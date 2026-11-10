@@ -5,7 +5,7 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initTabNavigation();
+  initNavigation();
   initBurgerMenu();
   initThemeAndLanguage();
   initPatientGate();
@@ -13,6 +13,134 @@ document.addEventListener("DOMContentLoaded", () => {
   initRoiCalculator();
   initBlePairingSimulator();
 });
+
+/* ==========================================================================
+   Single-Page Landing & Patient Portal View Switcher
+   ========================================================================== */
+function showLandingView(scrollTarget) {
+  const landingView = document.getElementById("landingView");
+  const portalView = document.getElementById("patientPortalView");
+
+  if (portalView) portalView.style.display = "none";
+  if (landingView) landingView.style.display = "block";
+
+  // Deactivate patient nav buttons
+  document.querySelectorAll("#navBtnPatientPortal, #drawerBtnPatientPortal, #mobileBtnPatientPortal").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+
+  if (scrollTarget) {
+    setTimeout(() => {
+      const targetEl = document.querySelector(scrollTarget);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 60);
+  }
+}
+
+function showPatientPortal() {
+  const landingView = document.getElementById("landingView");
+  const portalView = document.getElementById("patientPortalView");
+
+  if (landingView) landingView.style.display = "none";
+  if (portalView) {
+    portalView.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Set patient nav buttons active, deactivate landing nav buttons
+  document.querySelectorAll(".nav-tab-btn, .mobile-nav-btn, .drawer-link-item").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  document.querySelectorAll("#navBtnPatientPortal, #drawerBtnPatientPortal, #mobileBtnPatientPortal").forEach((btn) => {
+    btn.classList.add("active");
+  });
+
+  // Trigger resize so EKG canvas renders properly
+  setTimeout(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, 100);
+}
+
+function updateActiveNav(targetSelector) {
+  document.querySelectorAll(".nav-tab-btn[data-scroll], .mobile-nav-btn[data-scroll], .drawer-link-item[data-scroll]").forEach((btn) => {
+    if (btn.getAttribute("data-scroll") === targetSelector) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+}
+
+function initNavigation() {
+  // Return to landing button from patient portal
+  const btnReturn = document.getElementById("btnReturnToLanding");
+  if (btnReturn) {
+    btnReturn.addEventListener("click", () => {
+      showLandingView("#sec-txostena");
+      updateActiveNav("#sec-txostena");
+    });
+  }
+
+  // All buttons with data-scroll (header, mobile bar, drawer)
+  const scrollButtons = document.querySelectorAll(".nav-tab-btn[data-scroll], .mobile-nav-btn[data-scroll]");
+  scrollButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-scroll");
+      if (target) {
+        showLandingView(target);
+        updateActiveNav(target);
+      }
+    });
+  });
+
+  // Patient Portal CTA buttons
+  const patientButtons = document.querySelectorAll("#navBtnPatientPortal, #mobileBtnPatientPortal");
+  patientButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showPatientPortal();
+    });
+  });
+
+  // Top header brand icon clicks scroll to hero
+  const brandIcon = document.querySelector(".brand-icon-link");
+  if (brandIcon) {
+    brandIcon.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLandingView("#sec-hero");
+      updateActiveNav("#sec-txostena");
+    });
+  }
+
+  initScrollSpy();
+}
+
+function initScrollSpy() {
+  const sections = document.querySelectorAll(".hero-section, .landing-section");
+  if (!("IntersectionObserver" in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        const selector = `#${id}`;
+        document.querySelectorAll(".nav-tab-btn[data-scroll], .mobile-nav-btn[data-scroll]").forEach((b) => {
+          if (b.getAttribute("data-scroll") === selector) {
+            b.classList.add("active");
+          } else {
+            b.classList.remove("active");
+          }
+        });
+      }
+    });
+  }, {
+    rootMargin: "-25% 0px -65% 0px",
+    threshold: 0
+  });
+
+  sections.forEach((sec) => observer.observe(sec));
+}
 
 /* ==========================================================================
    Burger Drawer Menu Kontrola (Figma Overlay Pattern)
@@ -46,28 +174,16 @@ function initBurgerMenu() {
 
   drawerLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      const targetTab = link.getAttribute("data-tab");
+      const isPatient = link.getAttribute("data-view") === "patient" || link.id === "drawerBtnPatientPortal";
       const targetScroll = link.getAttribute("data-scroll");
 
-      // Switch tab
-      if (targetTab) {
-        const matchingBtn = document.querySelector(`.nav-tab-btn[data-tab="${targetTab}"], .mobile-nav-btn[data-tab="${targetTab}"]`);
-        if (matchingBtn) {
-          matchingBtn.click();
-        }
-      }
-
-      // Close drawer smoothly
       closeDrawer();
 
-      // If scrolling to a specific section in the business report
-      if (targetScroll) {
-        setTimeout(() => {
-          const targetEl = document.querySelector(targetScroll);
-          if (targetEl) {
-            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }, 200);
+      if (isPatient) {
+        showPatientPortal();
+      } else if (targetScroll) {
+        showLandingView(targetScroll);
+        updateActiveNav(targetScroll);
       }
     });
   });
@@ -151,56 +267,6 @@ function initPatientGate() {
   if (btnLogout) btnLogout.addEventListener("click", doLogout);
 }
 
-/* ==========================================================================
-   1. Tab Nabigazio Interaktiboa (Figma UI & Mobile App Pattern)
-   ========================================================================== */
-function initTabNavigation() {
-  const allNavButtons = document.querySelectorAll(".nav-tab-btn, .mobile-nav-btn");
-  const tabPanels = document.querySelectorAll(".tab-panel");
-
-  function switchTab(targetId) {
-    // Eguneratu aktibo klasea bai goiko tab-etan bai beheko mugikorreko barran
-    allNavButtons.forEach((b) => {
-      if (b.getAttribute("data-tab") === targetId) {
-        b.classList.add("active");
-      } else {
-        b.classList.remove("active");
-      }
-    });
-
-    // Panelak erakutsi / ezkutatu
-    tabPanels.forEach((panel) => {
-      if (panel.id === targetId) {
-        panel.classList.add("active");
-      } else {
-        panel.classList.remove("active");
-      }
-    });
-
-    // Mugikorretan leunki mugitu edukia ikusteko
-    if (window.innerWidth < 768) {
-      const targetPanel = document.getElementById(targetId);
-      if (targetPanel) {
-        const topOffset = 130;
-        const elementPosition = targetPanel.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - topOffset;
-        window.scrollTo({
-          top: Math.max(0, offsetPosition),
-          behavior: "smooth"
-        });
-      }
-    }
-  }
-
-  allNavButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-tab");
-      if (targetId) {
-        switchTab(targetId);
-      }
-    });
-  });
-}
 
 /* ==========================================================================
    2. EKG Telemetria Fisiologikoaren Simulagailua (HTML5 Canvas)
