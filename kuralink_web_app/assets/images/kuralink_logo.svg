@@ -54,9 +54,9 @@
 
   <!-- Typography: Brand Name -->
   <g transform="translate(275, 118)">
-    <!-- "Kura" -->
+    <!-- "Kura" (Crisp White for High Contrast) -->
     <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Montserrat', sans-serif" 
-          font-size="82" font-weight="900" fill="#0F172A" letter-spacing="-1.5">Kura</text>
+          font-size="82" font-weight="900" fill="#FFFFFF" letter-spacing="-1.5">Kura</text>
     
     <!-- "Link" -->
     <text x="202" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Montserrat', sans-serif" 
@@ -64,10 +64,10 @@
 
     <!-- Subtitle: Category & Specialization -->
     <text x="4" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Open Sans', sans-serif" 
-          font-size="19" font-weight="700" fill="#64748B" letter-spacing="5.5">HEALTH TECHNOLOGIES</text>
+          font-size="19" font-weight="700" fill="#94A3B8" letter-spacing="5.5">HEALTH TECHNOLOGIES</text>
 
     <!-- Tagline / Slogan in Basque -->
     <text x="5" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Open Sans', sans-serif" 
-          font-size="15" font-weight="500" fill="#0EA5E9" letter-spacing="1.2">Software Biomedikoa &amp; Gailu Adimendunen Sinkronizazioa</text>
+          font-size="15" font-weight="500" fill="#00D4B2" letter-spacing="1.2">Software Biomedikoa &amp; Gailu Adimendunen Sinkronizazioa</text>
   </g>
 </svg>

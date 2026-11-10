@@ -1,6 +1,7 @@
 package com.kuralink.health.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kuralink.health.R
 import com.kuralink.health.ui.theme.*
 import com.kuralink.health.util.PdfOpener
 import java.text.NumberFormat
@@ -65,6 +68,51 @@ fun CompanyScreen(
                 modifier = Modifier.padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                // Prominent Corporate Logo Emblem Banner
+                Surface(
+                    color = CardBackground,
+                    shape = RoundedCornerShape(12.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, TechBlue.copy(alpha = 0.5f)),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Surface(
+                            color = PrimaryDark,
+                            shape = RoundedCornerShape(10.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.5.dp, AccentCyan),
+                            modifier = Modifier.size(52.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                contentDescription = "KuraLink Logo Bektoriala",
+                                modifier = Modifier.size(52.dp)
+                            )
+                        }
+                        Column {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("Kura", color = TextLight, fontSize = 22.sp, fontWeight = FontWeight.Black)
+                                Text("Link", color = AccentCyan, fontSize = 22.sp, fontWeight = FontWeight.Black)
+                            }
+                            Text(
+                                text = "HEALTH TECHNOLOGIES • CE MDR IIa",
+                                color = AccentCyan,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.8.sp
+                            )
+                            Text(
+                                text = "Software Biomedikoa & Gailu Adimendunak",
+                                color = TextMuted,
+                                fontSize = 10.sp
+                            )
+                        }
+                    }
+                }
+
                 Surface(
                     color = CardBackground,
                     shape = RoundedCornerShape(20.dp),

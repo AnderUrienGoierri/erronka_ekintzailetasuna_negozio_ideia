@@ -6,10 +6,102 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initTabNavigation();
+  initBurgerMenu();
+  initPatientGate();
   initEcgSimulator();
   initRoiCalculator();
   initBlePairingSimulator();
 });
+
+/* ==========================================================================
+   Burger Drawer Menu Kontrola (Figma Overlay Pattern)
+   ========================================================================== */
+function initBurgerMenu() {
+  const burgerBtn = document.getElementById("burgerBtn");
+  const drawer = document.getElementById("burgerDrawer");
+  const overlay = document.getElementById("drawerOverlay");
+  const closeBtn = document.getElementById("drawerCloseBtn");
+  const drawerLinks = document.querySelectorAll(".drawer-link-item");
+
+  function openDrawer() {
+    if (drawer && overlay) {
+      drawer.classList.add("open");
+      overlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeDrawer() {
+    if (drawer && overlay) {
+      drawer.classList.remove("open");
+      overlay.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+  }
+
+  if (burgerBtn) burgerBtn.addEventListener("click", openDrawer);
+  if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+  if (overlay) overlay.addEventListener("click", closeDrawer);
+
+  drawerLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const targetTab = link.getAttribute("data-tab");
+      const targetScroll = link.getAttribute("data-scroll");
+
+      // Switch tab
+      if (targetTab) {
+        const matchingBtn = document.querySelector(`.nav-tab-btn[data-tab="${targetTab}"], .mobile-nav-btn[data-tab="${targetTab}"]`);
+        if (matchingBtn) {
+          matchingBtn.click();
+        }
+      }
+
+      // Close drawer smoothly
+      closeDrawer();
+
+      // If scrolling to a specific section in the business report
+      if (targetScroll) {
+        setTimeout(() => {
+          const targetEl = document.querySelector(targetScroll);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 200);
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   Paziente Ataria: Login Segurua (Gated Medical Access)
+   ========================================================================== */
+let isPatientLoggedIn = false;
+
+function initPatientGate() {
+  const gate = document.getElementById("patientLockedGate");
+  const unlocked = document.getElementById("patientUnlockedContent");
+  const btnSubmit = document.getElementById("btnLoginSubmit");
+  const btnDemo = document.getElementById("btnDemoLogin");
+  const btnLogout = document.getElementById("btnLogoutBtn");
+
+  function doLogin() {
+    isPatientLoggedIn = true;
+    if (gate) gate.style.display = "none";
+    if (unlocked) unlocked.style.display = "block";
+    // Trigger canvas resize so EKG renders properly
+    window.dispatchEvent(new Event("resize"));
+  }
+
+  function doLogout() {
+    isPatientLoggedIn = false;
+    if (gate) gate.style.display = "flex";
+    if (unlocked) unlocked.style.display = "none";
+  }
+
+  if (btnSubmit) btnSubmit.addEventListener("click", doLogin);
+  if (btnDemo) btnDemo.addEventListener("click", doLogin);
+  if (btnLogout) btnLogout.addEventListener("click", doLogout);
+}
 
 /* ==========================================================================
    1. Tab Nabigazio Interaktiboa (Figma UI & Mobile App Pattern)

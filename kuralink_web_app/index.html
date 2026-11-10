@@ -18,14 +18,15 @@
       <span class="brand-badge">ISO 13485 • CE MDR IIa</span>
     </div>
 
-    <nav class="nav-links">
+    <!-- Desktop Navigation Links (Hidden on Mobile) -->
+    <nav class="nav-links desktop-nav-links">
       <button class="nav-tab-btn active" data-tab="tab-txostena">
-        <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
         Negozio Proiektua
       </button>
       <button class="nav-tab-btn" data-tab="tab-simulagailua">
         <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-        Simulagailu Klinikoa
+        Paziente Ataria &amp; EKG
       </button>
       <button class="nav-tab-btn" data-tab="tab-roi">
         <svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
@@ -46,12 +47,120 @@
         <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
         Txostena (PDF)
       </a>
-      <div class="btn-pill-live">
-        <span class="live-indicator"></span>
-        FHIR / HL7
-      </div>
+
+      <!-- Burger Menu Button (Mobile & Tablet) -->
+      <button id="burgerBtn" class="burger-menu-btn" aria-label="Ireki Menua">
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
     </div>
   </header>
+
+  <!-- Burger Off-canvas Drawer Menu (Figma Overlay Pattern) -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <aside id="burgerDrawer" class="burger-drawer" aria-label="Nabigazio Tiradera">
+    <div class="drawer-header">
+      <img src="assets/images/kuralink_logo.svg" alt="KuraLink" class="drawer-logo">
+      <button id="drawerCloseBtn" class="drawer-close-btn" aria-label="Itxi Menua">
+        <svg class="svg-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="drawer-content">
+      <!-- Section: Negozio Plana (Txostena) -->
+      <div class="drawer-section-title">Negozio Plana (Txostena)</div>
+      <div class="drawer-links-list">
+        <button class="drawer-link-item active" data-tab="tab-txostena" data-scroll="#sec-arazoa">
+          <span class="drawer-num">01</span>
+          <div class="drawer-link-text">
+            <strong>Arazoa eta Irtenbidea</strong>
+            <small>Saturazioa eta zaintza biomedikoa</small>
+          </div>
+        </button>
+
+        <button class="drawer-link-item" data-tab="tab-txostena" data-scroll="#sec-misioa">
+          <span class="drawer-num">02</span>
+          <div class="drawer-link-text">
+            <strong>Misioa, Bisioa eta Baloreak</strong>
+            <small>Nortasun korporatiboa eta etika</small>
+          </div>
+        </button>
+
+        <button class="drawer-link-item" data-tab="tab-txostena" data-scroll="#sec-target">
+          <span class="drawer-num">03</span>
+          <div class="drawer-link-text">
+            <strong>Target (Xede Publikoa)</strong>
+            <small>B2B2C segmentazio osoa</small>
+          </div>
+        </button>
+
+        <button class="drawer-link-item" data-tab="tab-txostena" data-scroll="#sec-balioa">
+          <span class="drawer-num">04</span>
+          <div class="drawer-link-text">
+            <strong>Balio Proposamena &amp; Lehia</strong>
+            <small>MDR IIa eta Osabide/FHIR</small>
+          </div>
+        </button>
+
+        <button class="drawer-link-item" data-tab="tab-txostena" data-scroll="#sec-marka">
+          <span class="drawer-num">05</span>
+          <div class="drawer-link-text">
+            <strong>Marka: KuraLink</strong>
+            <small>Izenaren garapena eta koloreak</small>
+          </div>
+        </button>
+      </div>
+
+      <!-- Section: Tresna Klinikoak & Datuak -->
+      <div class="drawer-section-title">Tresna Klinikoak &amp; Datuak</div>
+      <div class="drawer-links-list">
+        <button class="drawer-link-item" data-tab="tab-roi">
+          <span class="drawer-icon-box cyan"><svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+          <div class="drawer-link-text">
+            <strong>ROI Kalkulagailua</strong>
+            <small>Ospitaleen aurrezpen ekonomikoa</small>
+          </div>
+        </button>
+
+        <button class="drawer-link-item" data-tab="tab-merkatua">
+          <span class="drawer-icon-box blue"><svg class="svg-icon sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+          <div class="drawer-link-text">
+            <strong>Merkatu Datuak</strong>
+            <small>Euskadiko zahartzea eta SaMD</small>
+          </div>
+        </button>
+
+        <button class="drawer-link-item" data-tab="tab-marka">
+          <span class="drawer-icon-box green"><svg class="svg-icon sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span>
+          <div class="drawer-link-text">
+            <strong>Marka &amp; Egoitzako Argazkiak</strong>
+            <small>Miramongo laborategia eta logotipoak</small>
+          </div>
+        </button>
+      </div>
+
+      <!-- Section: Pazientearen Eremu Babestua -->
+      <div class="drawer-section-title">Pazientearen Eremu Babestua</div>
+      <div class="drawer-links-list">
+        <button class="drawer-link-item drawer-patient-highlight" data-tab="tab-simulagailua">
+          <span class="drawer-icon-box red"><svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>
+          <div class="drawer-link-text">
+            <strong>Paziente Ataria (Login)</strong>
+            <small>Fitxa klinikoa, telemetria eta ariketak</small>
+          </div>
+        </button>
+      </div>
+
+      <!-- Bottom Drawer CTA -->
+      <div class="drawer-footer-cta">
+        <a href="assets/docs/KuraLink_Negozio_Txostena.pdf" download="KuraLink_Negozio_Txostena.pdf" class="btn-download-pdf full-width">
+          <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Deskargatu Txostena (PDF)
+        </a>
+      </div>
+    </div>
+  </aside>
 
   <!-- Mobile Bottom Navigation Bar (Figma Native App Pattern) -->
   <nav class="mobile-bottom-nav" aria-label="Mugikorreko Nabigazioa">
@@ -62,7 +171,7 @@
     </button>
     <button class="mobile-nav-btn" data-tab="tab-simulagailua">
       <svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-      <span>Simulagailua</span>
+      <span>Pazientea</span>
       <span class="nav-active-dot"></span>
     </button>
     <button class="mobile-nav-btn" data-tab="tab-roi">
@@ -85,9 +194,15 @@
   <!-- Main Container -->
   <main class="main-layout">
 
-    <!-- Hero Section -->
+    <!-- Hero Section with PROMINENT PRINCIPAL LOGO -->
     <section class="hero-section">
       <div class="hero-content">
+        <!-- HERO PROMINENT LOGO EMBLEM -->
+        <div class="hero-brand-emblem">
+          <img src="assets/images/kuralink_logo.svg" alt="KuraLink Health Technologies" class="hero-main-logo">
+          <span class="hero-brand-sub">HEALTH TECHNOLOGIES • CE MDR IIa</span>
+        </div>
+
         <div class="hero-tagline">
           <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           SAAS MEDIKOA &amp; IOMT TELE-MONITORIZAZIO KLINIKOA
@@ -153,7 +268,7 @@
       </div>
 
       <!-- 01: ARAZOA ETA IRTENBIDEA -->
-      <section class="section-card">
+      <section id="sec-arazoa" class="section-card">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-number-badge">01</div>
@@ -230,7 +345,7 @@
       </section>
 
       <!-- 02: MISIOA, BISIOA ETA BALOREAK -->
-      <section class="section-card">
+      <section id="sec-misioa" class="section-card">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-number-badge">02</div>
@@ -306,7 +421,7 @@
       </section>
 
       <!-- 03: TARGET (XEDE PUBLIKOA) -->
-      <section class="section-card">
+      <section id="sec-target" class="section-card">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-number-badge">03</div>
@@ -347,7 +462,7 @@
       </section>
 
       <!-- 04: BALIO PROPOSAMENA -->
-      <section class="section-card">
+      <section id="sec-balioa" class="section-card">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-number-badge">04</div>
@@ -405,7 +520,7 @@
       </section>
 
       <!-- 05: MARKA -->
-      <section class="section-card">
+      <section id="sec-marka" class="section-card">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-number-badge">05</div>
@@ -439,85 +554,217 @@
     </div>
 
     <!-- ====================================================================
-         TAB 2: SIMULAGAILU KLINIKOA (LIVE ECG CANVAS & BLE PAIRING)
+         TAB 2: PAZIENTE ATARIA & TELEMETRIA BABESTUA (GATED ACCESS)
          ==================================================================== -->
     <div id="tab-simulagailua" class="tab-panel">
       <section class="section-card">
         <div class="section-head">
           <div class="section-head-left">
-            <div class="section-number-badge"><svg class="svg-icon md" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></div>
+            <div class="section-number-badge"><svg class="svg-icon md" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
             <div>
-              <h2>EKG Telemetria eta BLE Parekatze Simulagailua</h2>
-              <p>Proba ezazu gailu biomedikoaren denbora errealeko seinalea eta alerta-triatzea</p>
+              <h2>Paziente Ataria, EKG Telemetria eta Ariketak</h2>
+              <p>MDR IIa eta GDPR bidez babestutako eremu klinikoa (Saio-hasiera beharrezkoa)</p>
             </div>
           </div>
         </div>
 
-        <!-- BLE Zero-Touch Scanner Widget -->
-        <div style="background: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <div>
-              <h3 style="font-size: 1.1rem; color: var(--text-primary);">Zero-Touch BLE Parekatze Proba</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary);">Gailu mediko eramangarriak gerturatzean automatikoki konektatzen dira</p>
+        <!-- 1. LOCKED GATE (Erakutsi saioa hasi gabe dagoenean) -->
+        <div id="patientLockedGate" class="patient-login-gate">
+          <div class="gate-lock-icon-box">
+            <svg class="svg-icon lg" viewBox="0 0 24 24" style="color: var(--accent-cyan);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h3 style="font-size: 1.3rem; color: var(--text-primary); margin-bottom: 0.5rem; text-align: center;">
+            Pazientearen Datu Klinikoak eta Telemetria Babestuak
+          </h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); text-align: center; max-width: 540px; margin-bottom: 1.5rem; line-height: 1.6;">
+            Datu medikoen segurtasun araudia (GDPR / ENS Altua) eta MDR IIa homologazioa betez, pazientearen fitxa pertsonala, denbora errealeko EKG telemetria eta errehabilitazio ariketak ikusteko, mesedez hasi saioa zure kontuarekin.
+          </p>
+
+          <div class="gate-form-card">
+            <div class="form-field-group">
+              <label for="loginOti">OTI / Osasun Txartel Zenbakia edo Emaila:</label>
+              <input type="text" id="loginOti" class="gate-input" value="9845-234-A">
             </div>
-            <button id="btnBleScan" class="btn-ctrl" style="background: var(--tech-blue); border-color: var(--tech-blue); color: white;">
-              <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-              Bilatu Sentsoreak (BLE)
+
+            <div class="form-field-group">
+              <label for="loginPass">Pasahitza:</label>
+              <input type="password" id="loginPass" class="gate-input" value="••••••••">
+            </div>
+
+            <button id="btnLoginSubmit" class="btn-ctrl" style="background: var(--tech-blue); border-color: var(--tech-blue); color: #FFFFFF; width: 100%; height: 46px; font-weight: 700; margin-top: 0.5rem;">
+              <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              Hasi Saioa Paziente gisa
+            </button>
+
+            <div style="text-align: center; margin: 0.8rem 0; font-size: 0.8rem; color: var(--text-muted);">- edo berehala probatzeko -</div>
+
+            <button id="btnDemoLogin" class="btn-ctrl" style="border-color: var(--accent-cyan); color: var(--accent-cyan); width: 100%; height: 44px; font-weight: 600;">
+              <svg class="svg-icon sm" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Demo Pazientea: Mikel Iturbe (68 urte)
             </button>
           </div>
-
-          <div id="bleDeviceList">
-            <div style="padding: 0.8rem; background: var(--secondary-bg); border-radius: 8px; font-size: 0.85rem; color: var(--text-muted);">
-              Sentsorea detektatzeko, sakatu "Bilatu Sentsoreak (BLE)" botoia.
-            </div>
-          </div>
         </div>
 
-        <!-- Telemetry Widget with Canvas -->
-        <div class="telemetry-widget">
-          <div class="telemetry-top-bar">
-            <div>
-              <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
-                EKG Telemetria Jarraitua (Deribazio II)
-              </h3>
-              <p style="font-size: 0.82rem; color: var(--text-muted);">
-                Laginketa: 250 Hz • Zarata-Iragazkia: Butterworth 0.05-40 Hz
-              </p>
-            </div>
+        <!-- 2. UNLOCKED CONTENT (Erakutsi saioa hasitakoan) -->
+        <div id="patientUnlockedContent" style="display: none;">
 
-            <div class="telemetry-status-pills">
-              <div id="bleStatusPill" class="status-pill" style="color: var(--accent-green); border-color: var(--accent-green);">
-                <span class="live-indicator"></span>
-                BioPatch #702 Konektatuta (BLE)
+          <!-- Patient Header Card -->
+          <div style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.15) 0%, rgba(0, 212, 178, 0.1) 100%); border: 1px solid var(--accent-cyan); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--tech-blue); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; color: white; border: 2px solid var(--accent-cyan);">
+                  MI
+                </div>
+                <div>
+                  <h3 style="font-size: 1.25rem; color: var(--text-primary); font-weight: 800;">Mikel Iturbe Agirre (68 urte)</h3>
+                  <p style="font-size: 0.85rem; color: var(--accent-cyan); font-weight: 600;">OTI: 9845-234-A • Donostia Unibertsitate Ospitalea (Kardiologia Zerbitzua)</p>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">Mediku Arduraduna: Dr. Miren Elorza • Protokoloa: Infartu osteko etxeko tele-zaintza</p>
+                </div>
               </div>
-              <div id="ecgStatusDisplay" class="status-pill" style="color: var(--accent-cyan); border-color: var(--accent-cyan);">
-                Erritmo Sinusala Egonkorra (Normala)
-              </div>
-            </div>
-          </div>
 
-          <div class="canvas-container">
-            <canvas id="ecgCanvas"></canvas>
-          </div>
-
-          <div class="telemetry-controls-row">
-            <div class="control-group">
-              <label for="bpmSlider">Bihotz Maiztasuna:</label>
-              <input type="range" id="bpmSlider" class="slider-range" min="45" max="150" value="72">
-              <span id="bpmDisplay" style="font-size: 1.1rem; font-weight: 800; color: var(--accent-cyan); min-width: 75px;">72 BPM</span>
-            </div>
-
-            <div class="btn-group">
-              <button id="btnEcgNormal" class="btn-ctrl active">
-                <svg class="svg-icon sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Egoera Normala
-              </button>
-              <button id="btnEcgArrhythmia" class="btn-ctrl">
-                <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                Arritmia Simulatua
+              <button id="btnLogoutBtn" class="btn-ctrl" style="border-color: var(--alert-red); color: var(--alert-red); padding: 0.5rem 1rem;">
+                <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Itxi Saioa (Blokeatu)
               </button>
             </div>
           </div>
+
+          <!-- Physiological Constants Grid -->
+          <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem;">Pazientearen Datu Fisiologikoak eta Konstanteak:</h3>
+          <div class="grid-4" style="margin-bottom: 2rem;">
+            <div class="info-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Bihotz-Maiztasuna</span>
+              <h4 id="physioBpm" style="font-size: 1.8rem; font-weight: 800; color: var(--accent-cyan); margin: 0.2rem 0;">72 BPM</h4>
+              <span style="font-size: 0.75rem; color: var(--accent-green); font-weight: 600;">Egonkorra (Sinusala)</span>
+            </div>
+
+            <div class="info-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Tentsio Arteriala</span>
+              <h4 style="font-size: 1.8rem; font-weight: 800; color: var(--tech-blue-light); margin: 0.2rem 0;">120/78</h4>
+              <span style="font-size: 0.75rem; color: var(--accent-green); font-weight: 600;">mmHg • Optimoa</span>
+            </div>
+
+            <div class="info-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Oxigeno Saturazioa</span>
+              <h4 style="font-size: 1.8rem; font-weight: 800; color: var(--accent-green); margin: 0.2rem 0;">%98</h4>
+              <span style="font-size: 0.75rem; color: var(--accent-green); font-weight: 600;">SpO2 • Normala</span>
+            </div>
+
+            <div class="info-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Tenperatura / Gluzemia</span>
+              <h4 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">36.6 °C</h4>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Gluzemia: 95 mg/dL</span>
+            </div>
+          </div>
+
+          <!-- BLE Zero-Touch Scanner Widget -->
+          <div style="background: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+              <div>
+                <h3 style="font-size: 1.1rem; color: var(--text-primary);">Zero-Touch BLE Parekatze Proba</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Gailu mediko eramangarriak gerturatzean automatikoki konektatzen dira</p>
+              </div>
+              <button id="btnBleScan" class="btn-ctrl" style="background: var(--tech-blue); border-color: var(--tech-blue); color: white;">
+                <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                Bilatu Sentsoreak (BLE)
+              </button>
+            </div>
+
+            <div id="bleDeviceList">
+              <div style="padding: 0.8rem; background: var(--secondary-bg); border-radius: 8px; font-size: 0.85rem; color: var(--text-muted);">
+                Sentsorea detektatzeko, sakatu "Bilatu Sentsoreak (BLE)" botoia.
+              </div>
+            </div>
+          </div>
+
+          <!-- Telemetry Widget with Canvas -->
+          <div class="telemetry-widget" style="margin-bottom: 2rem;">
+            <div class="telemetry-top-bar">
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+                  EKG Telemetria Jarraitua (Deribazio II)
+                </h3>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">
+                  Laginketa: 250 Hz • Zarata-Iragazkia: Butterworth 0.05-40 Hz
+                </p>
+              </div>
+
+              <div class="telemetry-status-pills">
+                <div id="bleStatusPill" class="status-pill" style="color: var(--accent-green); border-color: var(--accent-green);">
+                  <span class="live-indicator"></span>
+                  BioPatch #702 Konektatuta (BLE)
+                </div>
+                <div id="ecgStatusDisplay" class="status-pill" style="color: var(--accent-cyan); border-color: var(--accent-cyan);">
+                  Erritmo Sinusala Egonkorra (Normala)
+                </div>
+              </div>
+            </div>
+
+            <div class="canvas-container">
+              <canvas id="ecgCanvas"></canvas>
+            </div>
+
+            <div class="telemetry-controls-row">
+              <div class="control-group">
+                <label for="bpmSlider">Bihotz Maiztasuna:</label>
+                <input type="range" id="bpmSlider" class="slider-range" min="45" max="150" value="72">
+                <span id="bpmDisplay" style="font-size: 1.1rem; font-weight: 800; color: var(--accent-cyan); min-width: 75px;">72 BPM</span>
+              </div>
+
+              <div class="btn-group">
+                <button id="btnEcgNormal" class="btn-ctrl active">
+                  <svg class="svg-icon sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Egoera Normala
+                </button>
+                <button id="btnEcgArrhythmia" class="btn-ctrl">
+                  <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  Arritmia Simulatua
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rehabilitation Exercises Card -->
+          <div style="background: var(--surface-bg); border: 1px solid var(--surface-border); border-radius: var(--radius-lg); padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+              <div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); font-weight: 700;">Gaurko Errehabilitazio Ariketen Plana</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Dr. Miren Elorzak agindutako jarduera kardiobaskularra</p>
+              </div>
+              <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-green); border-radius: 9999px; padding: 0.35rem 0.85rem; color: var(--accent-green); font-size: 0.8rem; font-weight: 700;">
+                Asteko Atxikimendua: %88 Beteta
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--secondary-bg); border-radius: 10px; border-left: 4px solid var(--accent-green);">
+                <div>
+                  <h4 style="font-size: 0.95rem; color: var(--text-primary);">1. Ibiltze Terapeutiko Erritmikoa</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">20 minutu • Pultsu muga: 110 BPM</p>
+                </div>
+                <span class="badge-check"><svg class="svg-icon sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Osatuta</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--secondary-bg); border-radius: 10px; border-left: 4px solid var(--accent-green);">
+                <div>
+                  <h4 style="font-size: 0.95rem; color: var(--text-primary);">2. Diafragma Arnasketa Zikloa</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">10 minutu • Erlaxazioa</p>
+                </div>
+                <span class="badge-check"><svg class="svg-icon sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Osatuta</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--secondary-bg); border-radius: 10px; border-left: 4px solid var(--tech-blue);">
+                <div>
+                  <h4 style="font-size: 0.95rem; color: var(--text-primary);">3. Luzatze Isometriko Gidatuak</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">15 minutu • 3 serie</p>
+                </div>
+                <button class="btn-ctrl" style="background: var(--tech-blue); color: white; padding: 0.4rem 0.9rem; font-size: 0.8rem;">
+                  Hasi Ariketa
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
     </div>
