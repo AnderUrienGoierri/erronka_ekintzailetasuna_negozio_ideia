@@ -31,6 +31,8 @@ import com.kuralink.health.ui.screens.HomeScreen
 import com.kuralink.health.ui.screens.PatientLoginGate
 import com.kuralink.health.ui.screens.PatientPortalScreen
 import com.kuralink.health.ui.screens.RehabScreen
+import com.kuralink.health.ui.screens.SettingsScreen
+import com.kuralink.health.ui.screens.AppLanguage
 import com.kuralink.health.ui.theme.*
 import com.kuralink.health.util.PdfOpener
 import kotlinx.coroutines.launch
@@ -40,6 +42,7 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object Patient : Screen("patient", "Pazientea", Icons.Default.AccountCircle)
     object Monitoring : Screen("monitoring", "Telemetria", Icons.Default.Favorite)
     object Rehab : Screen("rehab", "Ariketak", Icons.Default.FitnessCenter)
+    object Settings : Screen("settings", "Ezarpenak", Icons.Default.Settings)
 }
 
 class MainActivity : ComponentActivity() {
@@ -54,6 +57,7 @@ class MainActivity : ComponentActivity() {
 
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.Company) }
                 var isLoggedIn by remember { mutableStateOf(false) }
+                var currentLanguage by remember { mutableStateOf(AppLanguage.EUSKARA) }
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
@@ -286,6 +290,28 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
 
+                                HorizontalDivider(color = SurfaceBorder, thickness = 1.dp)
+
+                                // Section 4: Configuration & Settings (Ezarpenak)
+                                Text(
+                                    text = "Ezarpenak & Konfigurazioa",
+                                    color = TextMuted,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    letterSpacing = 0.5.sp
+                                )
+
+                                DrawerToolItem(
+                                    icon = Icons.Default.Settings,
+                                    iconColor = AccentCyan,
+                                    title = "Ezarpenak",
+                                    subtitle = "Tema (Argia/Iluna), Hizkuntza eta Alertak",
+                                    onClick = {
+                                        currentScreen = Screen.Settings
+                                        scope.launch { drawerState.close() }
+                                    }
+                                )
+
                                 Spacer(modifier = Modifier.weight(1f))
 
                                 HorizontalDivider(color = SurfaceBorder, thickness = 1.dp)
@@ -359,40 +385,44 @@ class MainActivity : ComponentActivity() {
                                             color = CardBackground,
                                             shape = RoundedCornerShape(8.dp),
                                             border = androidx.compose.foundation.BorderStroke(1.dp, TechBlue.copy(alpha = 0.5f)),
-                                            modifier = Modifier.size(34.dp)
+                                            modifier = Modifier.size(32.dp)
                                         ) {
                                             Image(
                                                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                                                 contentDescription = "KuraLink Logo",
-                                                modifier = Modifier.size(34.dp)
+                                                modifier = Modifier.size(32.dp)
                                             )
                                         }
-                                        Column {
-                                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                                Text(
-                                                    text = "Kura",
-                                                    color = TextLight,
-                                                    fontSize = 17.sp,
-                                                    fontWeight = FontWeight.ExtraBold
-                                                )
-                                                Text(
-                                                    text = "Link",
-                                                    color = AccentCyan,
-                                                    fontSize = 17.sp,
-                                                    fontWeight = FontWeight.ExtraBold
-                                                )
-                                            }
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
                                             Text(
-                                                text = "HEALTH TECHNOLOGIES",
-                                                color = TextMuted,
-                                                fontSize = 9.sp,
-                                                fontWeight = FontWeight.SemiBold,
-                                                letterSpacing = 0.5.sp
+                                                text = "Kura",
+                                                color = TextLight,
+                                                fontSize = 17.sp,
+                                                fontWeight = FontWeight.ExtraBold,
+                                                maxLines = 1
+                                            )
+                                            Text(
+                                                text = "Link",
+                                                color = AccentCyan,
+                                                fontSize = 17.sp,
+                                                fontWeight = FontWeight.ExtraBold,
+                                                maxLines = 1
                                             )
                                         }
                                     }
                                 },
                                 actions = {
+                                    // Quick Light/Dark Mode Toggle
+                                    IconButton(
+                                        onClick = { isDarkThemeState.value = !isDarkThemeState.value }
+                                    ) {
+                                        Icon(
+                                            imageVector = if (isDarkThemeState.value) Icons.Default.LightMode else Icons.Default.DarkMode,
+                                            contentDescription = "Aldatu Tema",
+                                            tint = AccentCyan
+                                        )
+                                    }
+
                                     // PDF Quick Download Button
                                     IconButton(
                                         onClick = { PdfOpener.openOrDownloadPdf(context) }
@@ -509,6 +539,15 @@ class MainActivity : ComponentActivity() {
                                         onLoginSuccess = { isLoggedIn = true }
                                     )
                                 }
+                            }
+                            is Screen.Settings -> {
+                                SettingsScreen(
+                                    modifier = Modifier.padding(innerPadding),
+                                    isDarkTheme = isDarkThemeState.value,
+                                    onThemeToggle = { isDarkThemeState.value = it },
+                                    currentLanguage = currentLanguage,
+                                    onLanguageChange = { currentLanguage = it }
+                                )
                             }
                         }
                     }

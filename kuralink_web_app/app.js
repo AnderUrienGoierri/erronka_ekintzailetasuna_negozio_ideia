@@ -7,6 +7,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   initTabNavigation();
   initBurgerMenu();
+  initThemeAndLanguage();
   initPatientGate();
   initEcgSimulator();
   initRoiCalculator();
@@ -68,6 +69,53 @@ function initBurgerMenu() {
           }
         }, 200);
       }
+    });
+  });
+}
+
+/* ==========================================================================
+   Tema eta Hizkuntza Kontrolatzailea (Modu Argia / Iluna & Euskara/ES/EN)
+   ========================================================================== */
+function initThemeAndLanguage() {
+  const headerBtn = document.getElementById("headerThemeToggleBtn");
+  const drawerBtn = document.getElementById("drawerThemeToggleBtn");
+  const descEl = document.getElementById("themeStatusDesc");
+  const btnTextEl = document.getElementById("themeBtnText");
+  const langPills = document.querySelectorAll(".lang-pill");
+
+  // Load saved theme or default to dark
+  const savedTheme = localStorage.getItem("kuralink-theme") || "dark";
+  applyTheme(savedTheme);
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+      if (descEl) descEl.textContent = "Modu Argia (Egun/Kliniko)";
+      if (btnTextEl) btnTextEl.textContent = "Iluna";
+      localStorage.setItem("kuralink-theme", "light");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      if (descEl) descEl.textContent = "Modu Iluna (Gau/Kliniko)";
+      if (btnTextEl) btnTextEl.textContent = "Argia";
+      localStorage.setItem("kuralink-theme", "dark");
+    }
+  }
+
+  function toggleTheme() {
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    applyTheme(isLight ? "dark" : "light");
+  }
+
+  if (headerBtn) headerBtn.addEventListener("click", toggleTheme);
+  if (drawerBtn) drawerBtn.addEventListener("click", toggleTheme);
+
+  // Language selector
+  langPills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      langPills.forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
+      const lang = pill.getAttribute("data-lang");
+      localStorage.setItem("kuralink-lang", lang);
     });
   });
 }

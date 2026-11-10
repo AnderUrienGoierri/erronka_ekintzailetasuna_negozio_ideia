@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -22,10 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kuralink.health.R
 import com.kuralink.health.ui.theme.*
 
 @Composable
@@ -326,7 +330,7 @@ fun HomeScreen(
             )
         }
 
-        // Primary Call to Action Button: FHIR Sync & Rehab
+        // Primary Call to Action Buttons: FHIR Sync & Rehab (Unclipped Layout)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -338,22 +342,130 @@ fun HomeScreen(
                 },
                 shape = RoundedCornerShape(12.dp),
                 border = androidx.compose.foundation.BorderStroke(1.dp, TechBlue),
-                modifier = Modifier.weight(1f).height(50.dp)
+                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .defaultMinSize(minHeight = 54.dp)
             ) {
-                Icon(Icons.Default.CloudSync, contentDescription = null, tint = TechBlue)
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(text = "Osabide FHIR", color = TechBlue, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CloudSync,
+                        contentDescription = null,
+                        tint = TechBlue,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column(horizontalAlignment = Alignment.Start) {
+                        Text(
+                            text = "Osabide",
+                            color = TechBlue,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp,
+                            lineHeight = 14.sp
+                        )
+                        Text(
+                            text = "FHIR Datuak",
+                            color = TechBlue.copy(alpha = 0.8f),
+                            fontSize = 10.sp,
+                            lineHeight = 12.sp
+                        )
+                    }
+                }
             }
 
             Button(
                 onClick = onNavigateToRehab,
                 colors = ButtonDefaults.buttonColors(containerColor = TechBlue),
                 shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.weight(1.3f).height(50.dp)
+                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp),
+                modifier = Modifier
+                    .weight(1.3f)
+                    .defaultMinSize(minHeight = 54.dp)
             ) {
-                Icon(Icons.Default.FitnessCenter, contentDescription = null, tint = Color.White)
-                Spacer(modifier = Modifier.width(6.dp))
-                Text(text = "Ariketak Hasi (%88)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FitnessCenter,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column(horizontalAlignment = Alignment.Start) {
+                        Text(
+                            text = "Ariketak Hasi",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp,
+                            lineHeight = 14.sp
+                        )
+                        Text(
+                            text = "Atxikimendua %88",
+                            color = AccentCyan,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 10.sp,
+                            lineHeight = 12.sp
+                        )
+                    }
+                }
+            }
+        }
+
+        // Real Corporate Hardware Photo Card (BioPatch & Smartphone)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+            shape = RoundedCornerShape(14.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+        ) {
+            Column {
+                Image(
+                    painter = painterResource(id = R.drawable.kuralink_app_mockup),
+                    contentDescription = "BioPatch sentsore biomedikoa eta KuraLink app",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp)
+                        .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp))
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 14.dp, vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            text = "BioPatch Gailu Medikoa (CE MDR IIa)",
+                            color = TextLight,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Adabaki itsasgarri arina • 7 eguneko bateria",
+                            color = TextMuted,
+                            fontSize = 10.sp
+                        )
+                    }
+                    Surface(
+                        color = TechBlue.copy(alpha = 0.2f),
+                        shape = RoundedCornerShape(6.dp)
+                    ) {
+                        Text(
+                            text = "BLE 5.3",
+                            color = TechBlue,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                        )
+                    }
+                }
             }
         }
     }

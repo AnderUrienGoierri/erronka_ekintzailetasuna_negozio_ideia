@@ -146,20 +146,38 @@ fun PatientLoginGate(
 
                 OutlinedButton(
                     onClick = onLoginSuccess,
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(12.dp),
                     border = androidx.compose.foundation.BorderStroke(1.dp, AccentCyan),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
+                        .defaultMinSize(minHeight = 52.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null, tint = AccentCyan)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Demo Pazientea: Mikel Iturbe (68 urte)",
-                        color = AccentCyan,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 12.sp
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PlayArrow,
+                            contentDescription = null,
+                            tint = AccentCyan,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column(horizontalAlignment = Alignment.Start) {
+                            Text(
+                                text = "Demo Pazientea: Mikel Iturbe",
+                                color = AccentCyan,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp
+                            )
+                            Text(
+                                text = "Kardiologia Alta • 68 urte",
+                                color = TextMuted,
+                                fontSize = 11.sp
+                            )
+                        }
+                    }
                 }
             }
         }

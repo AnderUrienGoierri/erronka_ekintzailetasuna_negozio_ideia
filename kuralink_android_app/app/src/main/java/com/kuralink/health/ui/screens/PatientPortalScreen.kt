@@ -1,6 +1,7 @@
 package com.kuralink.health.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -17,10 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kuralink.health.R
 import com.kuralink.health.ui.theme.*
 
 @Composable
@@ -141,22 +145,97 @@ fun PatientPortalScreen(
                     // Quick Demo Login Shortcut
                     OutlinedButton(
                         onClick = { onLoginChange(true) },
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(12.dp),
                         border = androidx.compose.foundation.BorderStroke(1.dp, AccentCyan),
-                        modifier = Modifier.fillMaxWidth().height(48.dp)
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .defaultMinSize(minHeight = 52.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null, tint = AccentCyan)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "Demo Pazientea: Mikel Iturbe (68 urte)",
-                            color = AccentCyan,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.PlayArrow,
+                                contentDescription = null,
+                                tint = AccentCyan,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Column(horizontalAlignment = Alignment.Start) {
+                                Text(
+                                    text = "Demo Pazientea: Mikel Iturbe",
+                                    color = AccentCyan,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 13.sp
+                                )
+                                Text(
+                                    text = "Kardiologia Alta • 68 urte",
+                                    color = TextMuted,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
                     }
                 }
             }
         } else {
             // LOGGED IN: PATIENT PROFILE & PHYSIOLOGICAL DATA
+
+            // Real Clinical Scene Card (Mikel Iturbe tele-zaintzan)
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+                shape = RoundedCornerShape(16.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+            ) {
+                Column {
+                    Image(
+                        painter = painterResource(id = R.drawable.kuralink_pazientea_etxean),
+                        contentDescription = "Mikel Iturbe pazientea bere etxean tele-zaintzan",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text(
+                                text = "Mikel Iturbe • Etxeko Tele-Zaintza Zuzenekoa",
+                                color = TextLight,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = "Kardiologia Jarraipena • Donostia Ospitalea",
+                                color = TextMuted,
+                                fontSize = 10.sp
+                            )
+                        }
+                        Surface(
+                            color = AccentGreen.copy(alpha = 0.15f),
+                            shape = RoundedCornerShape(6.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, AccentGreen.copy(alpha = 0.4f))
+                        ) {
+                            Text(
+                                text = "BioPatch Aktibo",
+                                color = AccentGreen,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                            )
+                        }
+                    }
+                }
+            }
 
             // Patient Header Card
             Card(

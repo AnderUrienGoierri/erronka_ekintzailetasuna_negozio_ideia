@@ -39,6 +39,65 @@
   --shadow-glow: 0 0 25px var(--tech-blue-glow);
 }
 
+/* Light Theme Variables */
+[data-theme="light"] {
+  --primary-bg: #F1F5F9;
+  --secondary-bg: #FFFFFF;
+  --surface-bg: #FFFFFF;
+  --surface-hover: #F8FAFC;
+  --surface-border: #CBD5E1;
+  --surface-border-subtle: #E2E8F0;
+
+  --tech-blue: #0284C7;
+  --tech-blue-light: #0284C7;
+  --tech-blue-glow: rgba(2, 132, 199, 0.15);
+
+  --accent-cyan: #0891B2;
+  --accent-cyan-light: #06B6D4;
+  --accent-cyan-glow: rgba(8, 145, 178, 0.15);
+
+  --accent-green: #059669;
+  --accent-green-glow: rgba(5, 150, 105, 0.15);
+
+  --alert-red: #DC2626;
+  --alert-red-glow: rgba(220, 38, 38, 0.15);
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 20px rgba(2, 132, 199, 0.1);
+}
+
+[data-theme="light"] .top-nav {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .burger-drawer {
+  background: #FFFFFF;
+  border-right-color: #CBD5E1;
+}
+
+[data-theme="light"] .mobile-bottom-nav {
+  background: rgba(255, 255, 255, 0.96);
+  border-top-color: #CBD5E1;
+}
+
+[data-theme="light"] .mobile-nav-btn.active span {
+  color: #0F172A;
+}
+
+[data-theme="light"] .hero-brand-emblem {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .drawer-header {
+  border-bottom-color: #E2E8F0;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1537,5 +1596,104 @@ footer {
   .mobile-nav-btn:active {
     transform: scale(0.92);
   }
+}
+
+/* ==========================================================================
+   Ezarpenak & Tema / Hizkuntza Osagaiak
+   ========================================================================== */
+.theme-toggle-header-btn {
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
+  color: var(--accent-cyan);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-header-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-cyan);
+}
+
+.drawer-settings-box {
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.drawer-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.setting-label-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.setting-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.theme-switch-btn {
+  background: var(--secondary-bg);
+  border: 1px solid var(--surface-border);
+  color: var(--accent-cyan);
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-switch-btn:hover {
+  border-color: var(--accent-cyan);
+}
+
+.lang-pill-selector {
+  display: flex;
+  background: var(--secondary-bg);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  gap: 2px;
+}
+
+.lang-pill {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-pill.active {
+  background: var(--tech-blue);
+  color: #FFFFFF;
 }
 

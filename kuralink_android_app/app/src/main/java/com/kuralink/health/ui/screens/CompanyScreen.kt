@@ -15,8 +15,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -205,6 +207,58 @@ fun CompanyScreen(
             }
         }
 
+        // Corporate Headquarters Photo Card (Miramon Parkea & I+G Laborategia)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+            shape = RoundedCornerShape(16.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+        ) {
+            Column {
+                Image(
+                    painter = painterResource(id = R.drawable.kuralink_enpresa_irudia),
+                    contentDescription = "Miramongo Parke Zientifiko eta Teknologikoa",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                )
+                Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Miramongo Egoitza & I+G Laborategia",
+                            color = TextLight,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Surface(
+                            color = TechBlue.copy(alpha = 0.2f),
+                            shape = RoundedCornerShape(6.dp)
+                        ) {
+                            Text(
+                                text = "Donostia",
+                                color = TechBlue,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+                    Text(
+                        text = "KuraLink Egoitza Nagusia: I+G Software Garapena eta Ingeniaritza Biomedikoaren laborategi bateratua.",
+                        color = TextMuted,
+                        fontSize = 11.sp,
+                        lineHeight = 15.sp
+                    )
+                }
+            }
+        }
+
         // Section Title: Business Plan Development (teoria_pdf)
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -269,6 +323,58 @@ fun CompanyScreen(
                 "Irizpide Jokabidezkoak" to "Tratamendua etxean jarraitu nahi duten gaixoak; medikazioa eta errehabilitazio ariketak egitean laguntza behar dutenak."
             )
         )
+
+        // Real Patient at Home Photo Card (Mikel Iturbe)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+            shape = RoundedCornerShape(16.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+        ) {
+            Column {
+                Image(
+                    painter = painterResource(id = R.drawable.kuralink_pazientea_etxean),
+                    contentDescription = "Pazientearen Etxeko Tele-Zaintza Zuzenekoa",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                )
+                Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Pazientearen Etxeko Tele-Zaintza Zuzenekoa",
+                            color = TextLight,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Surface(
+                            color = AccentGreen.copy(alpha = 0.15f),
+                            shape = RoundedCornerShape(6.dp)
+                        ) {
+                            Text(
+                                text = "B2B2C Eredua",
+                                color = AccentGreen,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+                    Text(
+                        text = "Mikel Iturbe (68 urte) bere etxean tele-zaintza medikoarekin, Osakidetzako osasun-profesionalaren jarraipenarekin.",
+                        color = TextMuted,
+                        fontSize = 11.sp,
+                        lineHeight = 15.sp
+                    )
+                }
+            }
+        }
 
         // Section 4: Balio Proposamena eta Konparaketa
         ExpandableBusinessCard(
