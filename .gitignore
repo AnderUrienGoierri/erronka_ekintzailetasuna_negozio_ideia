@@ -1,0 +1,14 @@
+# Gradle & Android
+.gradle/
+build/
+app/build/
+*.iml
+.idea/
+local.properties
+.cxx/
+captures/
+
+# OS generated
+.DS_Store
+Thumbs.db
+*.tmp

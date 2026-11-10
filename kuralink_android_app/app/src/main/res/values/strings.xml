@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">KuraLink Health</string>
+    <string name="tagline">Zubi adimenduna gailu medikoen eta zure osasunaren artean</string>
+    <string name="nav_home">Monitorizazioa</string>
+    <string name="nav_rehab">Errehabilitazioa</string>
+    <string name="nav_business">Negozio Plana</string>
+    <string name="nav_settings">Ezarpenak</string>
+
+    <string name="vital_heart_rate">Bihotz-maiztasuna</string>
+    <string name="vital_spo2">Oxigeno Saturazioa</string>
+    <string name="vital_bp">Arerio Presioa</string>
+    <string name="vital_status_normal">Egonkorra / Normala</string>
+    <string name="sensor_status_connected">KuraLink BioPatch Konektatuta (BLE)</string>
+    <string name="sensor_battery">Bateria: %94</string>
+    <string name="action_start_exercise">Ariketa Hasi</string>
+    <string name="action_sync_ehr">Osakidetza Osabiderekin Sinkronizatu</string>
+</resources>

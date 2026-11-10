@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuraLink Health Technologies — Negozio Ideiaren Garapena</title>
+  <style>
+    :root {
+      --primary-dark: #0A192F;
+      --secondary-dark: #1E293B;
+      --tech-blue: #0284C7;
+      --accent-cyan: #00D4B2;
+      --accent-green: #10B981;
+      --bg-light: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, #0F2744 100%);
+      color: white;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      position: relative;
+      border-bottom: 4px solid var(--accent-cyan);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(0, 212, 178, 0.15);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+    .header-logo-container {
+      max-width: 650px;
+      margin: 1.5rem auto;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .header-logo-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    .header-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+    .header-subtitle {
+      color: #94A3B8;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0.5rem auto 1.5rem;
+    }
+    .container {
+      max-width: 1140px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      background: white;
+      padding: 0.6rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+    }
+    .nav-btn {
+      padding: 0.75rem 1.4rem;
+      border: none;
+      background: transparent;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      color: var(--tech-blue);
+      background: #F1F5F9;
+    }
+    .nav-btn.active {
+      background: var(--tech-blue);
+      color: white;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+    }
+    .section-card {
+      background: white;
+      border-radius: 18px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);
+      border: 1px solid var(--border-color);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #F1F5F9;
+    }
+    .section-num {
+      background: linear-gradient(135deg, var(--tech-blue), var(--accent-cyan));
+      color: white;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .info-box {
+      background: #F8FAFC;
+      border-radius: 14px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--tech-blue);
+      border-top: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .info-box.accent {
+      border-left-color: var(--accent-cyan);
+    }
+    .info-box.green {
+      border-left-color: var(--accent-green);
+    }
+    .info-box h4 {
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #F0FDF4 0%, #E0F2FE 100%);
+      padding: 1.5rem;
+      border-radius: 14px;
+      text-align: center;
+      border: 1px solid #BAE6FD;
+    }
+    .stat-number {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--tech-blue);
+      margin-bottom: 0.2rem;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .image-showcase {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .image-showcase img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+      border: 3px solid white;
+    }
+    .image-caption {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 1rem 1.2rem;
+      text-align: left;
+    }
+    th {
+      background: var(--primary-dark);
+      color: white;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+    tr:hover {
+      background: #F1F5F9;
+    }
+    .highlight-cell {
+      background: #ECFDF5 !important;
+      font-weight: 700;
+      color: #065F46;
+    }
+    .color-swatch {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid var(--border-color);
+      margin-bottom: 0.6rem;
+    }
+    .swatch-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    footer {
+      background: var(--primary-dark);
+      color: #94A3B8;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-size: 0.9rem;
+      border-top: 1px solid #1E293B;
+    }
+    footer strong {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-badge">EIP II — 2. Ebaluaketa Erronka | Goierri Eskola</div>
+    <h1 class="header-title">Negozio Ideiaren Garapena: KuraLink</h1>
+    <p class="header-subtitle">Multiplataforma Garapena (DAM) &amp; Biomedikuntza Ingeniaritza uztartzen dituen osasun digitaleko startup fiktizioa</p>
+    
+    <div class="header-logo-container">
+      <img src="02_marka_eta_identitate_bisuala/kuralink_logo.svg" alt="KuraLink Health Technologies Logo">
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 1. ARAZOA ETA IRTENBIDEA -->
+    <section class="section-card" id="arazoa-irtenbidea">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <h2 class="section-title">Arazoa eta Irtenbidea</h2>
+      </div>
+
+      <div class="grid-3">
+        <div class="stat-card">
+          <div class="stat-number">%23,5+</div>
+          <div class="stat-label">65 urtetik gorakoak Euskadin</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">%77</div>
+          <div class="stat-label">Gastu Publikoa Gaixotasun Kronikoetan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">%50+</div>
+          <div class="stat-label">Etxean Ariketak Uzten Dituzten Pazienteak</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-box">
+          <h4>🚨 Zer arazo ikusten dugu inguruan?</h4>
+          <p>Biztanleriaren zahartze azkarrak eta gaixotasun kronikoek ospitaleak eta lehen arretako zentroak gainezka jarri dituzte. Pazienteek etxera itzultzean ez dute jarraipen kliniko digitalizaturik izaten, eta errehabilitazio-ariketak egiteari uzten diote motibazio eta kontrol faltagatik.</p>
+        </div>
+        <div class="info-box accent">
+          <h4>💡 Zer trebetasun bihurtzen dugu negozio?</h4>
+          <p><strong>Biomedikuntza Ingeniaritza</strong> (seinale fisiologikoak, EKG, sentsorika eta MDR araudi medikoa) eta <strong>Multiplataforma Garapena</strong> (Flutter, Android, iOS, BLE sinkronizazioa eta FHIR interoperabilitatea) bateratzen ditugu.</p>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: 1.5rem;">
+        <div class="info-box">
+          <h4>01. Nor da bezeroa?</h4>
+          <p><strong>B2B eta B2B2C:</strong> Osakidetza, ospitale eta klinika pribatuak (Kardiologia, Traumatologia, Neurologia), aseguru-etxeak (IMQ, Sanitas) eta errehabilitazio-zentroak.</p>
+        </div>
+        <div class="info-box accent">
+          <h4>02. Zer arazo konpontzen du?</h4>
+          <p>Ospitaleratze errepikatuak %35 murrizten ditu, errehabilitazio-epeak laburtzen ditu eta etxeko monitorizazioa seguru, automatiko eta fidagarri bihurtzen du.</p>
+        </div>
+        <div class="info-box green">
+          <h4>03. Zergatik ordainduko luke inork?</h4>
+          <p>Ospitaleek ohe-kostuetan milaka euro aurrezten dituztelako eta arrisku kliniko larriak aldez aurretik saihesten dituztelako (ROI azkarra eta garbia).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. MISIOA, BISIOA ETA BALOREAK -->
+    <section class="section-card" id="misioa-bisioa-balioak">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <h2 class="section-title">Misioa, Bisioa eta Baloreak</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-box" style="border-left-color: #0284C7;">
+          <h4>🎯 Gure Misioa (Egunerokotasuna)</h4>
+          <p style="font-size: 1.1rem; font-style: italic; color: #1E293B; margin-bottom: 0.8rem;">
+            "Ingeniaritza biomedikoa eta software multiplataforma adimenduna uztartzea, pazienteen zaintza eta errehabilitazioa ospitaleko hormetatik harago eramateko, osasun-arreta irisgarri, pertsonalizatu eta fidagarri bat bermatuz."
+          </p>
+          <small style="color: var(--text-muted);">Laburra, inspiratzailea, originala eta merkatuko benetako hutsunera zuzendua.</small>
+        </div>
+
+        <div class="info-box accent">
+          <h4>🔭 Gure Bisioa (Etorkizuneko Helmuga)</h4>
+          <p style="font-size: 1.1rem; font-style: italic; color: #1E293B; margin-bottom: 0.8rem;">
+            "2030erako Hego Euskal Herrian eta Europan osasun digitaleko eta tele-monitorizazioko erreferente nagusia bihurtzea, gailu medikoen eta sistema klinikoen arteko zubirik seguruena eraikiz."
+          </p>
+          <small style="color: var(--text-muted);">Etorkizuneko proiekzio argia, errealista eta anbizio handikoa.</small>
+        </div>
+      </div>
+
+      <h4 style="margin: 1.8rem 0 1rem; color: var(--primary-dark);">Balio Estrategikoak (Enpresaren ADN-a):</h4>
+      <div class="grid-4">
+        <div class="info-box green">
+          <strong>1. Bikaintasun Zientifikoa</strong>
+          <p style="font-size: 0.88rem; margin-top: 0.4rem;">Ebidentzia klinikoan eta MDR araudi medikoan (EB 2017/745) oinarritua.</p>
+        </div>
+        <div class="info-box accent">
+          <strong>2. Gizatasuna &amp; UI/UX</strong>
+          <p style="font-size: 0.88rem; margin-top: 0.4rem;">Erabilerraztasun maximoa adineko pertsonentzat (Zero-Touch).</p>
+        </div>
+        <div class="info-box">
+          <strong>3. Datuen Segurtasuna</strong>
+          <p style="font-size: 0.88rem; margin-top: 0.4rem;">GDPR, ENS Altua eta muturreko zifraketa osasun-datuetan.</p>
+        </div>
+        <div class="info-box green">
+          <strong>4. Lankidetza Irekia</strong>
+          <p style="font-size: 0.88rem; margin-top: 0.4rem;">Basque Health Cluster, BioGipuzkoa eta medikuekin ko-diseinua.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TARGET (XEDE PUBLIKOA) -->
+    <section class="section-card" id="target">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <h2 class="section-title">Target (Xede Publikoa)</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="info-box">
+          <h4>👥 B2C Erabiltzaile Finala (Pazientea &amp; Zaintzailea)</h4>
+          <ul style="padding-left: 1.2rem; font-size: 0.95rem;">
+            <li><strong>Demografikoak:</strong> 50-85 urte bitarteko pertsonak (bihotz-arazoak, iktus ondorengoa edo errehabilitazioa).</li>
+            <li><strong>Geografikoak:</strong> Euskadi eta Nafarroa (hiriguneak zein landa-eremuak, non ospitalera joatea zailagoa den).</li>
+            <li><strong>Psikografikoak:</strong> Etxean segurtasunez bizi nahi dutenak, autonomia bilatzen dutenak baina lasaitasuna behar dutenak.</li>
+            <li><strong>Jokabidezkoak:</strong> Eguneroko ariketak eta neurketak modu errazean bete nahi dituztenak.</li>
+          </ul>
+        </div>
+
+        <div class="info-box accent">
+          <h4>🏥 B2B Bezero Eroslea (Erakunde Sanitarioa)</h4>
+          <ul style="padding-left: 1.2rem; font-size: 0.95rem;">
+            <li><strong>Demografikoak:</strong> Ospitaleetako Zuzendari Medikoak, Berrikuntza Buruak (CIO/CMIO), Zerbitzu Buruak (40-62 urte).</li>
+            <li><strong>Geografikoak:</strong> Osakidetza, IMQ, Poliklinika Gipuzkoa, Quironsalud, Matia Fundazioa.</li>
+            <li><strong>Psikografikoak:</strong> Kalitate kliniko handiena eta zentroaren efizientzia ekonomikoa bilatzen duten liderrak.</li>
+            <li><strong>Jokabidezkoak:</strong> Alerta-nekea (alarm fatigue) ekiditea eta pazienteen birsartzeak %35 murriztea bilatzen dutenak.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BALIO PROPOSAMENA -->
+    <section class="section-card" id="balio-proposamena">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <h2 class="section-title">Balio Proposamena eta Konparaketa</h2>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Irizpideak</th>
+            <th>Kontsumo Wearableak (Fitbit, Apple)</th>
+            <th>Ospitaleko Makina Zaharrak</th>
+            <th style="background: var(--tech-blue);">KuraLink SaMD Plataforma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MDR / CE Marka Medikoa</strong></td>
+            <td>EZ (Fitness maila)</td>
+            <td>BAI</td>
+            <td class="highlight-cell">BAI (SaMD Klasea IIa)</td>
+          </tr>
+          <tr>
+            <td><strong>Etxean Erabiltzeko Egokia</strong></td>
+            <td>BAI</td>
+            <td>EZ (Ospitalean bakarrik)</td>
+            <td class="highlight-cell">BAI (Zero-Touch BLE)</td>
+          </tr>
+          <tr>
+            <td><strong>Multiplataforma (Mugikorra + Web)</strong></td>
+            <td>Mugatua</td>
+            <td>EZ</td>
+            <td class="highlight-cell">BAI (Flutter + Hodeia)</td>
+          </tr>
+          <tr>
+            <td><strong>Osabide / FHIR Integrazioa</strong></td>
+            <td>EZ</td>
+            <td>Oso zaila eta itxia</td>
+            <td class="highlight-cell">BAI (Jatorrizko FHIR API)</td>
+          </tr>
+          <tr>
+            <td><strong>Adinekoentzat Irisgarritasuna</strong></td>
+            <td>Konplexua</td>
+            <td>Teknikaria behar du</td>
+            <td class="highlight-cell">OSO ERRAZA (Piztu eta prest)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 5. MARKA ETA IRUDIA -->
+    <section class="section-card" id="marka">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <h2 class="section-title">Marka, Identitatea eta Enpresaren Irudi Erreala</h2>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h4 style="margin-bottom: 0.8rem; color: var(--primary-dark);">Zergatik KuraLink? (PDF 16. orrialdea):</h4>
+          <ul style="padding-left: 1.2rem; font-size: 0.95rem; line-height: 1.8;">
+            <li><strong>Gogoratzeko erraza:</strong> 3 silaba fonetiko sendo: <em>Ku-ra-Link</em>.</li>
+            <li><strong>Ahoskatzeko eta idazteko erraza:</strong> Euskaraz, gaztelaniaz zein ingelesez naturala.</li>
+            <li><strong>Jarduerarekin lotuta:</strong> <em>Kura</em> (osasuna/zaintza) + <em>Link</em> (multiplataforma zubia).</li>
+            <li><strong>Beste markekiko bereizlea:</strong> Euskal nortasuna eta nazioarteko teknologia bateratzen ditu.</li>
+          </ul>
+
+          <h4 style="margin: 1.5rem 0 0.8rem; color: var(--primary-dark);">Kolore Korporatiboak:</h4>
+          <div class="color-swatch">
+            <div class="swatch-box" style="background: #0A192F;"></div>
+            <div><strong>Deep Health Navy (#0A192F):</strong> Zorroztasun zientifikoa eta datuen segurtasuna</div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-box" style="background: #0284C7;"></div>
+            <div><strong>Medical Tech Blue (#0284C7):</strong> Multiplataforma softwarearen berrikuntza</div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-box" style="background: #00D4B2;"></div>
+            <div><strong>Vital Bio-Cyan (#00D4B2):</strong> Bizi-seinalea, EKG pultsua eta errekuperazioa</div>
+          </div>
+        </div>
+
+        <div style="text-align: center;">
+          <h4 style="margin-bottom: 0.8rem; color: var(--primary-dark);">App Isotipoa / Ikonoa:</h4>
+          <img src="02_marka_eta_identitate_bisuala/kuralink_icon.svg" alt="KuraLink App Icon" style="width: 200px; height: 200px; border-radius: 40px; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);">
+          <p style="margin-top: 0.8rem; font-size: 0.9rem; color: var(--text-muted);">'K' letra + EKG bihotz-taupada + IoT nodoak</p>
+        </div>
+      </div>
+
+      <div class="image-showcase">
+        <h4 style="margin-bottom: 1rem; color: var(--primary-dark); font-size: 1.2rem;">Enpresaren Irudi Erreala: Miramongo Egoitza eta I+G Laborategia</h4>
+        <img src="03_irudiak_eta_mockupak/kuralink_enpresa_irudia.jpg" alt="KuraLink Egoitza eta Software Laborategia Miramonen">
+        <p class="image-caption">KuraLink Health Technologies: Ingeniari biomedikoak eta DAM multiplataforma garatzaileak Miramongo laborategian lanean (Donostia).</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p><strong>KuraLink Health Technologies S.L.</strong> — Enplegagarritasunerako Ibilbide Pertsonala II (EIP II)</p>
+    <p>Goierri Eskola | Multiplataforma Garapena &amp; Biomedikuntza Ingeniaritza | 2026</p>
+  </footer>
+
+</body>
+</html>
