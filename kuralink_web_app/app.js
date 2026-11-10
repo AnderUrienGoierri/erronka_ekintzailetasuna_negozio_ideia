@@ -12,35 +12,51 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   1. Tab Nabigazio Interaktiboa (Figma UI Pattern)
+   1. Tab Nabigazio Interaktiboa (Figma UI & Mobile App Pattern)
    ========================================================================== */
 function initTabNavigation() {
-  const tabButtons = document.querySelectorAll(".nav-tab-btn");
+  const allNavButtons = document.querySelectorAll(".nav-tab-btn, .mobile-nav-btn");
   const tabPanels = document.querySelectorAll(".tab-panel");
 
-  tabButtons.forEach((btn) => {
+  function switchTab(targetId) {
+    // Eguneratu aktibo klasea bai goiko tab-etan bai beheko mugikorreko barran
+    allNavButtons.forEach((b) => {
+      if (b.getAttribute("data-tab") === targetId) {
+        b.classList.add("active");
+      } else {
+        b.classList.remove("active");
+      }
+    });
+
+    // Panelak erakutsi / ezkutatu
+    tabPanels.forEach((panel) => {
+      if (panel.id === targetId) {
+        panel.classList.add("active");
+      } else {
+        panel.classList.remove("active");
+      }
+    });
+
+    // Mugikorretan leunki mugitu edukia ikusteko
+    if (window.innerWidth < 768) {
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        const topOffset = 130;
+        const elementPosition = targetPanel.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth"
+        });
+      }
+    }
+  }
+
+  allNavButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const targetId = btn.getAttribute("data-tab");
-
-      // Aktibo klaseak eguneratu botoietan
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      // Panelak erakutsi / ezkutatu
-      tabPanels.forEach((panel) => {
-        if (panel.id === targetId) {
-          panel.classList.add("active");
-        } else {
-          panel.classList.remove("active");
-        }
-      });
-
-      // Leihoa panelera leunki mugitu mugikorretan
-      if (window.innerWidth < 768) {
-        const targetPanel = document.getElementById(targetId);
-        if (targetPanel) {
-          targetPanel.scrollIntoView({ behavior: "smooth" });
-        }
+      if (targetId) {
+        switchTab(targetId);
       }
     });
   });
