@@ -247,7 +247,7 @@ fun CompanyScreen(
                 "Izenaren Garapena" to "• 'Kura': Sendatzea, osatzea eta zaintza (euskarazko eta latinezko erroak).\n• 'Link': Teknologia, interoperabilitatea eta gailu medikoen zein mediku-pazienteen arteko lotura.",
                 "Eslogan Korporatiboa" to "Zubi adimenduna gailu medikoen eta zure osasunaren artean.",
                 "Identitate Bisuala" to "Urdin Sakona (#0A192F, fidagarritasuna), Zian Bitala (#00D4B2, taupada eta bizitza), Urdin Teknologikoa (#0284C7, zehaztasuna).",
-                "PDF Baldintzak" to "Laburra (3 silaba), ahoskatzeko eta gogoratzeko erraza, arlo biomedikoarekin lotura zuzena eta nazioarteko zabalkunderako aproposa."
+                "Irizpideak eta Ezaugarriak" to "Laburra (3 silaba), ahoskatzeko eta gogoratzeko erraza, arlo biomedikoarekin lotura zuzena eta nazioarteko zabalkunderako aproposa."
             )
         )
 
@@ -410,7 +410,7 @@ fun CompanyScreen(
                     modifier = Modifier.size(32.dp)
                 )
                 Text(
-                    text = "Negozio Txosten Osoa (PDF)",
+                    text = "Negozio Txosten Estrategiko Osoa",
                     color = TextLight,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold

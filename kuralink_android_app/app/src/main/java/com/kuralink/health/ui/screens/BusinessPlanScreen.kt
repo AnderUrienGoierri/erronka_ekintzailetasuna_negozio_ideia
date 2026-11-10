@@ -115,7 +115,7 @@ fun BusinessPlanScreen(
             summary = "Kura (sendabidea/zaintza) + Link (multiplataforma konexioa).",
             content = listOf(
                 "Eslogana" to "Zubi adimenduna gailu medikoen eta zure osasunaren artean.",
-                "PDF Irizpideak" to "Gogoratzeko erraza (3 silaba), ahoskatzeko erraza, jarduerarekin lotua eta bereizgarria.",
+                "Irizpideak eta Ezaugarriak" to "Gogoratzeko erraza (3 silaba), ahoskatzeko erraza, jarduerarekin lotua eta bereizgarria.",
                 "Kolore Paleta" to "Urdin Sakona (#0A192F), Urdin Teknologikoa (#0284C7), Zian Bitala (#00D4B2)."
             )
         )
