@@ -10,7 +10,7 @@
 
 ## Proiektuaren Deskribapena
 
-**KuraLink Health Technologies S.L.** biomedikuntza ingeniaritzaren eta multiplataforma software garapenaren (DAM) arteko sinergian oinarritutako osasun digitaleko (_Digital Health_) startup fiktizio bat da.
+**KuraLink Health Technologies S.L.** multiplataforma software garapenaren (DAM) eta biomedikuntza ingeniaritzaren arteko sinergian oinarritutako osasun digitaleko (_Digital Health_) startup (negozio ideia) bat da.
 
 Biztanleriaren zahartze azkarrak (%23,5etik gora 65 urtetik gorakoak Euskadin) eta gaixo kronikoen gainkargak ospitaleak saturatuta utzi dituzte. KuraLink-ek gailu mediko eramangarriak (BLE bidezko adabaki kardiakoak eta IMU mugimendu-sentsoreak) zero-touch bidez automatikoki sinkronizatzen dituen eta Osakidetzako historian (**Osabide Global / HL7 FHIR**) zuzenean integratzen den **SaMD (Software as a Medical Device - Klasea IIa)** plataforma eskaintzen du.
 

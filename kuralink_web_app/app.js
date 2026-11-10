@@ -306,7 +306,7 @@ function initBlePairingSimulator() {
 
           btnScan.disabled = false;
           btnScan.innerHTML = `
-            <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
             Berriro Eskaneatu
           `;
           btnScan.style.opacity = "1";

@@ -15,24 +15,24 @@
   <header class="top-nav">
     <div class="brand-wrapper">
       <img src="assets/images/kuralink_logo.svg" alt="KuraLink Logo" class="brand-logo-img">
-      <span class="brand-badge">EIP II • Goierri Eskola</span>
+      <span class="brand-badge">ISO 13485 • CE MDR IIa</span>
     </div>
 
     <nav class="nav-links">
       <button class="nav-tab-btn active" data-tab="tab-txostena">
         <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        Txosten Nagusia (PDF)
+        Negozio Proiektua
       </button>
       <button class="nav-tab-btn" data-tab="tab-simulagailua">
         <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
         Simulagailu Klinikoa
       </button>
       <button class="nav-tab-btn" data-tab="tab-roi">
-        <svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
         ROI Kalkulagailua
       </button>
       <button class="nav-tab-btn" data-tab="tab-merkatua">
-        <svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <svg class="svg-icon sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         Merkatu Datuak
       </button>
       <button class="nav-tab-btn" data-tab="tab-marka">
@@ -42,6 +42,10 @@
     </nav>
 
     <div class="nav-actions">
+      <a href="assets/docs/KuraLink_Negozio_Txostena.pdf" download="KuraLink_Negozio_Txostena.pdf" class="btn-download-pdf">
+        <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Txostena PDF
+      </a>
       <div class="btn-pill-live">
         <span class="live-indicator"></span>
         FHIR / HL7 Konektatuta
@@ -56,14 +60,14 @@
     <section class="hero-section">
       <div class="hero-content">
         <div class="hero-tagline">
-          <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          Multiplataforma Garapena (DAM) &amp; Biomedikuntza Ingeniaritza
+          <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          SAAS MEDIKOA &amp; IOMT TELE-MONITORIZAZIO KLINIKOA
         </div>
         <h1 class="hero-title">
           Osasun tele-zaintza <span class="gradient-text">adimentsua</span> gailu medikoen eta pazienteen artean.
         </h1>
         <p class="hero-desc">
-          KuraLink Health Technologies enpresa fiktizioa gaur egungo lan-merkatuaren eta osasun-sistemaren benetako beharretan oinarrituta sortu da: sentsore biomedikoak zero-touch bidez sinkronizatzen dituen eta Osakidetzako historian zuzenean integratzen den SaMD plataforma medikoa.
+          KuraLink Health Technologies gailu mediko eramangarriak eta osasun-sistemak bateratzen dituen plataforma digital aurreratua da. Sentsore biomedikoak zero-touch bidez sinkronizatzen ditu, seinale fisiologikoak adimenez iragazten ditu eta ospitaleko historian (Osabide Global / HL7 FHIR) zuzenean txertatzen da, ospitaleratzeak %35 murriztuz.
         </p>
 
         <div class="hero-metrics-row">
@@ -96,14 +100,37 @@
          ==================================================================== -->
     <div id="tab-txostena" class="tab-panel active">
 
+      <!-- Executive PDF Download Card -->
+      <div style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.18) 0%, rgba(0, 212, 178, 0.12) 100%); border: 1px solid var(--accent-cyan); border-radius: var(--radius-lg); padding: 1.5rem 2rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; gap: 1.2rem;">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: rgba(0, 212, 178, 0.2); color: var(--accent-cyan); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg class="svg-icon lg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div>
+            <h3 style="font-size: 1.2rem; color: var(--text-primary); margin-bottom: 3px;">KuraLink Txosten Estrategiko Osoa (PDF)</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">A4 formatuko txosten korporatiboa (5 orrialde, datu klinikoak, lehiaren matrizea eta finantza bideragarritasuna)</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+          <a href="assets/docs/KuraLink_Negozio_Txostena.pdf" download="KuraLink_Negozio_Txostena.pdf" class="btn-download-pdf" style="font-size: 0.9rem; padding: 0.7rem 1.3rem;">
+            <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Deskargatu PDFa (161 KB)
+          </a>
+          <a href="txostena_inprimatzeko.html" target="_blank" class="btn-ctrl" style="text-decoration: none; padding: 0.7rem 1.1rem;">
+            <svg class="svg-icon sm" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Inprimatu / Zuzenean Ikusi
+          </a>
+        </div>
+      </div>
+
       <!-- 01: ARAZOA ETA IRTENBIDEA -->
       <section class="section-card">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-number-badge">01</div>
             <div>
-              <h2>Arazoa eta Irtenbidea</h2>
-              <p>Teoria gidaliburuko sormen galderak eta oinarrizko 3 erantzunak</p>
+              <h2>Erronka Soziosanitarioa eta Soluzio Teknologikoa</h2>
+              <p>Osasun krisia, etxeko zaintza eza eta gailu adimendunen erantzun integrala</p>
             </div>
           </div>
         </div>
@@ -164,7 +191,7 @@
           <div class="info-card">
             <div class="card-icon-title">
               <div class="icon-box green">
-                <svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
               </div>
               <h3>03. Zergatik ordainduko luke inork?</h3>
             </div>
@@ -473,7 +500,7 @@
       <section class="section-card">
         <div class="section-head">
           <div class="section-head-left">
-            <div class="section-number-badge"><svg class="svg-icon md" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+            <div class="section-number-badge"><svg class="svg-icon md" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
             <div>
               <h2>Ospitale eta Kliniken ROI Kalkulagailua</h2>
               <p>Zenbat diru aurrezten du osasun-zentro batek KuraLink tele-monitorizazioa ezartzean?</p>
@@ -660,10 +687,10 @@
   <!-- Footer -->
   <footer>
     <div class="footer-content">
-      <p><strong>KuraLink Health Technologies S.L.</strong> — EIP II Erronka (2. Ebaluaketa)</p>
-      <p>Goierri Eskola | Multiplataforma Garapena (DAM) &amp; Biomedikuntza Ingeniaritza | 2026</p>
+      <p><strong>&copy; 2026 KuraLink Health Technologies S.L.</strong> Eskubide guztiak erreserbatuta.</p>
+      <p>Gipuzkoako Parke Zientifiko eta Teknologikoa, Mikeletegi Pasealekua, Donostia</p>
       <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;">
-        Diseinu Sistema eta Frontend Interaktiboa: Zero-emojis politika zorrotza, ikono bektorial garbiak eta argazki profesional errealak.
+        ISO 13485 Mediko Ziurtagiria • CE Mark MDR Class IIa (EB 2017/745) • HL7 FHIR Elkarreragingarritasuna • GDPR &amp; ENS Datu Babesa
       </p>
     </div>
   </footer>
