@@ -8,7 +8,7 @@ echo.
 cd /d "C:\Dev\01_Stack\Docker_Stacks\goierri_eskola_lab"
 
 echo [1/2] Docker Desktop motorrarekin konektatzen...
-echo [2/2] Edukiontzia sortzen (itzalita geratuko da normalean)...
+echo [2/2] Edukiontzia sortzen goierri_eskola_lab taldean (itzalita)...
 echo.
 docker compose up --no-start eip2
 
@@ -29,8 +29,8 @@ if %ERRORLEVEL% EQU 0 (
     echo ========================================================================
     echo   [OHARRA] Docker Desktop-eko motorra (daemon) ez dago piztuta.
     echo ========================================================================
-    echo   1. Ireki Docker Desktop eta itxaron beheko ezkerreko ikonoa berdea
-    echo      egon arte (Engine running).
+    echo   1. Ireki Docker Desktop aplikazioa eta itxaron beheko ezkerreko
+    echo      ikonoa berdea egon arte (Engine running).
     echo   2. Sakatu edozein tekla script hau berriro exekutatzeko.
 )
 echo.
