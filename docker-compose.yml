@@ -1,0 +1,9 @@
+services:
+  eip2_kuralink_webapp:
+    image: nginx:alpine
+    container_name: eip2_ebaluaketa_webapp
+    restart: unless-stopped
+    ports:
+      - "3004:80"
+    volumes:
+      - ./kuralink_web_app:/usr/share/nginx/html:ro
