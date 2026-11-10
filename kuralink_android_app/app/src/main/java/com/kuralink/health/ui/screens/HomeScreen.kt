@@ -1,5 +1,7 @@
 package com.kuralink.health.ui.screens
 
+import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -16,11 +18,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,9 +30,15 @@ import com.kuralink.health.ui.theme.*
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateToRehab: () -> Unit = {}
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
+
+    var bpmValue by remember { mutableFloatStateOf(72f) }
+    var isArrhythmia by remember { mutableStateOf(false) }
+    var isFhirSynced by remember { mutableStateOf(true) }
 
     Column(
         modifier = modifier
@@ -48,14 +56,14 @@ fun HomeScreen(
         ) {
             Column {
                 Text(
-                    text = "KuraLink Care",
+                    text = "KuraLink Telemetria",
                     color = TextLight,
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     letterSpacing = (-0.5).sp
                 )
                 Text(
-                    text = "Pazientearen Monitorizazio Adimenduna",
+                    text = "Bihotz-erritmoaren Zuzeneko Jarraipena",
                     color = TextMuted,
                     fontSize = 12.sp
                 )
@@ -76,10 +84,10 @@ fun HomeScreen(
                         modifier = Modifier
                             .size(8.dp)
                             .clip(CircleShape)
-                            .background(AccentCyan)
+                            .background(if (isArrhythmia) AlertRed else AccentCyan)
                     )
                     Text(
-                        text = "BioPatch BLE Aktibo",
+                        text = "BioPatch BLE %88",
                         color = TextLight,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium
@@ -93,7 +101,7 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = CardBackground),
             shape = RoundedCornerShape(16.dp),
-            border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+            border = androidx.compose.foundation.BorderStroke(1.dp, if (isArrhythmia) AlertRed else SurfaceBorder)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -111,7 +119,7 @@ fun HomeScreen(
                         Icon(
                             imageVector = Icons.Default.Favorite,
                             contentDescription = "EKG Telemetria",
-                            tint = AccentCyan,
+                            tint = if (isArrhythmia) AlertRed else AccentCyan,
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
@@ -122,15 +130,19 @@ fun HomeScreen(
                         )
                     }
                     Text(
-                        text = "72 BPM • Egonkorra",
-                        color = AccentCyan,
+                        text = "${bpmValue.toInt()} BPM • ${if (isArrhythmia) "ARRITMIA" else "Egonkorra"}",
+                        color = if (isArrhythmia) AlertRed else AccentCyan,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
 
                 // Animated ECG Wave Canvas
-                AnimatedEcgCanvas(modifier = Modifier.fillMaxWidth().height(100.dp))
+                AnimatedEcgCanvas(
+                    modifier = Modifier.fillMaxWidth().height(110.dp),
+                    bpm = bpmValue,
+                    isArrhythmia = isArrhythmia
+                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -142,11 +154,118 @@ fun HomeScreen(
                         fontSize = 11.sp
                     )
                     Text(
-                        text = "HL7/FHIR Sinkronizatuta",
-                        color = AccentGreen,
+                        text = if (isFhirSynced) "HL7/FHIR Sinkronizatuta" else "Sinkronizazio Zain",
+                        color = if (isFhirSynced) AccentGreen else TechBlue,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium
                     )
+                }
+            }
+        }
+
+        // Interactive Simulation Controls (Web-app-aren antzera)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+            shape = RoundedCornerShape(14.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "Simulagailu Klinikoaren Kontrolak",
+                    color = TextLight,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                // BPM Slider
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "Bihotz-Maiztasuna erregulatu:", color = TextLight, fontSize = 12.sp)
+                        Text(text = "${bpmValue.toInt()} BPM", color = AccentCyan, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    }
+                    Slider(
+                        value = bpmValue,
+                        onValueChange = { bpmValue = it },
+                        valueRange = 45f..150f,
+                        steps = 20,
+                        colors = SliderDefaults.colors(
+                            thumbColor = AccentCyan,
+                            activeTrackColor = AccentCyan,
+                            inactiveTrackColor = SurfaceBorder
+                        )
+                    )
+                }
+
+                // Arrhythmia Toggle
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(text = "Arritmia Simulatzailea", color = TextLight, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = "Detekzio algoritmikoa probatu", color = TextMuted, fontSize = 11.sp)
+                    }
+                    Switch(
+                        checked = isArrhythmia,
+                        onCheckedChange = { isArrhythmia = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = AlertRed,
+                            checkedTrackColor = AlertRed.copy(alpha = 0.3f),
+                            uncheckedThumbColor = TextMuted,
+                            uncheckedTrackColor = SurfaceBorder
+                        )
+                    )
+                }
+            }
+        }
+
+        // Arrhythmia Alert Banner (if triggered)
+        AnimatedVisibility(visible = isArrhythmia) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = AlertRed.copy(alpha = 0.15f)),
+                shape = RoundedCornerShape(12.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, AlertRed)
+            ) {
+                Column(
+                    modifier = Modifier.padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(Icons.Default.Warning, contentDescription = null, tint = AlertRed)
+                        Text(
+                            text = "Arreta: Bihotz-erritmo Anormala Detektatua",
+                            color = AlertRed,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Text(
+                        text = "EKG morfologian takikardia bentrikular goiztiarra hauteman da. Datuak Osakidetzako zainketa-zentrora bideratu dira telematikoki.",
+                        color = TextLight,
+                        fontSize = 11.sp
+                    )
+                    Button(
+                        onClick = {
+                            Toast.makeText(context, "Alerta bidalita Dr. Elorzari (Donostia Ospitalea)", Toast.LENGTH_LONG).show()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = AlertRed),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = "Medikuari Premiazko Alerta Igorri", color = Color.White, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
         }
@@ -166,11 +285,11 @@ fun HomeScreen(
             VitalMetricCard(
                 modifier = Modifier.weight(1f),
                 title = "Bihotz Maiztasuna",
-                value = "72",
+                value = "${bpmValue.toInt()}",
                 unit = "BPM",
-                icon = Icons.Default.ShowChart,
-                accentColor = TechBlue,
-                statusText = "Atseden egoera"
+                icon = Icons.Default.Favorite,
+                accentColor = if (isArrhythmia) AlertRed else TechBlue,
+                statusText = if (isArrhythmia) "Arritmia" else "Egonkorra"
             )
             VitalMetricCard(
                 modifier = Modifier.weight(1f),
@@ -190,7 +309,7 @@ fun HomeScreen(
             VitalMetricCard(
                 modifier = Modifier.weight(1f),
                 title = "Arterio Presioa",
-                value = "118 / 76",
+                value = "120 / 78",
                 unit = "mmHg",
                 icon = Icons.Default.Speed,
                 accentColor = AccentGreen,
@@ -207,31 +326,34 @@ fun HomeScreen(
             )
         }
 
-        // Primary Call to Action Button
-        Button(
-            onClick = { /* Ekintza interaktiboa */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = TechBlue,
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(12.dp)
+        // Primary Call to Action Button: FHIR Sync & Rehab
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            OutlinedButton(
+                onClick = {
+                    isFhirSynced = true
+                    Toast.makeText(context, "Datuak Osakidetza Osabide FHIR zerbitzarira bidalita!", Toast.LENGTH_SHORT).show()
+                },
+                shape = RoundedCornerShape(12.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, TechBlue),
+                modifier = Modifier.weight(1f).height(50.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = null
-                )
-                Text(
-                    text = "Gaurko Errehabilitazio Ariketa Hasi",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Icon(Icons.Default.CloudSync, contentDescription = null, tint = TechBlue)
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(text = "Osabide FHIR", color = TechBlue, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            }
+
+            Button(
+                onClick = onNavigateToRehab,
+                colors = ButtonDefaults.buttonColors(containerColor = TechBlue),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.weight(1.3f).height(50.dp)
+            ) {
+                Icon(Icons.Default.FitnessCenter, contentDescription = null, tint = Color.White)
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(text = "Ariketak Hasi (%88)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 13.sp)
             }
         }
     }
@@ -311,13 +433,19 @@ fun VitalMetricCard(
 }
 
 @Composable
-fun AnimatedEcgCanvas(modifier: Modifier = Modifier) {
+fun AnimatedEcgCanvas(
+    modifier: Modifier = Modifier,
+    bpm: Float = 72f,
+    isArrhythmia: Boolean = false
+) {
+    val durationMs = ((60f / bpm.coerceAtLeast(30f)) * 1000f).toInt().coerceIn(400, 2500)
+
     val infiniteTransition = rememberInfiniteTransition(label = "ecgWave")
     val phase by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
-            animation = tween(2200, easing = LinearEasing),
+            animation = tween(durationMs, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "phase"
@@ -352,24 +480,24 @@ fun AnimatedEcgCanvas(modifier: Modifier = Modifier) {
 
             // P wave
             path.lineTo(pWaveX - 10, midY)
-            path.quadraticBezierTo(pWaveX, midY - 14, pWaveX + 10, midY)
+            path.quadraticBezierTo(pWaveX, midY - (if (isArrhythmia) 22f else 14f), pWaveX + 10, midY)
 
             // QRS Complex
             path.lineTo(qWaveX, midY)
-            path.lineTo(qWaveX + 4, midY + 8) // Q
-            path.lineTo(rWaveX, midY - 42)    // R spike
-            path.lineTo(sWaveX, midY + 16)    // S trough
+            path.lineTo(qWaveX + 4, midY + (if (isArrhythmia) 16f else 8f)) // Q
+            path.lineTo(rWaveX, midY - (if (isArrhythmia) 55f else 42f))    // R spike
+            path.lineTo(sWaveX, midY + (if (isArrhythmia) 26f else 16f))    // S trough
             path.lineTo(sWaveX + 6, midY)
 
             // T wave
             path.lineTo(tWaveX - 12, midY)
-            path.quadraticBezierTo(tWaveX, midY - 22, tWaveX + 12, midY)
+            path.quadraticBezierTo(tWaveX, midY - (if (isArrhythmia) 8f else 22f), tWaveX + 12, midY)
             path.lineTo(startX + cycleWidth, midY)
         }
 
         drawPath(
             path = path,
-            color = AccentCyan,
+            color = if (isArrhythmia) AlertRed else AccentCyan,
             style = Stroke(width = 3.dp.toPx())
         )
     }
