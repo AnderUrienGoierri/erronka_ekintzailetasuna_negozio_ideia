@@ -5,12 +5,15 @@ echo ========================================================================
 echo   KuraLink Health (EIP2) Edukiontzia Docker Desktop-era Gehitzen
 echo ========================================================================
 echo.
+echo [1/3] Azken fitxategiak (kuralink_web_app) Docker stack-era sinkronizatzen...
+robocopy "%~dp0kuralink_web_app" "C:\Dev\01_Stack\Docker_Stacks\goierri_eskola_lab\services\eip2-webapp" /E /PURGE > nul
+
 cd /d "C:\Dev\01_Stack\Docker_Stacks\goierri_eskola_lab"
 
-echo [1/2] Docker Desktop motorrarekin konektatzen...
-echo [2/2] Edukiontzia sortzen goierri_eskola_lab taldean (itzalita)...
+echo [2/3] Docker Desktop motorrarekin konektatzen...
+echo [3/3] Edukiontzia sortzen/eguneratzen goierri_eskola_lab taldean...
 echo.
-docker compose up --no-start eip2
+docker compose up -d eip2
 
 if %ERRORLEVEL% EQU 0 (
     echo.
