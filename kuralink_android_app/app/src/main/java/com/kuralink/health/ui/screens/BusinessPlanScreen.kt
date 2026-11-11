@@ -158,13 +158,24 @@ fun BusinessSectionCard(
                         color = accentColor.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(
-                            text = sectionNumber,
-                            color = accentColor,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
+                        ) {
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = accentColor,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = sectionNumber,
+                                color = accentColor,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
 
                     Text(

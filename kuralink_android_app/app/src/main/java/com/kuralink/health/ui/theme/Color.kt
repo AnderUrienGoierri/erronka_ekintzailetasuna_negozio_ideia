@@ -30,4 +30,3 @@ val AccentCyan: Color
 
 val AccentGreen = Color(0xFF10B981)
 val AlertRed = Color(0xFFEF4444)
-val BackgroundLight = Color(0xFFF8FAFC)

@@ -45,6 +45,7 @@ fun KuraLinkHealthTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
+            @Suppress("DEPRECATION")
             window.statusBarColor = (if (darkTheme) Color(0xFF0A192F) else Color(0xFFF1F5F9)).toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }

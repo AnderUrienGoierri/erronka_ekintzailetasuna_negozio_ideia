@@ -91,7 +91,7 @@ fun CompanyScreen(
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                                contentDescription = "KuraLink Logo Bektoriala",
+                                contentDescription = "KuraLink Logo",
                                 modifier = Modifier.size(52.dp)
                             )
                         }
@@ -515,6 +515,21 @@ fun CompanyScreen(
                         }
                     }
                 }
+
+                Surface(
+                    color = TechBlue.copy(alpha = 0.12f),
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "Saihestutako Berrospitaleratzeak (%35):", color = TextLight, fontSize = 11.sp)
+                        Text(text = "$avoidedReadmissions paziente", color = AccentCyan, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
             }
         }
 
@@ -637,13 +652,24 @@ fun ExpandableBusinessCard(
                         color = accentColor.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(
-                            text = sectionNumber,
-                            color = accentColor,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
+                        ) {
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = accentColor,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = sectionNumber,
+                                color = accentColor,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
 
                     Column {
