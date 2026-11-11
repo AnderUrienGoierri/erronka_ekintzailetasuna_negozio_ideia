@@ -50,12 +50,20 @@ function showPatientPortal() {
   }
 
   // Set patient nav buttons active, deactivate landing nav buttons
-  document.querySelectorAll(".nav-tab-btn, .mobile-nav-btn, .drawer-link-item").forEach((btn) => {
+  document.querySelectorAll(".nav-tab-btn, .mobile-nav-btn, .drawer-link-item, .dropdown-menu-item").forEach((btn) => {
     btn.classList.remove("active");
   });
   document.querySelectorAll("#navBtnPatientPortal, #drawerBtnPatientPortal, #mobileBtnPatientPortal").forEach((btn) => {
     btn.classList.add("active");
   });
+
+  const dropdownWrapper = document.getElementById("projectDropdownWrapper");
+  if (dropdownWrapper) dropdownWrapper.classList.remove("open");
+  const btnDropdown = document.getElementById("btnDropdownProject");
+  if (btnDropdown) {
+    btnDropdown.setAttribute("aria-expanded", "false");
+    btnDropdown.classList.remove("active");
+  }
 
   // Trigger resize so EKG canvas renders properly
   setTimeout(() => {
@@ -63,9 +71,39 @@ function showPatientPortal() {
   }, 100);
 }
 
+const projectTargets = [
+  "#sec-txostena",
+  "#sec-arazoa",
+  "#sec-misioa",
+  "#sec-target",
+  "#sec-balioa",
+  "#sec-kap-marka"
+];
+
 function updateActiveNav(targetSelector) {
+  const isProject = projectTargets.includes(targetSelector);
+  const btnDropdown = document.getElementById("btnDropdownProject");
+  if (btnDropdown) {
+    if (isProject) {
+      btnDropdown.classList.add("active");
+    } else {
+      btnDropdown.classList.remove("active");
+    }
+  }
+
+  // Update dropdown items active status
+  document.querySelectorAll(".dropdown-menu-item[data-scroll]").forEach((item) => {
+    if (item.getAttribute("data-scroll") === targetSelector) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+  });
+
+  // Update tabs, drawer items and mobile navigation buttons
   document.querySelectorAll(".nav-tab-btn[data-scroll], .mobile-nav-btn[data-scroll], .drawer-link-item[data-scroll]").forEach((btn) => {
-    if (btn.getAttribute("data-scroll") === targetSelector) {
+    const scrollTarget = btn.getAttribute("data-scroll");
+    if (scrollTarget === targetSelector || (isProject && scrollTarget === "#sec-txostena")) {
       btn.classList.add("active");
     } else {
       btn.classList.remove("active");
@@ -74,6 +112,68 @@ function updateActiveNav(targetSelector) {
 }
 
 function initNavigation() {
+  // Project Dropdown Navigation
+  const dropdownWrapper = document.getElementById("projectDropdownWrapper");
+  const btnDropdown = document.getElementById("btnDropdownProject");
+  const dropdownMenu = document.getElementById("projectDropdownMenu");
+
+  function openProjectDropdown() {
+    if (dropdownWrapper) dropdownWrapper.classList.add("open");
+    if (btnDropdown) btnDropdown.setAttribute("aria-expanded", "true");
+  }
+
+  function closeProjectDropdown() {
+    if (dropdownWrapper) dropdownWrapper.classList.remove("open");
+    if (btnDropdown) btnDropdown.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleProjectDropdown(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const isOpen = dropdownWrapper && dropdownWrapper.classList.contains("open");
+    if (isOpen) {
+      closeProjectDropdown();
+    } else {
+      openProjectDropdown();
+    }
+  }
+
+  if (btnDropdown) {
+    btnDropdown.addEventListener("click", toggleProjectDropdown);
+  }
+
+  // Click outside closes dropdown
+  document.addEventListener("click", (e) => {
+    if (dropdownWrapper && !dropdownWrapper.contains(e.target)) {
+      closeProjectDropdown();
+    }
+  });
+
+  // Escape key closes dropdown
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeProjectDropdown();
+    }
+  });
+
+  // Dropdown items click handling
+  if (dropdownMenu) {
+    dropdownMenu.querySelectorAll("[data-scroll]").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const target = item.getAttribute("data-scroll");
+        closeProjectDropdown();
+        if (target) {
+          showLandingView(target);
+          updateActiveNav(target);
+        }
+      });
+    });
+  }
+
   // Return to landing button from patient portal
   const btnReturn = document.getElementById("btnReturnToLanding");
   if (btnReturn) {
@@ -117,7 +217,9 @@ function initNavigation() {
 }
 
 function initScrollSpy() {
-  const sections = document.querySelectorAll(".hero-section, .landing-section");
+  const sections = document.querySelectorAll(
+    ".hero-section, .landing-section, #sec-arazoa, #sec-misioa, #sec-target, #sec-balioa, #sec-kap-marka"
+  );
   if (!("IntersectionObserver" in window)) return;
 
   const observer = new IntersectionObserver((entries) => {
@@ -125,17 +227,11 @@ function initScrollSpy() {
       if (entry.isIntersecting) {
         const id = entry.target.id;
         const selector = `#${id}`;
-        document.querySelectorAll(".nav-tab-btn[data-scroll], .mobile-nav-btn[data-scroll]").forEach((b) => {
-          if (b.getAttribute("data-scroll") === selector) {
-            b.classList.add("active");
-          } else {
-            b.classList.remove("active");
-          }
-        });
+        updateActiveNav(selector);
       }
     });
   }, {
-    rootMargin: "-25% 0px -65% 0px",
+    rootMargin: "-20% 0px -65% 0px",
     threshold: 0
   });
 

@@ -30,17 +30,108 @@
 
       <!-- Desktop Navigation Links (Hidden on Mobile) -->
       <nav class="nav-links desktop-nav-links">
-        <button class="nav-tab-btn active" data-scroll="#sec-txostena">
-          <svg class="svg-icon sm" viewBox="0 0 24 24">
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-          </svg>
-          Negozio Proiektua
-        </button>
+        <div class="nav-dropdown-wrapper" id="projectDropdownWrapper">
+          <button
+            class="nav-tab-btn nav-dropdown-btn active"
+            id="btnDropdownProject"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-label="Negozio Proiektua zabaltzeko menua"
+          >
+            <svg class="svg-icon sm" viewBox="0 0 24 24">
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <span>Negozio Proiektua</span>
+            <svg class="svg-icon xs dropdown-chevron" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- Dropdown Menu (Negozio Proiektuaren 5 Atal Teoriakoak) -->
+          <div
+            class="nav-dropdown-menu"
+            id="projectDropdownMenu"
+            role="menu"
+            aria-label="Negozio Proiektuaren Atalak"
+          >
+            <div class="dropdown-header">
+              <span class="dropdown-header-title">Negozio Ideiaren Garapena</span>
+              <a
+                href="#sec-txostena"
+                class="dropdown-top-link"
+                data-scroll="#sec-txostena"
+              >
+                Txosten Osoa (PDF) &rarr;
+              </a>
+            </div>
+            <div class="dropdown-items-list">
+              <button
+                class="dropdown-menu-item"
+                data-scroll="#sec-arazoa"
+                role="menuitem"
+              >
+                <span class="dropdown-num-badge">01</span>
+                <div class="dropdown-item-text">
+                  <strong>Erronka Soziosanitarioa eta Soluzio Teknologikoa</strong>
+                  <small>Osasun krisia, etxeko zaintza eza eta soluzio integrala</small>
+                </div>
+              </button>
+
+              <button
+                class="dropdown-menu-item"
+                data-scroll="#sec-misioa"
+                role="menuitem"
+              >
+                <span class="dropdown-num-badge">02</span>
+                <div class="dropdown-item-text">
+                  <strong>Misioa, Bisioa eta Baloreak</strong>
+                  <small>Nortasun korporatiboa, etika klinikoa eta balioak</small>
+                </div>
+              </button>
+
+              <button
+                class="dropdown-menu-item"
+                data-scroll="#sec-target"
+                role="menuitem"
+              >
+                <span class="dropdown-num-badge">03</span>
+                <div class="dropdown-item-text">
+                  <strong>Target (Xede Publikoa)</strong>
+                  <small>B2B2C segmentazio osoa eta arrisku taldeak</small>
+                </div>
+              </button>
+
+              <button
+                class="dropdown-menu-item"
+                data-scroll="#sec-balioa"
+                role="menuitem"
+              >
+                <span class="dropdown-num-badge">04</span>
+                <div class="dropdown-item-text">
+                  <strong>Balio Proposamena eta Lehiaren Konparaketa</strong>
+                  <small>MDR IIa, HL7 FHIR eta abantaila lehiakorrak</small>
+                </div>
+              </button>
+
+              <button
+                class="dropdown-menu-item"
+                data-scroll="#sec-kap-marka"
+                role="menuitem"
+              >
+                <span class="dropdown-num-badge">05</span>
+                <div class="dropdown-item-text">
+                  <strong>Marka: KuraLink</strong>
+                  <small>Teoriaren 4 irizpideak eta identitate korporatiboa</small>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
         <button class="nav-tab-btn" data-scroll="#sec-roi">
           <svg class="svg-icon sm" viewBox="0 0 24 24">
             <line x1="18" y1="20" x2="18" y2="10"></line>
