@@ -29,8 +29,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kuralink.health.R
+import com.kuralink.health.data.model.SensorDevice
+import com.kuralink.health.data.model.VitalSign
 import com.kuralink.health.ui.theme.*
 
+@Suppress("SpellCheckingInspection")
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -42,6 +45,22 @@ fun HomeScreen(
     var bpmValue by remember { mutableFloatStateOf(72f) }
     var isArrhythmia by remember { mutableStateOf(false) }
     var isFhirSynced by remember { mutableStateOf(true) }
+
+    val currentVitals = remember(bpmValue, isArrhythmia) {
+        listOf(
+            VitalSign("bpm", "Bihotz Maiztasuna", "${bpmValue.toInt()}", "BPM", if (isArrhythmia) "Arritmia!" else "Egonkorra", !isArrhythmia, "Oraintxe"),
+            VitalSign("spo2", "Oxigeno Saturazioa", "98", "% SpO2", "Optimoa", true, "Duela 1 min"),
+            VitalSign("bp", "Arterio Presioa", "120 / 78", "mmHg", "Normala", true, "Duela 15 min"),
+            VitalSign("recovery", "Errekuperazio Indizea", "88", "%", "Bikaina", true, "Ariketa ondoren")
+        )
+    }
+
+    val connectedSensors = remember {
+        listOf(
+            SensorDevice("biopatch", "BioPatch Medical Pro (BLE)", "EKG + PPG", 92, true, "C4:64:E3:88:12:FA"),
+            SensorDevice("oximeter", "Oximetro Klinikoa (BLE)", "SpO2", 84, true, "A1:B2:C3:D4:E5:F6")
+        )
+    }
 
     Column(
         modifier = modifier
@@ -90,7 +109,7 @@ fun HomeScreen(
                             .background(if (isArrhythmia) AlertRed else AccentCyan)
                     )
                     Text(
-                        text = "BioPatch BLE %88",
+                        text = "${connectedSensors.firstOrNull()?.name?.take(8) ?: "BioPatch"} BLE %${connectedSensors.firstOrNull()?.batteryPercent ?: 88}",
                         color = TextLight,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium
@@ -275,7 +294,7 @@ fun HomeScreen(
 
         // Vital Signs Grid
         Text(
-            text = "Funtsezko Parametro Biomedikoak",
+            text = "Funtsezko Parametro Biomedikoak (${currentVitals.size})",
             color = TextLight,
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
@@ -329,7 +348,7 @@ fun HomeScreen(
             )
         }
 
-        // Primary Call to Action Buttons: FHIR Sync & Rehab (Unclipped Layout)
+        // Primary Call-to-Action Buttons: FHIR Sync & Rehab (Unclipped Layout)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)

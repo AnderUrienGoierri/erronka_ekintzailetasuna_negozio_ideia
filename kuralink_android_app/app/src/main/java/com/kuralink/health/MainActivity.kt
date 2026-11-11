@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kuralink.health.ui.screens.BusinessPlanScreen
 import com.kuralink.health.ui.screens.CompanyScreen
 import com.kuralink.health.ui.screens.HomeScreen
 import com.kuralink.health.ui.screens.PatientLoginGate
@@ -39,6 +40,7 @@ import kotlinx.coroutines.launch
 
 sealed class Screen(val title: String, val icon: ImageVector) {
     object Company : Screen("Enpresa", Icons.Default.Business)
+    object BusinessPlan : Screen("Negozio Plana", Icons.Default.Description)
     object Patient : Screen("Pazientea", Icons.Default.AccountCircle)
     object Monitoring : Screen("Telemetria", Icons.Default.Favorite)
     object Rehab : Screen("Ariketak", Icons.Default.FitnessCenter)
@@ -179,7 +181,7 @@ class MainActivity : ComponentActivity() {
                                     title = "Arazoa eta Irtenbidea",
                                     subtitle = "Saturazioa eta zaintza biomedikoa",
                                     onClick = {
-                                        currentScreen = Screen.Company
+                                        currentScreen = Screen.BusinessPlan
                                         scope.launch { drawerState.close() }
                                     }
                                 )
@@ -189,7 +191,7 @@ class MainActivity : ComponentActivity() {
                                     title = "Misioa, Bisioa eta Baloreak",
                                     subtitle = "Nortasun korporatiboa eta etika",
                                     onClick = {
-                                        currentScreen = Screen.Company
+                                        currentScreen = Screen.BusinessPlan
                                         scope.launch { drawerState.close() }
                                     }
                                 )
@@ -199,7 +201,7 @@ class MainActivity : ComponentActivity() {
                                     title = "Target (Xede Publikoa)",
                                     subtitle = "B2B2C segmentazio osoa",
                                     onClick = {
-                                        currentScreen = Screen.Company
+                                        currentScreen = Screen.BusinessPlan
                                         scope.launch { drawerState.close() }
                                     }
                                 )
@@ -209,7 +211,7 @@ class MainActivity : ComponentActivity() {
                                     title = "Balio Proposamena & Lehia",
                                     subtitle = "MDR IIa eta Osabide/FHIR",
                                     onClick = {
-                                        currentScreen = Screen.Company
+                                        currentScreen = Screen.BusinessPlan
                                         scope.launch { drawerState.close() }
                                     }
                                 )
@@ -219,7 +221,7 @@ class MainActivity : ComponentActivity() {
                                     title = "Marka: KuraLink",
                                     subtitle = "Izenaren garapena eta koloreak",
                                     onClick = {
-                                        currentScreen = Screen.Company
+                                        currentScreen = Screen.BusinessPlan
                                         scope.launch { drawerState.close() }
                                     }
                                 )
@@ -505,6 +507,9 @@ class MainActivity : ComponentActivity() {
                             is Screen.Company -> CompanyScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 onNavigateToPortal = { currentScreen = Screen.Patient }
+                            )
+                            is Screen.BusinessPlan -> BusinessPlanScreen(
+                                modifier = Modifier.padding(innerPadding)
                             )
                             is Screen.Patient -> PatientPortalScreen(
                                 modifier = Modifier.padding(innerPadding),

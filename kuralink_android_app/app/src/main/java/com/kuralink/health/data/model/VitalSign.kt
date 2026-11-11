@@ -1,5 +1,6 @@
 package com.kuralink.health.data.model
 
+@Suppress("unused")
 data class VitalSign(
     val id: String,
     val title: String,
@@ -10,6 +11,7 @@ data class VitalSign(
     val timestamp: String
 )
 
+@Suppress("unused")
 data class SensorDevice(
     val id: String,
     val name: String,
@@ -19,6 +21,7 @@ data class SensorDevice(
     val macAddress: String
 )
 
+@Suppress("unused")
 data class BusinessSection(
     val number: String,
     val title: String,

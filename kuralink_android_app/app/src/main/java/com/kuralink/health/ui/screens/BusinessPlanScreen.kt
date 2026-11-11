@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kuralink.health.data.model.BusinessSection
 import com.kuralink.health.ui.theme.*
 
 @Composable
@@ -26,6 +27,16 @@ fun BusinessPlanScreen(
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
+
+    val businessPlanSections = remember {
+        listOf(
+            BusinessSection("01", "Arazoa eta Irtenbidea", "Euskadiko biztanleriaren zahartzea eta ospitale saturazioa.", emptyList()),
+            BusinessSection("02", "Misioa, Bisioa eta Baloreak", "Paziente kronikoen bizi-kalitatea hobetzea.", emptyList()),
+            BusinessSection("03", "Target (Xede Publikoa)", "Osasun publikoa, pribatua eta paziente kronikoak.", emptyList()),
+            BusinessSection("04", "Balio Proposamena & Lehia", "MDR IIa ziurtagiria eta zero-touch sinkronizazioa.", emptyList()),
+            BusinessSection("05", "Marka: KuraLink", "Kura (sendabidea) + Link (konexioa).", emptyList())
+        )
+    }
 
     Column(
         modifier = modifier
@@ -43,7 +54,7 @@ fun BusinessPlanScreen(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "EIP II — 2. Ebaluaketa Erronka | Goierri Eskola",
+                text = "EIP II — 2. Ebaluaketa Erronka (${businessPlanSections.size} Atal Giltzarri) | Goierri Eskola",
                 color = TextMuted,
                 fontSize = 12.sp
             )

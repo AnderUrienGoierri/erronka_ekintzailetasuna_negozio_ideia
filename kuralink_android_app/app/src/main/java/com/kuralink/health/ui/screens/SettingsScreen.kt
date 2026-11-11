@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kuralink.health.ui.theme.*
 
+@Suppress("SpellCheckingInspection")
 enum class AppLanguage(val code: String, val title: String, val subtitle: String) {
     EUSKARA("eu", "Euskara", "Euskadiko osasun-sistema eta interfaze lehenetsia"),
     ESPANOL("es", "Español", "Sistema de salud y terminología clínica en castellano"),
@@ -233,7 +234,7 @@ fun SettingsScreen(
                 }
 
                 // 3 Language Options
-                AppLanguage.values().forEach { lang ->
+                AppLanguage.entries.forEach { lang ->
                     val isSelected = currentLanguage == lang
                     Surface(
                         color = if (isSelected) TechBlue.copy(alpha = 0.15f) else CardBackground,

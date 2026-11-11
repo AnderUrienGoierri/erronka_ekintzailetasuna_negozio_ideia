@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
 
@@ -38,10 +39,10 @@ object PdfOpener {
             val chooser = Intent.createChooser(intent, "Ireki KuraLink Negozio Txostena (PDF)")
             chooser.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(chooser)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Fallback to online browser viewer
             try {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(ONLINE_PDF_URL)).apply {
+                val browserIntent = Intent(Intent.ACTION_VIEW, ONLINE_PDF_URL.toUri()).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 }
                 context.startActivity(browserIntent)
