@@ -77,7 +77,8 @@ const projectTargets = [
   "#sec-misioa",
   "#sec-target",
   "#sec-balioa",
-  "#sec-kap-marka"
+  "#sec-kap-marka",
+  "#sec-marka"
 ];
 
 function updateActiveNav(targetSelector) {

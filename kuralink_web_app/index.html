@@ -150,15 +150,6 @@
           </svg>
           Merkatu Datuak
         </button>
-        <button class="nav-tab-btn" data-scroll="#sec-marka">
-          <svg class="svg-icon sm" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polygon
-              points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
-            ></polygon>
-          </svg>
-          Marka &amp; Argazkiak
-        </button>
         <button class="nav-tab-btn nav-patient-btn" id="navBtnPatientPortal" data-view="patient">
           <svg class="svg-icon sm" viewBox="0 0 24 24">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
@@ -287,8 +278,8 @@
           >
             <span class="drawer-num">05</span>
             <div class="drawer-link-text">
-              <strong>Marka: KuraLink</strong>
-              <small>Izenaren garapena eta nortasuna</small>
+              <strong>Marka &amp; Argazkiak: KuraLink</strong>
+              <small>4 irizpideak, identitatea eta Miramongo egoitza</small>
             </div>
           </button>
         </div>
@@ -315,26 +306,12 @@
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" y1="12" x2="22" y2="12"></line>
                 <path
-                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
                 ></path></svg
             ></span>
             <div class="drawer-link-text">
               <strong>Merkatu Datuak</strong>
               <small>Euskadiko zahartzea eta SaMD</small>
-            </div>
-          </button>
-
-          <button class="drawer-link-item" data-scroll="#sec-marka">
-            <span class="drawer-icon-box green"
-              ><svg class="svg-icon sm" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polygon
-                  points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
-                ></polygon></svg
-            ></span>
-            <div class="drawer-link-text">
-              <strong>Marka &amp; Egoitzako Argazkiak</strong>
-              <small>Miramongo laborategia eta logotipoak</small>
             </div>
           </button>
         </div>
@@ -446,16 +423,6 @@
           ></path>
         </svg>
         <span>Merkatua</span>
-        <span class="nav-active-dot"></span>
-      </button>
-      <button class="mobile-nav-btn" data-scroll="#sec-marka">
-        <svg class="svg-icon" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polygon
-            points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
-          ></polygon>
-        </svg>
-        <span>Marka</span>
         <span class="nav-active-dot"></span>
       </button>
     </nav>
@@ -1136,21 +1103,25 @@
           </div>
         </section>
 
-        <!-- 05: MARKA -->
+        <!-- 05: MARKA ETA ARGAZKIAK (BATERATUA) -->
         <section id="sec-kap-marka" class="section-card">
+          <span id="sec-marka" style="display: block; position: relative; top: -110px; visibility: hidden;"></span>
           <div class="section-head">
             <div class="section-head-left">
               <div class="section-number-badge">05</div>
               <div>
-                <h2>Marka: KuraLink</h2>
+                <h2>Marka &amp; Argazkiak: KuraLink</h2>
                 <p>
-                  Teoria dokumentuko 4 irizpideak eta identitate korporatiboa
+                  Teoria dokumentuko 4 irizpideak, logotipo bektorialak, enpresaren argazki errealak eta diseinu-sistema
                 </p>
               </div>
             </div>
           </div>
 
-          <div class="grid-4">
+          <h3 style="font-size: 1.05rem; color: var(--text-primary); margin: 0.5rem 0 1rem">
+            Teoriaren 4 Irizpide Nagusiak (Negozio Ideiaren Garapena):
+          </h3>
+          <div class="grid-4" style="margin-bottom: 2rem">
             <div class="info-card">
               <h4 style="color: var(--accent-cyan); margin-bottom: 0.4rem">
                 1. Gogoratzeko erraza
@@ -1186,6 +1157,154 @@
                 Euskal nortasuneko sustraiak baina autoritate zientifiko
                 unibertsala.
               </p>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1.05rem; color: var(--text-primary); margin: 1.5rem 0 1rem">
+            Logotipo Korporatiboak eta Aktibo Bektorialak (SVG):
+          </h3>
+          <div class="brand-showcase-grid" style="margin-bottom: 2rem">
+            <div class="brand-asset-card">
+              <h4 style="color: var(--text-primary); margin-bottom: 1rem">
+                Logotipo Korporatibo Bektoriala (SVG)
+              </h4>
+              <img
+                src="assets/images/kuralink_logo.svg"
+                alt="KuraLink Logotipoa"
+                style="
+                  background: rgba(255, 255, 255, 0.03);
+                  padding: 1.5rem;
+                  border: 1px solid var(--surface-border);
+                "
+              />
+              <p
+                style="
+                  font-size: 0.85rem;
+                  color: var(--text-muted);
+                  margin-top: 0.8rem;
+                "
+              >
+                'K' letra geometrikoa + EKG bihotz-taupadaren uhina + IoT
+                konexio nodoak
+              </p>
+            </div>
+
+            <div class="brand-asset-card">
+              <h4 style="color: var(--text-primary); margin-bottom: 1rem">
+                App Ikonoa / Isotipoa (SVG)
+              </h4>
+              <img
+                src="assets/images/kuralink_icon.svg"
+                alt="KuraLink Ikonoa"
+                style="
+                  width: 140px;
+                  height: 140px;
+                  margin: 0 auto 1rem;
+                  display: block;
+                  border-radius: 32px;
+                "
+              />
+              <p style="font-size: 0.85rem; color: var(--text-muted)">
+                Mugikorrerako aplikazio ikonoa (Android eta iOS formatuan)
+              </p>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1.05rem; color: var(--text-primary); margin: 1.5rem 0 1rem">
+            Miramongo I+G Egoitza eta Zaintza Klinikoko Argazki Errealak:
+          </h3>
+          <div class="photo-gallery" style="margin-bottom: 2rem">
+            <div class="photo-card">
+              <img
+                src="assets/images/kuralink_enpresa_irudia.jpg"
+                alt="Miramongo KuraLink Laborategia"
+              />
+              <div class="photo-card-info">
+                <h4>Miramongo I+G Laborategia eta Egoitza</h4>
+                <p>
+                  Gipuzkoako Parke Zientifiko eta Teknologikoan kokatuta
+                  (Donostia). Ingeniari biomedikoak eta DAM multiplataforma
+                  garatzaileak elkarrekin lanean.
+                </p>
+              </div>
+            </div>
+
+            <div class="photo-card">
+              <img
+                src="assets/images/kuralink_app_mockup.jpg"
+                alt="KuraLink Aplikazioa eta BioPatch Sentsorea"
+              />
+              <div class="photo-card-info">
+                <h4>KuraLink Mugikorreko App-a &amp; BioPatch Eramangarria</h4>
+                <p>
+                  Pazientearen gela edo etxeko ingurunean sentsorea bularrean
+                  jantzi eta smartphonean telemetria automatikoki bistaratzen
+                  da.
+                </p>
+              </div>
+            </div>
+
+            <div class="photo-card">
+              <img
+                src="assets/images/kuralink_pazientea_etxean.jpg"
+                alt="Pazientearen Etxeko Tele-Zaintza Zuzenekoa"
+              />
+              <div class="photo-card-info">
+                <h4>Pazientearen Etxeko Tele-Zaintza (Mikel Iturbe, 68 urte)</h4>
+                <p>
+                  Egoera erreala: gaixoa bularrean BioPatch eramaten eta mugikorrean bere osasun-egoera kontsultatzen, Osakidetzako osasun-profesionalaren bertako jarraipen klinikoarekin.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3
+            style="
+              font-size: 1.05rem;
+              color: var(--text-primary);
+              margin: 1.5rem 0 1rem;
+            "
+          >
+            Kolore Korporatiboen Diseinu Sistemako Tokenak (Figma Tokens):
+          </h3>
+          <div class="swatches-list">
+            <div class="color-swatch-row">
+              <div class="swatch-square" style="background: #0a192f"></div>
+              <div>
+                <strong style="color: var(--text-primary)"
+                  >Deep Health Navy (#0A192F)</strong
+                >
+                <p style="font-size: 0.82rem; color: var(--text-secondary)">
+                  Zorroztasun zientifikoa, datu medikoen babesa eta sendotasun
+                  korporatiboa.
+                </p>
+              </div>
+            </div>
+
+            <div class="color-swatch-row">
+              <div class="swatch-square" style="background: #0284c7"></div>
+              <div>
+                <strong style="color: var(--text-primary)"
+                  >Medical Tech Blue (#0284C7)</strong
+                >
+                <p style="font-size: 0.82rem; color: var(--text-secondary)">
+                  Multiplataforma softwarearen berrikuntza, interfaze klinikoak
+                  eta konfiantza.
+                </p>
+              </div>
+            </div>
+
+            <div class="color-swatch-row">
+              <div class="swatch-square" style="background: #00d4b2"></div>
+              <div>
+                <strong style="color: var(--text-primary)"
+                  >Vital Bio-Cyan (#00D4B2)</strong
+                >
+                <p style="font-size: 0.82rem; color: var(--text-secondary)">
+                  EKG bihotz-pultsu bitala, osasuna, errekuperazioa eta BLE
+                  konexio aktiboak.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -1438,175 +1557,6 @@
               MDR araudi klinikoa ez ditu ezagutzen. Profil hibridoak (DAM +
               Biomedikuntza) merkatuaren gabezia larri hori konpontzen du.
             </p>
-          </div>
-        </section>
-      </section>
-
-      <!-- ====================================================================
-         TAB 5: MARKA, IDENTITATEA ETA ARGAZKI ERREALAK
-         ==================================================================== -->
-      <section id="sec-marka" class="landing-section">
-        <section class="section-card">
-          <div class="section-head">
-            <div class="section-head-left">
-              <div class="section-number-badge">
-                <svg class="svg-icon md" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polygon
-                    points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
-                  ></polygon>
-                </svg>
-              </div>
-              <div>
-                <h2>Marka, Identitate Bisuala eta Enpresaren Irudi Errealak</h2>
-                <p>
-                  KuraLink Health Technologies: Diseinu sistema, logotipo
-                  bektorialak eta Miramongo egoitza
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="brand-showcase-grid">
-            <div class="brand-asset-card">
-              <h4 style="color: var(--text-primary); margin-bottom: 1rem">
-                Logotipo Korporatibo Bektoriala (SVG)
-              </h4>
-              <img
-                src="assets/images/kuralink_logo.svg"
-                alt="KuraLink Logotipoa"
-                style="
-                  background: rgba(255, 255, 255, 0.03);
-                  padding: 1.5rem;
-                  border: 1px solid var(--surface-border);
-                "
-              />
-              <p
-                style="
-                  font-size: 0.85rem;
-                  color: var(--text-muted);
-                  margin-top: 0.8rem;
-                "
-              >
-                'K' letra geometrikoa + EKG bihotz-taupadaren uhina + IoT
-                konexio nodoak
-              </p>
-            </div>
-
-            <div class="brand-asset-card">
-              <h4 style="color: var(--text-primary); margin-bottom: 1rem">
-                App Ikonoa / Isotipoa (SVG)
-              </h4>
-              <img
-                src="assets/images/kuralink_icon.svg"
-                alt="KuraLink Ikonoa"
-                style="
-                  width: 140px;
-                  height: 140px;
-                  margin: 0 auto 1rem;
-                  display: block;
-                  border-radius: 32px;
-                "
-              />
-              <p style="font-size: 0.85rem; color: var(--text-muted)">
-                Mugikorrerako aplikazio ikonoa (Android eta iOS formatuan)
-              </p>
-            </div>
-          </div>
-
-          <div class="photo-gallery">
-            <div class="photo-card">
-              <img
-                src="assets/images/kuralink_enpresa_irudia.jpg"
-                alt="Miramongo KuraLink Laborategia"
-              />
-              <div class="photo-card-info">
-                <h4>Miramongo I+G Laborategia eta Egoitza</h4>
-                <p>
-                  Gipuzkoako Parke Zientifiko eta Teknologikoan kokatuta
-                  (Donostia). Ingeniari biomedikoak eta DAM multiplataforma
-                  garatzaileak elkarrekin lanean.
-                </p>
-              </div>
-            </div>
-
-            <div class="photo-card">
-              <img
-                src="assets/images/kuralink_app_mockup.jpg"
-                alt="KuraLink Aplikazioa eta BioPatch Sentsorea"
-              />
-              <div class="photo-card-info">
-                <h4>KuraLink Mugikorreko App-a &amp; BioPatch Eramangarria</h4>
-                <p>
-                  Pazientearen gela edo etxeko ingurunean sentsorea bularrean
-                  jantzi eta smartphonean telemetria automatikoki bistaratzen
-                  da.
-                </p>
-              </div>
-            </div>
-
-            <div class="photo-card">
-              <img
-                src="assets/images/kuralink_pazientea_etxean.jpg"
-                alt="Pazientearen Etxeko Tele-Zaintza Zuzenekoa"
-              />
-              <div class="photo-card-info">
-                <h4>Pazientearen Etxeko Tele-Zaintza (Mikel Iturbe, 68 urte)</h4>
-                <p>
-                  Egoera erreala: gaixoa bularrean BioPatch eramaten eta mugikorrean bere osasun-egoera kontsultatzen, Osakidetzako osasun-profesionalaren bertako jarraipen klinikoarekin.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <h3
-            style="
-              font-size: 1.1rem;
-              color: var(--text-primary);
-              margin: 2rem 0 1rem;
-            "
-          >
-            Kolore Korporatiboen Diseinu Sistemako Tokenak (Figma Tokens):
-          </h3>
-          <div class="swatches-list">
-            <div class="color-swatch-row">
-              <div class="swatch-square" style="background: #0a192f"></div>
-              <div>
-                <strong style="color: var(--text-primary)"
-                  >Deep Health Navy (#0A192F)</strong
-                >
-                <p style="font-size: 0.82rem; color: var(--text-secondary)">
-                  Zorroztasun zientifikoa, datu medikoen babesa eta sendotasun
-                  korporatiboa.
-                </p>
-              </div>
-            </div>
-
-            <div class="color-swatch-row">
-              <div class="swatch-square" style="background: #0284c7"></div>
-              <div>
-                <strong style="color: var(--text-primary)"
-                  >Medical Tech Blue (#0284C7)</strong
-                >
-                <p style="font-size: 0.82rem; color: var(--text-secondary)">
-                  Multiplataforma softwarearen berrikuntza, interfaze klinikoak
-                  eta konfiantza.
-                </p>
-              </div>
-            </div>
-
-            <div class="color-swatch-row">
-              <div class="swatch-square" style="background: #00d4b2"></div>
-              <div>
-                <strong style="color: var(--text-primary)"
-                  >Vital Bio-Cyan (#00D4B2)</strong
-                >
-                <p style="font-size: 0.82rem; color: var(--text-secondary)">
-                  EKG bihotz-pultsu bitala, osasuna, errekuperazioa eta BLE
-                  konexio aktiboak.
-                </p>
-              </div>
-            </div>
           </div>
         </section>
       </section>
