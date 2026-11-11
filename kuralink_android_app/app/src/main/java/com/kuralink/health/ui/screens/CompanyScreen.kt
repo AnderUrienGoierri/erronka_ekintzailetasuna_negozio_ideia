@@ -408,6 +408,42 @@ fun CompanyScreen(
             )
         )
 
+        // Aktuazio Eremu Klinikoen Argazki Errealak
+        Text(
+            text = "KuraLink-en Aktuazio Eremu Klinikoak",
+            color = TextLight,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+
+        // 1. Ospitaleko Telemetria
+        ClinicalPhotoCard(
+            drawableRes = R.drawable.kuralink_ospitalea_telemetria,
+            tag = "Ospitale Klinikoa",
+            tagColor = TechBlue,
+            title = "Ospitaleko Tele-Monitorizazio Zentroa",
+            description = "Donostia Unibertsitate Ospitaleko kontrol-gela: kardiologoek eta erizainek pazienteen EKG uhinak eta alerta goiztiarrak aztertzen dituzte Osabide Global bidez."
+        )
+
+        // 2. Etxez-etxeko Zaintza (HADO)
+        ClinicalPhotoCard(
+            drawableRes = R.drawable.kuralink_etxez_etxeko_zaintza,
+            tag = "HADO / Etxez Etxekoa",
+            tagColor = AccentGreen,
+            title = "Etxez-etxeko Ospitalizazio Taldea (HADO)",
+            description = "Osasun-langilea pazientearen etxean sentsorearen datuak eta parametro klinikoak tabletan balioztatzen, berrospitaleratzeak prebenituz."
+        )
+
+        // 3. Bihotz Errehabilitazioa
+        ClinicalPhotoCard(
+            drawableRes = R.drawable.kuralink_bihotz_errehabilitazioa,
+            tag = "Errehabilitazio Gidatua",
+            tagColor = AccentCyan,
+            title = "Bihotz-Errehabilitazio Klinikoa",
+            description = "Fisioterapeutak gidatutako ariketa saioa: pazienteak arnasketa eta mugikortasuna lantzen ditu, KuraLink-ek bihotz-maiztasuna uneoro neurtzen duen bitartean."
+        )
+
         // Interactive ROI Calculator Section (Web-app-aren antzekoa)
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -723,6 +759,66 @@ fun ExpandableBusinessCard(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun ClinicalPhotoCard(
+    drawableRes: Int,
+    tag: String,
+    tagColor: Color,
+    title: String,
+    description: String
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+        shape = RoundedCornerShape(16.dp),
+        border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+    ) {
+        Column {
+            Image(
+                painter = painterResource(id = drawableRes),
+                contentDescription = title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+            )
+            Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = title,
+                        color = TextLight,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Surface(
+                        color = tagColor.copy(alpha = 0.15f),
+                        shape = RoundedCornerShape(6.dp)
+                    ) {
+                        Text(
+                            text = tag,
+                            color = tagColor,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+                }
+                Text(
+                    text = description,
+                    color = TextMuted,
+                    fontSize = 11.sp,
+                    lineHeight = 15.sp
+                )
             }
         }
     }

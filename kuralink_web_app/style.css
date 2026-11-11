@@ -343,6 +343,23 @@
   font-weight: 700;
 }
 
+[data-theme="light"] .photo-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="light"] .photo-card:hover {
+  border-color: #0284c7;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="light"] .photo-tag {
+  background: rgba(2, 132, 199, 0.08);
+  border-color: rgba(2, 132, 199, 0.25);
+  color: #0284c7;
+}
+
 [data-theme="light"] .btn-demo-patient:hover {
   background: #0284c7;
   color: #ffffff;
@@ -1558,8 +1575,8 @@ body {
 /* Real Photography Gallery */
 .photo-gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.8rem;
   margin: 2rem 0;
 }
 
@@ -1569,29 +1586,64 @@ body {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .photo-card img {
   width: 100%;
-  height: 280px;
+  height: 230px;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease;
+}
+
+.photo-card:hover img {
+  transform: scale(1.03);
 }
 
 .photo-card-info {
-  padding: 1.5rem;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.photo-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent-cyan);
+  background: rgba(0, 212, 178, 0.1);
+  border: 1px solid rgba(0, 212, 178, 0.25);
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  margin-bottom: 0.65rem;
 }
 
 .photo-card-info h4 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
+  line-height: 1.35;
 }
 
 .photo-card-info p {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text-secondary);
+  line-height: 1.55;
+  margin-top: auto;
 }
 
 /* Footer */
