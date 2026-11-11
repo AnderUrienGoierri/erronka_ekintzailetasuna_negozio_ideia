@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.kuralink.health
 
 import android.os.Bundle

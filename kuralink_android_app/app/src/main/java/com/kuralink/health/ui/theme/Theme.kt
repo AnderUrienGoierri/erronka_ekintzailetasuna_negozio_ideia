@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION", "unused")
+
 package com.kuralink.health.ui.theme
 
 import android.app.Activity

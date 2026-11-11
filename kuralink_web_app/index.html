@@ -1543,86 +1543,38 @@
          PAZIENTE ATARIA: GATED ACCESS & TELEMETRIA (DEDICATED VIEW)
          ==================================================================== -->
       <div id="patientPortalView" class="patient-portal-view" style="display: none;">
-        <div class="portal-nav-bar">
-          <button id="btnReturnToLanding" class="btn-portal-back">
+        <!-- Clean Left-Aligned Back Button Strip -->
+        <div class="portal-header-bar-clean">
+          <button id="btnReturnToLanding" class="btn-portal-back-clean" type="button" aria-label="Itzuli Negozio Planera">
             <svg class="svg-icon sm" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            Itzuli Negozio Planera
+            <span>Itzuli Negozio Planera</span>
           </button>
-          <div class="portal-security-badge">
-            <svg class="svg-icon sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            SaMD MDR IIa Eremu Babestua • HL7 FHIR
-          </div>
         </div>
-        <!-- ====================================================================
-         TAB 2: PAZIENTE ATARIA & TELEMETRIA BABESTUA (GATED ACCESS)
-         ==================================================================== -->
-      <div id="tab-simulagailua" class="tab-panel active">
-        <section class="section-card">
-          <div class="section-head">
-            <div class="section-head-left">
-              <div class="section-number-badge">
-                <svg class="svg-icon md" viewBox="0 0 24 24">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <div>
-                <h2>Paziente Ataria, EKG Telemetria eta Ariketak</h2>
-                <p>
-                  MDR IIa eta GDPR bidez babestutako eremu klinikoa
-                  (Saio-hasiera beharrezkoa)
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <!-- 1. LOCKED GATE (Erakutsi saioa hasi gabe dagoenean) -->
+        <div id="tab-simulagailua" class="tab-panel active">
+          <!-- 1. LOCKED GATE (Kokatuta gorago, scrolik gabe berehala ikusteko) -->
           <div id="patientLockedGate" class="patient-login-gate">
             <div class="gate-lock-icon-box">
-              <svg
-                class="svg-icon lg"
-                viewBox="0 0 24 24"
-                style="color: var(--accent-cyan)"
-              >
+              <svg class="svg-icon md" viewBox="0 0 24 24" style="color: var(--accent-cyan)">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             </div>
-            <h3
-              style="
-                font-size: 1.3rem;
-                color: var(--text-primary);
-                margin-bottom: 0.5rem;
-                text-align: center;
-              "
-            >
-              Pazientearen Datu Klinikoak eta Telemetria Babestuak
-            </h3>
-            <p
-              style="
-                font-size: 0.9rem;
-                color: var(--text-secondary);
-                text-align: center;
-                max-width: 540px;
-                margin-bottom: 1.5rem;
-                line-height: 1.6;
-              "
-            >
-              Datu medikoen segurtasun araudia (GDPR / ENS Altua) eta MDR IIa
-              homologazioa betez, pazientearen fitxa pertsonala, denbora
-              errealeko EKG telemetria eta errehabilitazio ariketak ikusteko,
-              mesedez hasi saioa zure kontuarekin.
-            </p>
+            <h2 class="gate-title">Paziente Ataria (Login)</h2>
+            <div class="gate-badge">
+              <svg class="svg-icon xs" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              SaMD MDR IIa &bull; GDPR Babes Bereziko Eremua
+            </div>
 
             <div class="gate-form-card">
               <div class="form-field-group">
-                <label for="loginOti"
-                  >OTI / Osasun Txartel Zenbakia edo Emaila:</label
-                >
+                <label for="loginOti">OTI / Osasun Txartel Zenbakia edo Emaila:</label>
                 <input
                   type="text"
                   id="loginOti"
                   class="gate-input"
                   value="9845-234-A"
+                  autocomplete="username"
                 />
               </div>
 
@@ -1633,21 +1585,14 @@
                   id="loginPass"
                   class="gate-input"
                   value="••••••••"
+                  autocomplete="current-password"
                 />
               </div>
 
               <button
                 id="btnLoginSubmit"
-                class="btn-ctrl"
-                style="
-                  background: var(--tech-blue);
-                  border-color: var(--tech-blue);
-                  color: #ffffff;
-                  width: 100%;
-                  height: 46px;
-                  font-weight: 700;
-                  margin-top: 0.5rem;
-                "
+                class="btn-ctrl btn-login-submit"
+                type="button"
               >
                 <svg class="svg-icon sm" viewBox="0 0 24 24">
                   <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
@@ -1657,27 +1602,14 @@
                 Hasi Saioa Paziente gisa
               </button>
 
-              <div
-                style="
-                  text-align: center;
-                  margin: 0.8rem 0;
-                  font-size: 0.8rem;
-                  color: var(--text-muted);
-                "
-              >
+              <div class="gate-divider-text">
                 - edo berehala probatzeko -
               </div>
 
               <button
                 id="btnDemoLogin"
-                class="btn-ctrl"
-                style="
-                  border-color: var(--accent-cyan);
-                  color: var(--accent-cyan);
-                  width: 100%;
-                  height: 44px;
-                  font-weight: 600;
-                "
+                class="btn-ctrl btn-login-demo"
+                type="button"
               >
                 <svg class="svg-icon sm" viewBox="0 0 24 24">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -1687,8 +1619,25 @@
             </div>
           </div>
 
-          <!-- 2. UNLOCKED CONTENT (Erakutsi saioa hasitakoan) -->
+          <!-- 2. UNLOCKED CONTENT (Erakutsi saioa hasitakoan bakarrik) -->
           <div id="patientUnlockedContent" style="display: none">
+            <section class="section-card">
+              <div class="section-head">
+                <div class="section-head-left">
+                  <div class="section-number-badge">
+                    <svg class="svg-icon md" viewBox="0 0 24 24">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2>Paziente Ataria, EKG Telemetria eta Ariketak</h2>
+                    <p>
+                      MDR IIa eta GDPR bidez babestutako eremu klinikoa
+                      (Saio aktiboa)
+                    </p>
+                  </div>
+                </div>
+              </div>
             <!-- Patient Header Card -->
             <div
               style="
@@ -2169,9 +2118,9 @@
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
+          </section>
+        </div><!-- end patientUnlockedContent -->
+      </div><!-- end tab-simulagailua -->
       </div><!-- end patientPortalView -->
 
 </main>

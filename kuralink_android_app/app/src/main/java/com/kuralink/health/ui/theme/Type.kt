@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.kuralink.health.ui.theme
 
 import androidx.compose.material3.Typography

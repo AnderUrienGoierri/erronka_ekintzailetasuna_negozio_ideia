@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.kuralink.health.ui.screens
 
 import android.widget.Toast
