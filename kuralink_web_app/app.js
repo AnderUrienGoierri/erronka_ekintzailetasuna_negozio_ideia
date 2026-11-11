@@ -74,6 +74,7 @@ function showPatientPortal() {
 const projectTargets = [
   "#sec-txostena",
   "#sec-arazoa",
+  "#sec-merkatua",
   "#sec-misioa",
   "#sec-target",
   "#sec-balioa",
