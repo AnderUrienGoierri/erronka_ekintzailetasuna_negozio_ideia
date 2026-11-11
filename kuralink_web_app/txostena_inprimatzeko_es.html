@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KuraLink Health Technologies - Desarrollo de la Idea de Negocio y Plan de Viabilidad</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/kuralink_icon.svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1E293B;
+      background: #E2E8F0;
+      line-height: 1.55;
+      font-size: 10pt;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Print Setup */
+    @page {
+      size: A4 portrait;
+      margin: 12mm 14mm 14mm 14mm;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        min-height: 270mm;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+    }
+
+    /* Interactive Top Action Bar */
+    .print-actions-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #0A192F;
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .print-actions-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .print-actions-left a {
+      color: #00D4B2;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .print-actions-left a:hover {
+      color: #38BDF8;
+    }
+    .print-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .print-lang-group {
+      display: inline-flex;
+      align-items: center;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .btn-lang-choice {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-lang-choice:hover {
+      color: white;
+    }
+    .btn-lang-choice.active {
+      background: #0284C7;
+      color: white;
+    }
+    .btn-print {
+      background: #0284C7;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn-print:hover {
+      background: #0369A1;
+    }
+
+    /* Document Sheet Wrapper */
+    .doc-container {
+      max-width: 210mm;
+      margin: 25px auto;
+    }
+
+    .page {
+      background: #FFFFFF;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 16mm 18mm 18mm 18mm;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.12);
+      border-radius: 4px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    /* Running Header & Footer */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid #E2E8F0;
+      padding-bottom: 3.5mm;
+      margin-bottom: 6mm;
+      font-size: 8pt;
+      color: #64748B;
+      font-weight: 600;
+    }
+    .page-header-title {
+      color: #0284C7;
+      font-weight: 700;
+    }
+    .page-header-tag {
+      background: #F1F5F9;
+      color: #0A192F;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .page-content {
+      flex: 1;
+    }
+
+    .page-footer {
+      border-top: 1px solid #E2E8F0;
+      padding-top: 2.8mm;
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8pt;
+      color: #94A3B8;
+    }
+    .page-footer-left {
+      font-weight: 600;
+      color: #64748B;
+    }
+    .page-footer-cert {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.8mm;
+      font-size: 7pt;
+      font-weight: 700;
+      color: #0284C7;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      padding: 0.5mm 2mm;
+      border-radius: 3px;
+    }
+    .footer-cert-stamp {
+      height: 4mm;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ==========================================================================
+       COVER PAGE
+       ========================================================================== */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+      border-top: 6px solid #0284C7;
+      padding: 20mm 20mm 20mm 20mm;
+    }
+    .cover-top {
+      padding-top: 10mm;
+    }
+    .cover-logo-wrapper {
+      margin-bottom: 14mm;
+    }
+    .cover-logo {
+      width: 440px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(2, 132, 199, 0.15));
+    }
+    .cover-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8mm;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: #F0FDF4;
+      border: 1px solid #10B981;
+      color: #047857;
+      font-size: 8.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .cover-badge.blue {
+      background: #F0F9FF;
+      border-color: #0284C7;
+      color: #0284C7;
+    }
+    .cover-title {
+      font-size: 26pt;
+      font-weight: 800;
+      color: #0A192F;
+      line-height: 1.18;
+      margin-bottom: 5mm;
+      letter-spacing: -0.6px;
+    }
+    .cover-subtitle {
+      font-size: 12.5pt;
+      color: #0284C7;
+      font-weight: 600;
+      line-height: 1.45;
+      max-width: 580px;
+      margin-bottom: 12mm;
+    }
+
+    /* Cover Metadata Box */
+    .cover-meta-card {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-left: 5px solid #0284C7;
+      border-radius: 8px;
+      padding: 6mm 8mm;
+      margin-bottom: 10mm;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm 8mm;
+      font-size: 8.8pt;
+    }
+    .meta-item strong {
+      color: #0A192F;
+      display: inline-block;
+      min-width: 95px;
+    }
+    .meta-item span {
+      color: #475569;
+    }
+
+    .cover-bottom-bar {
+      border-top: 1.5px solid #E2E8F0;
+      padding-top: 5mm;
+      display: flex;
+      justify-content: space-between;
+      color: #64748B;
+      font-size: 8.2pt;
+    }
+
+    /* ==========================================================================
+       SECTION HEADINGS & TYPOGRAPHY
+       ========================================================================== */
+    h2.section-heading {
+      font-size: 15pt;
+      font-weight: 800;
+      color: #0A192F;
+      border-bottom: 2px solid #0284C7;
+      padding-bottom: 2.5mm;
+      margin-bottom: 4mm;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.3px;
+    }
+    h2.section-heading .num {
+      background: #0284C7;
+      color: white;
+      font-size: 10pt;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    h3.sub-heading {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #0284C7;
+      margin-top: 4.5mm;
+      margin-bottom: 2mm;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    p {
+      margin-bottom: 3mm;
+      color: #334155;
+      text-align: justify;
+      line-height: 1.55;
+    }
+
+    ul, ol {
+      margin-left: 6mm;
+      margin-bottom: 3.5mm;
+      color: #334155;
+    }
+    li {
+      margin-bottom: 1.5mm;
+      line-height: 1.5;
+    }
+    li strong {
+      color: #0A192F;
+    }
+
+    /* Content Cards & Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5mm;
+      margin: 3.5mm 0;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3.5mm;
+      margin: 3.5mm 0;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3mm;
+      margin: 3mm 0;
+    }
+
+    .card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 3.5mm 4.5mm;
+    }
+    .card.highlight {
+      background: #F0F9FF;
+      border-color: #BAE6FD;
+      border-left: 3.5px solid #0284C7;
+    }
+    .card h4 {
+      font-size: 9.8pt;
+      font-weight: 700;
+      color: #0A192F;
+      margin-bottom: 1.5mm;
+    }
+    .card p {
+      margin-bottom: 0;
+      font-size: 8.8pt;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .callout-box {
+      background: #F8FAFC;
+      border-left: 4px solid #0284C7;
+      padding: 3.5mm 4.5mm;
+      margin: 3mm 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 9.2pt;
+    }
+    .callout-box.green {
+      border-left-color: #10B981;
+      background: #F0FDF4;
+    }
+    .callout-box.cyan {
+      border-left-color: #00D4B2;
+      background: #F0FDFA;
+    }
+    .callout-box.navy {
+      border-left-color: #0A192F;
+      background: #F1F5F9;
+    }
+
+    /* Comparison Table */
+    table.comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 3.5mm 0;
+      font-size: 8.5pt;
+    }
+    table.comp-table th, table.comp-table td {
+      border: 1px solid #CBD5E1;
+      padding: 2.2mm 3.2mm;
+      text-align: left;
+    }
+    table.comp-table th {
+      background: #0A192F;
+      color: white;
+      font-weight: 700;
+      font-size: 8.8pt;
+    }
+    table.comp-table th.brand-col {
+      background: #0284C7;
+      color: white;
+    }
+    table.comp-table tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+    table.comp-table td.highlight-cell {
+      background: #F0FDFA !important;
+      font-weight: 700;
+      color: #0F766E;
+    }
+
+    /* Visual Photo Cards for Marka & Clinical Gallery */
+    .photo-grid-doc {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+      margin: 3.5mm 0;
+    }
+    .photo-grid-doc.three-col {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .photo-doc-card {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-doc-card img {
+      width: 100%;
+      height: 38mm;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-doc-card.tall img {
+      height: 48mm;
+    }
+    .photo-doc-info {
+      padding: 2.5mm 3.5mm;
+      background: #FFFFFF;
+      flex: 1;
+    }
+    .photo-doc-tag {
+      display: inline-block;
+      font-size: 6.8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0284C7;
+      background: #E0F2FE;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-bottom: 1.5mm;
+    }
+    .photo-doc-info h5 {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0A192F;
+      margin-bottom: 1mm;
+      line-height: 1.25;
+    }
+    .photo-doc-info p {
+      font-size: 7.8pt;
+      color: #475569;
+      line-height: 1.35;
+      margin-bottom: 0;
+      text-align: left;
+    }
+
+    /* Brand Asset Display */
+    .brand-asset-box {
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      padding: 3mm;
+      background: #F8FAFC;
+      text-align: center;
+    }
+    .brand-asset-box img {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+    }
+
+    /* Metric Badges */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3mm;
+      margin: 3.5mm 0;
+    }
+    .metric-card {
+      background: #0A192F;
+      color: white;
+      padding: 3.5mm;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 16pt;
+      font-weight: 800;
+      color: #00D4B2;
+      line-height: 1.1;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .metric-label {
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #BAE6FD;
+      margin-top: 1mm;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Top Bar with Instant Print / PDF Save Action -->
+  <div class="print-actions-bar no-print">
+    <div class="print-actions-left">
+      <a href="index.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Volver a la Aplicación Web
+      </a>
+      <span style="color: #64748B;">|</span>
+      <span style="font-size: 13px; font-weight: 600;">Plan de Negocio KuraLink (Versión Oficial 2.0 • 9 Páginas)</span>
+    </div>
+    <div class="print-actions-right">
+      <div class="print-lang-group">
+        <a href="txostena_inprimatzeko.html" class="btn-lang-choice" title="Txostena Euskaraz">Euskara</a>
+        <a href="txostena_inprimatzeko_es.html" class="btn-lang-choice active" title="Plan de Negocio en Español">Español</a>
+        <a href="txostena_inprimatzeko_en.html" class="btn-lang-choice" title="Business Plan in English">English</a>
+      </div>
+      <button class="btn-print" onclick="window.print()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Imprimir / Guardar PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="doc-container">
+
+    <!-- ====================================================================
+         ORRIALDEA 1: AZALA (COVER PAGE)
+         ==================================================================== -->
+    <div class="page cover-page">
+      <div class="cover-top">
+        <div class="cover-logo-wrapper">
+          <img src="assets/images/kuralink_logo_print.svg" alt="KuraLink Health Technologies Logo" class="cover-logo">
+        </div>
+
+        <div class="cover-badge-row">
+          <span class="cover-badge blue">DOCUMENTO ESTRATÉGICO CORPORATIVO</span>
+        </div>
+
+        <h1 class="cover-title">Desarrollo de la Idea de Negocio y Plan de Viabilidad</h1>
+        <p class="cover-subtitle">
+          Tele-monitorización inteligente entre dispositivos biomédicos vestibles y sistemas hospitalarios.
+        </p>
+
+        <!-- Executive Metadata Box -->
+        <div class="cover-meta-card">
+          <div class="meta-grid">
+            <div class="meta-item"><strong>Entidad:</strong> <span>KuraLink Health Technologies S.L.</span></div>
+            <div class="meta-item"><strong>Sector:</strong> <span>MedTech / Salud Digital (SaMD)</span></div>
+            <div class="meta-item"><strong>Sede:</strong> <span>Parque Tecnológico de Miramón, San Sebastián</span></div>
+            <div class="meta-item"><strong>Regulación Clínica:</strong> <span>ISO 13485:2016 • MDR (UE 2017/745)</span></div>
+            <div class="meta-item"><strong>Autores:</strong> <span>Ander Urien, Iker Araujo y Julen Aguado (DAM 2 / EIP 2)</span></div>
+            <div class="meta-item"><strong>Protocolo:</strong> <span>HL7 FHIR • Integración Osabide Global</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cover-bottom-bar">
+        <div><strong>KuraLink Health Technologies</strong> • Ander Urien, Iker Araujo y Julen Aguado • Goierri Eskola • Noviembre 2026</div>
+        <div style="display: flex; align-items: center; gap: 3mm;">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE Mark" style="height: 5.5mm; width: auto; object-fit: contain;">
+          <span>Documento Confidencial • Versión Completa 2.0</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 2: AURKIBIDEA ETA LABURPEN EXEKUTIBOA
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">ÍNDICE &amp; RESUMEN</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">00</span> Índice y Resumen Ejecutivo</h2>
+
+        <h3 class="sub-heading">Índice de Contenidos del Informe:</h3>
+        <div class="card" style="margin-bottom: 5mm; padding: 4mm 6mm;">
+          <table style="width: 100%; font-size: 9pt; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #CBD5E1;">
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7; width: 45px;">01.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Arazoa eta Irtenbidea</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 3</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CBD5E1;">
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7;">02.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Misioa, Bisioa eta Baloreak (Nortasun Korporatiboa)</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 4</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CBD5E1;">
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7;">03.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Target (Xede Publikoa: 4 Segmentazio Aldagaiak)</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 5</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CBD5E1;">
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7;">04.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Balio Proposamena eta Lehiaren Konparaketa Matrizea</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 6</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CBD5E1;">
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7;">05.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Marka: KuraLink (Irizpideak eta Identitatea)</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 7</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #CBD5E1;">
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7;">06.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Aktuazio Eremu Klinikoen Argazki Galeria Erreala</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 8</td>
+            </tr>
+            <tr>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0284C7;">07.</td>
+              <td style="padding: 2mm 0; font-weight: 700; color: #0A192F;">Bideragarritasun Plana, Finantzak eta Ondorioak</td>
+              <td style="padding: 2mm 0; text-align: right; color: #64748B;">Página 9</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3 class="sub-heading">Laburpen Exekutiboa (Executive Summary):</h3>
+        <p>
+          <strong>KuraLink Health Technologies S.L.</strong> Donostian (Miramongo Parke Zientifiko eta Teknologikoan) kokatutako enpresa biomedikoa da. Gure proiektuak Europako eta Euskadiko osasun-krisi larri bati erantzuten dio: <strong>biztanleriaren zahartze azkarrak (%23,5etik gora adinekoak)</strong> eta gaixotasun kronikoek ospitaleak eta larrialdietako oheak kolapsatu dituzte, eta osasun-gastu publikoaren %77 bereganatzen dute.
+        </p>
+        <p>
+          Gaur egun, ospitaletik alta hartzen duten pazienteek ez dute etxeko zaintza digitalizatu eta jarraiturik. Kontsumoko erlojuek ez dute balio diagnostiko medikorik (ez dira CE MDR), eta ospitaleko makinak geldirik egotekoak dira. KuraLink-ek hutsune hori konpontzen du <strong>SaMD (Software as a Medical Device, Klasea IIa)</strong> plataforma baten bidez:
+        </p>
+
+        <div class="metric-row">
+          <div class="metric-card">
+            <div class="metric-val">%35</div>
+            <div class="metric-label">Ospitaleratze Murrizketa</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val">%88</div>
+            <div class="metric-label">Ariketa Atxikimendua</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val">360.000 €</div>
+            <div class="metric-label">Urteko Aurrezpena (120 paz.)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val">MDR IIa</div>
+            <div class="metric-label">CE Ziurtagiri Klinikoa</div>
+          </div>
+        </div>
+
+        <p>
+          KuraLink-ek jada merkatuan dauden sentsore homologatuak (BioPatch, oximetroak, tentsiometroak) integratzen ditu <strong>Zero-Touch</strong> bidez: adinekoak ez du ezer konfiguratu behar. Datuak automatikoki iragazten dira eta zuzenean <strong>Osakidetzako Osabide Global</strong> historian txertatzen dira HL7 FHIR protokolo estandarraren bidez.
+        </p>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 2</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 3: 01 - ARAZOA ETA IRTENBIDEA
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">01. PROBLEMA Y SOLUCIÓN</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">01</span> Problema y Solución Tecnológica</h2>
+
+        <h3 class="sub-heading">1.1. Tres Preguntas Estratégicas Fundamentales:</h3>
+
+        <div class="callout-box">
+          <strong>1. ¿Qué problemas identifica en su entorno para solucionar?</strong><br>
+          Euskal Autonomia Erkidegoan (Eustat datuak) 65 urtetik gorako herritarrak %23,5 dira jada, eta zahartze-indizea 160tik gorakoa da. Osasun-gastuaren %77 gaixo kronikoetara doa (kardiologia, arnasketa, iktusa). Ospitaleak gainezka daude, ohe-egun bakoitzak 750 € balio du, eta etxera itzultzen diren pazienteen %50ek errehabilitazioa bertan behera uzten dute jarraipenik ez dutelako.
+        </div>
+
+        <div class="callout-box cyan">
+          <strong>2. ¿Qué habilidades o competencias técnicas puede transformar en negocio?</strong><br>
+          Gure balio bereizlea gaitasun bikoitzean datza: <strong>Ingeniaritza Biomedikoa</strong> (seinale biologikoen zarata-iragazketa, EKG/PPG telemetria, MDR araudi klinikoa) eta <strong>DAM Multiplataforma Garapena</strong> (Flutter, Kotlin, Android, Web Cloud, HL7 FHIR interoperabilitatea). Merkatuan dagoen arrakala profesional handia betetzen dugu.
+        </div>
+
+        <div class="callout-box green">
+          <strong>3. ¿Qué tipo de producto o servicio no existe actualmente pero desearía ver?</strong><br>
+          Gailu eramangarrien datuak <em>zero-touch</em> bidez automatikoki irakurtzen dituen eta ospitaleko historia klinikoan zuzenean txertatzen den SaMD plataforma kliniko bat: adineko pazienteak ez du botoirik sakatu behar; sentsorea jantzi eta sistema medikuak berehala babesten du.
+        </div>
+
+        <h3 class="sub-heading">1.2. Datos del Mercado de Euskadi y Ecosistema Sanitario:</h3>
+        <p>
+          Euskadi erreferentea da bioosasunaren arloan: <strong>Basque Health Clusterrak 100 enpresa eta erakunde baino gehiago</strong> biltzen ditu (Tecnalia, Vicomtech, BioGipuzkoa, BioBizkaia, unibertsitateak eta Osakidetza). Sektoreak Euskadiko BPGaren %2 baino gehiago ordezkatzen du eta 10.000 langile kualifikatu baino gehiago ditu.
+        </p>
+        <p>
+          Hala ere, merkatuak gabezia larria du: ingeniari biomediko hutsak kode multiplataforma aurreratua falta du; eta programatzaile hutsak seinale biologikoen zarata eta MDR araudi klinikoa ez ditu ezagutzen. KuraLink-ek bi diziplinak bateratzen ditu.
+        </p>
+
+        <div class="grid-2" style="margin-top: 4mm;">
+          <div class="card highlight">
+            <h4>Pazientearen Mina (B2C):</h4>
+            <p>Etxeko bakardadea alta ostean, etengabeko ospitaleratzeen beldurra, desplazamendu neketsuak eta ariketak egiteko motibazio falta.</p>
+          </div>
+          <div class="card highlight">
+            <h4>Ospitalearen Mina (B2B):</h4>
+            <p>Ohe-kostu handiak (750 €/egun), larrialdietako saturazioa, alarma-nekea (datu faltsuak) eta medikuen gainkarga administratiboa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 3</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 4: 02 - MISIOA, BISIOA ETA BALOREAK
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">02. MISIÓN, VISIÓN Y VALORES</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">02</span> Misión, Visión y Valores</h2>
+
+        <p>
+          La misión, visión y valores son los tres pilares estratégicos que definen la identidad, propósito y cultura corporativa; representan el ADN de la compañía.
+        </p>
+
+        <h3 class="sub-heading">2.1. MISIÓN (¿Qué hacemos en el día a día? Razón de Ser):</h3>
+        <div class="callout-box" style="border-left-width: 5px;">
+          <p style="font-size: 11pt; font-weight: 700; color: #0A192F; margin-bottom: 2mm; font-style: italic;">
+            "Ingeniaritza biomedikoa eta software multiplataforma adimenduna uztartzea, pazienteen zaintza eta errehabilitazioa ospitaleko hormetatik harago eramateko, osasun-arreta irisgarri, pertsonalizatu eta ebidentzia klinikoan oinarritu bat bermatuz."
+          </p>
+          <div class="grid-4" style="margin-top: 3mm;">
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#0284C7; font-size: 8pt;">Laburra &amp; Zehatza:</strong><p style="font-size: 7.5pt;">Zaintza eta teknologia uztartzen ditu.</p></div>
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#0284C7; font-size: 8pt;">Inspiratzailea:</strong><p style="font-size: 7.5pt;">Bizitzak salbatu eta bizi-kalitatea hobetu.</p></div>
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#0284C7; font-size: 8pt;">Originala:</strong><p style="font-size: 7.5pt;">Etxeko zaintza ospitalearekin lotzen du.</p></div>
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#0284C7; font-size: 8pt;">Merkatura Zuzendua:</strong><p style="font-size: 7.5pt;">Gaixo kronikoen arazoari erantzuten dio.</p></div>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">2.2. VISIÓN (¿Qué aspiramos a ser en el futuro? Horizonte 2030):</h3>
+        <div class="callout-box green" style="border-left-width: 5px;">
+          <p style="font-size: 11pt; font-weight: 700; color: #0A192F; margin-bottom: 2mm; font-style: italic;">
+            "2030erako Hego Euskal Herrian eta Europan osasun digitaleko eta tele-monitorizazioko erreferente nagusia bihurtzea, gailu medikoen eta sistema klinikoen arteko zubirik seguruena eraikiz eta ospitaleratze prebenigarriak %40 murriztuz."
+          </p>
+          <div class="grid-3" style="margin-top: 3mm;">
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#059669; font-size: 8pt;">Etorkizuneko Proiekzioa:</strong><p style="font-size: 7.5pt;">Europako telemedikuntzan lidergoa.</p></div>
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#059669; font-size: 8pt;">Argia eta Errealista:</strong><p style="font-size: 7.5pt;">%40ko murrizketa neurgarria helburu.</p></div>
+            <div class="card" style="padding: 2.5mm;"><strong style="color:#059669; font-size: 8pt;">Kontsekuentea:</strong><p style="font-size: 7.5pt;">Gizarte zahartuaren beharrei lerrokatua.</p></div>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">2.3. BALIOAK (Konpainiaren Printzipio Etikoak eta Nortasuna):</h3>
+        <div class="grid-2">
+          <div class="card">
+            <h4>1. Bikaintasun Zientifiko-Teknologikoa</h4>
+            <p>Ez dugu fitness jostailurik egiten: gure algoritmoak ebidentzia zientifikoan eta Europako MDR (EB 2017/745) arau zorrotzetan oinarritzen dira.</p>
+          </div>
+          <div class="card">
+            <h4>2. Gizatasuna eta Irisgarritasuna (Zero-Touch)</h4>
+            <p>Teknologia gizartearen zerbitzura jartzen dugu: adineko pertsona batek konfigurazio teknikorik gabe erabili ahal izatea da gure lehentasuna.</p>
+          </div>
+          <div class="card">
+            <h4>3. Datuen Segurtasuna eta Etika Medikoa</h4>
+            <p>Pazienteen datu fisiologikoak sakratuak dira: GDPR eta Espainiako Segurtasun Eskema Nazionala (ENS Altua) muturreko enkriptazioz betetzen ditugu.</p>
+          </div>
+          <div class="card">
+            <h4>4. Lankidetza Irekia eta Euskal Sustraiak</h4>
+            <p>Osakidetza, Basque Health Cluster, BioGipuzkoa eta Goierriko ehun industrialarekin batera ko-diseinatzen dugu gure soluzioa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 4</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 5: 03 - TARGET (XEDE PUBLIKOA)
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">03. TARGET (PÚBLICO OBJETIVO)</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">03</span> Target (Público Objetivo)</h2>
+
+        <p>
+          El target no es un grupo indiferenciado de consumidores, sino un colectivo específico segmentado según atributos comunes. KuraLink opera bajo un modelo <strong>B2B2C sanitario</strong>.
+        </p>
+
+        <h3 class="sub-heading">3.1. Análisis de Variables de Segmentación:</h3>
+        <div class="grid-2">
+          <div class="card highlight">
+            <h4>A) Variables Demográficas:</h4>
+            <ul style="font-size: 8.5pt; margin-left: 4mm;">
+              <li><strong>B2C Erabiltzailea:</strong> 55-85 urteko adinekoak, gizon zein emakumeak, kardiopatia iskemikoak, bihotz-gutxiegitasuna edo BGBK (EPOC) dutenak.</li>
+              <li><strong>B2B Eroslea:</strong> 42-62 urteko ospitale-zuzendariak, kardiologia zerbitzu-buruak eta CIO/CMIO digitalizazio arduradunak.</li>
+            </ul>
+          </div>
+          <div class="card highlight">
+            <h4>B) Variables Geográficas:</h4>
+            <ul style="font-size: 8.5pt; margin-left: 4mm;">
+              <li><strong>Fase 1:</strong> Euskal Autonomia Erkidegoa (Gipuzkoa, Bizkaia, Araba) eta Nafarroa.</li>
+              <li><strong>Eremua:</strong> Hiriguneetako pazienteak zein ospitaletik urrun bizi diren landa-eremuetako adinekoak (Goierri, Tolosaldea, Enkarterri).</li>
+            </ul>
+          </div>
+          <div class="card highlight">
+            <h4>C) Variables Psicográficas:</h4>
+            <ul style="font-size: 8.5pt; margin-left: 4mm;">
+              <li>Familiari kargarik ez sortzeko borondatea.</li>
+              <li>Ospitaleratze berriei eta larrialdiei beldurra.</li>
+              <li>Beren etxean seguru eta medikuaren babesarekin bizitzeko desio sakona.</li>
+            </ul>
+          </div>
+          <div class="card highlight">
+            <h4>D) Variables Conductuales:</h4>
+            <ul style="font-size: 8.5pt; margin-left: 4mm;">
+              <li>Teknologiarekin trebetasun baxua (Zero-Touch behar dute).</li>
+              <li>Ariketak egiteko gidaritza eta baieztapen bisuala bilatzen dute.</li>
+              <li>Osasun publikoaren aginduekiko fidelak eta arduratsuak.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">3.2. Las 4 Características de un Target Idóneo en KuraLink:</h3>
+        <div class="callout-box">
+          <ul style="margin-left: 4mm; margin-bottom: 0;">
+            <li><strong>1. Espezifikoa eta zehatza da:</strong> Ez gara orokorrak; ospitaleko alta osteko eta errehabilitazioko bihotz/arnas gaixo kronikoak dira gure xedea.</li>
+            <li><strong>2. Antzeko premiak eta arazoak partekatzen ditu:</strong> Denek pairatzen dute etxeko ziurgabetasuna, kontrol faltagatik tratamendua uztea eta ospitaleratzeko arriskua.</li>
+            <li><strong>3. Erosteko gaitasuna eta interesa du:</strong> B2B finantzatua denez, Osakidetzak eta mutuek ordaintzen dute harpidetza, ohe-kostuak aurrezten dituztelako.</li>
+            <li><strong>4. Komunikazioz eskura daiteke:</strong> Mediku espezialistek alta-txostenean zuzenean preskribatzen dute KuraLink protokolo ofizial gisa.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 5</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 6: 04 - BALIO PROPOSAMENA ETA LEHIAREN KONPARAKETA
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">04. PROPUESTA DE VALOR Y COMPETENCIA</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">04</span> Propuesta de Valor y Comparativa Competitiva</h2>
+
+        <div class="card" style="margin-bottom: 3.5mm;">
+          <h4 style="color:#0284C7;">1. ¿Qué valor exclusivo aporta su producto al cliente?</h4>
+          <p>
+            Gailu biomediko anitzen seinaleak (EKG, SpO2, presioa) <strong>Zero-Touch</strong> bidez automatikoki biltzen dituen, seinalearen zarata adimenez garbitzen duen eta historia klinikoan (HL7 FHIR) zuzenean txertatzen duen CE MDR IIa SaMD plataforma osoa da.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom: 3.5mm;">
+          <h4 style="color:#0284C7;">2. ¿Qué resultados concretos obtiene el cliente al utilizar la solución?</h4>
+          <p>
+            Ospitaleratzeak <strong>%35 murriztea</strong>, altak 3-5 egun aurreratzea, ariketen atxikimendua %88ra igotzea eta zentro bakoitzeko <strong>360.000 €-ko aurrezpen garbia</strong> lortzea urtean.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom: 3.5mm;">
+          <h4 style="color:#0284C7;">3. ¿Cómo mejora la vida y soluciona el problema mejor que las alternativas?</h4>
+          <p>
+            Kontsumoko erlojuek (Apple Watch, Fitbit) ez dute balio diagnostiko medikorik; ospitaleko makinak, aldiz, garestiegiak eta geldirik egotekoak dira. KuraLink-ek bi munduen onena eskaintzen du: etxeko erosotasuna eta fidagarritasun mediko homologatua.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom: 3.5mm;">
+          <h4 style="color:#0284C7;">4. ¿Qué funcionalidades son fundamentales y generan mayor impacto?</h4>
+          <p>
+            1) Parekatze automatikoa konfiguraziorik gabe, 2) EKG seinalearen denbora errealeko telemetria eta arritmia alertak, 3) FHIR API bidezko sinkronizazioa, 4) Ariketa gidatuen errehabilitazio-modulua.
+          </p>
+        </div>
+
+        <h3 class="sub-heading">4.2. Matriz de Comparativa Competitiva:</h3>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Parámetro Técnico</th>
+              <th>Wearables de Consumo</th>
+              <th>Ospitaleko Makinak</th>
+              <th class="brand-col">KuraLink SaMD Plataforma</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>MDR CE Marka Medikoa</strong></td>
+              <td>EZ (Fitness Maila)</td>
+              <td>BAI</td>
+              <td class="highlight-cell">BAI (SaMD Klasea IIa)</td>
+            </tr>
+            <tr>
+              <td><strong>Etxeko Mugikortasuna</strong></td>
+              <td>BAI</td>
+              <td>EZ (Oheari lotuta)</td>
+              <td class="highlight-cell">BAI (Zero-Touch BLE)</td>
+            </tr>
+            <tr>
+              <td><strong>Osabide / FHIR Integrazioa</strong></td>
+              <td>EZ</td>
+              <td>Oso zaila eta garestia</td>
+              <td class="highlight-cell">BAI (Jatorrizko FHIR API)</td>
+            </tr>
+            <tr>
+              <td><strong>Erabilerraztasuna Adinekoentzat</strong></td>
+              <td>Konplexua</td>
+              <td>Teknikaria behar du</td>
+              <td class="highlight-cell">BIKAIN (Piztu eta prest)</td>
+            </tr>
+            <tr>
+              <td><strong>Burokrazia Murrizketa</strong></td>
+              <td>Ez du eragiten</td>
+              <td>Eskuzko kudeaketa</td>
+              <td class="highlight-cell">BAI (%40 denbora aurreztua)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 6</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 7: 05 - MARKA ETA IDENTITATE BISUALA
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">05. MARCA E IDENTIDAD</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">05</span> Marca: KuraLink</h2>
+
+        <p>
+          Para que un nombre de marca sea excelente debe cumplir cuatro criterios estratégicos clave. A continuación se detalla el desarrollo corporativo y científico de KuraLink:
+        </p>
+
+        <h3 class="sub-heading">5.1. Cumplimiento de Criterios Estratégicos:</h3>
+        <div class="grid-4" style="margin-bottom: 4mm;">
+          <div class="card highlight">
+            <h4 style="color:#0284C7;">1. Fácil de Recordar</h4>
+            <p>3 silaba fonetiko sendo: <strong>Ku-ra-Link</strong>. 8 letra, laburra, erritmo harmonikoa eta inpaktu handikoa.</p>
+          </div>
+          <div class="card highlight">
+            <h4 style="color:#0284C7;">2. Fácil de Pronunciar</h4>
+            <p>Idazten den bezala ahoskatzen da euskaraz, gaztelaniaz zein nazioarteko ingelesean.</p>
+          </div>
+          <div class="card highlight">
+            <h4 style="color:#0284C7;">3. Vinculado a la Actividad</h4>
+            <p><strong>KURA</strong> (sendatzea, zaintza) + <strong>LINK</strong> (software konexioa eta gailu medikoak).</p>
+          </div>
+          <div class="card highlight">
+            <h4 style="color:#0284C7;">4. Diferencial y Único</h4>
+            <p>Euskal sustraiak ditu, baina MedTech merkatuan autoritate zientifiko unibertsala transmititzen du.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">5.2. Logotipos Vectoriales e Icono de Aplicación:</h3>
+        <div class="grid-2" style="margin-bottom: 4mm;">
+          <div class="brand-asset-box">
+            <h5 style="font-size: 9pt; color: #0A192F; margin-bottom: 2mm;">Logotipo Corporativo Vectorial (SVG)</h5>
+            <img src="assets/images/kuralink_logo_print.svg" alt="KuraLink Logotipo Korporatiboa" style="max-height: 42mm;">
+            <p style="font-size: 7.5pt; color: #64748B; margin-top: 2mm;">'K' letra geometrikoa + EKG bihotz-uhina + IoT datu-nodoak</p>
+          </div>
+          <div class="brand-asset-box">
+            <h5 style="font-size: 9pt; color: #0A192F; margin-bottom: 2mm;">Icono de Aplicación / Isotipo (SVG)</h5>
+            <img src="assets/images/kuralink_icon.svg" alt="KuraLink Aplikazio Ikonoa" style="height: 38mm; border-radius: 12px;">
+            <p style="font-size: 7.5pt; color: #64748B; margin-top: 2mm;">Mugikorreko aplikazio ikono ofiziala (Android eta iOS)</p>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">5.3. Sistema de Diseño y Paleta Cromática:</h3>
+        <div class="grid-3">
+          <div class="card" style="border-left: 4px solid #0A192F;">
+            <strong style="color:#0A192F; font-size: 8.5pt;">Deep Health Navy (#0A192F)</strong>
+            <p style="font-size: 8pt;">Zorroztasun zientifikoa, datu medikoen babesa eta sendotasun instituzionala.</p>
+          </div>
+          <div class="card" style="border-left: 4px solid #0284C7;">
+            <strong style="color:#0284C7; font-size: 8.5pt;">Medical Tech Blue (#0284C7)</strong>
+            <p style="font-size: 8pt;">Multiplataforma softwarearen berrikuntza, interfaze klinikoak eta fidagarritasuna.</p>
+          </div>
+          <div class="card" style="border-left: 4px solid #00D4B2;">
+            <strong style="color:#0F766E; font-size: 8.5pt;">Vital Bio-Cyan (#00D4B2)</strong>
+            <p style="font-size: 8pt;">EKG bihotz-uhin bitala, osasuna, errekuperazioa eta BLE konexio aktiboak.</p>
+          </div>
+        </div>
+
+        <div class="callout-box" style="margin-top: 3.5mm; font-style: italic; text-align: center;">
+          <strong>Eslogan Korporatiboa:</strong> "Zubi adimenduna gailu medikoen eta zure osasunaren artean."
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 7</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 8: AKTUAZIO EREMU KLINIKOEN ARGAZKI GALERIA ERREALA
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">06. GALERÍA CLÍNICA REAL</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">06</span> Galería Real de Ámbitos de Actuación Clínica</h2>
+        <p style="margin-bottom: 3.5mm;">
+          KuraLink soluzioak osasun-kate osoa hartzen du bere gain: I+G laborategitik hasi, ospitaleko telemetria-zentrora eta pazientearen etxeko zein ariketetako ingurunera arte. Jarraian 6 aktuazio-eremu nagusien erregistro bisual errealak aurkezten dira:
+        </p>
+
+        <!-- 6 Real Photos Grid -->
+        <div class="photo-grid-doc three-col">
+          <!-- 1. Miramon I+G -->
+          <div class="photo-doc-card">
+            <img src="assets/images/kuralink_enpresa_irudia.jpg" alt="Miramongo KuraLink Egoitza">
+            <div class="photo-doc-info">
+              <span class="photo-doc-tag">I+G Egoitza</span>
+              <h5>Miramongo Egoitza &amp; Laborategia</h5>
+              <p>Gipuzkoako Parke Teknologikoa (Donostia): software garatzaileak eta ingeniari biomedikoak.</p>
+            </div>
+          </div>
+
+          <!-- 2. App & BioPatch -->
+          <div class="photo-doc-card">
+            <img src="assets/images/kuralink_app_mockup.jpg" alt="KuraLink Mugikorreko App-a">
+            <div class="photo-doc-info">
+              <span class="photo-doc-tag">Gailu Medikoa</span>
+              <h5>KuraLink App &amp; BioPatch</h5>
+              <p>Mugikorreko aplikazio natiboa eta bularreko adabaki sentsorea zero-touch sinkronizazioarekin.</p>
+            </div>
+          </div>
+
+          <!-- 3. Pazientea Etxean -->
+          <div class="photo-doc-card">
+            <img src="assets/images/kuralink_pazientea_etxean.jpg" alt="Mikel Iturbe Etxeko Tele-Zaintzan">
+            <div class="photo-doc-info">
+              <span class="photo-doc-tag">Etxeko Zaintza</span>
+              <h5>Mikel Iturbe (68 urte) Etxean</h5>
+              <p>Gaixoa etxean tele-monitorizatuta, Osakidetzako medikuaren jarraipen automatikoarekin.</p>
+            </div>
+          </div>
+
+          <!-- 4. Ospitale Telemetria -->
+          <div class="photo-doc-card">
+            <img src="assets/images/kuralink_ospitalea_telemetria.jpg" alt="Ospitaleko Tele-Monitorizazio Zentroa">
+            <div class="photo-doc-info">
+              <span class="photo-doc-tag">Ospitale Klinikoa</span>
+              <h5>Ospitaleko Kontrol Gela</h5>
+              <p>Donostia Ospitaleko telemetria estazioa: kardiologoek EKG seinaleak eta alertak aztertzen.</p>
+            </div>
+          </div>
+
+          <!-- 5. HADO Etxez Etxekoa -->
+          <div class="photo-doc-card">
+            <img src="assets/images/kuralink_etxez_etxeko_zaintza.jpg" alt="Etxez-etxeko Ospitalizazio Taldea">
+            <div class="photo-doc-info">
+              <span class="photo-doc-tag">HADO Arreta</span>
+              <h5>Etxez Etxeko Ospitalizazioa</h5>
+              <p>Erizaina pazientearen etxean tabletan parametro klinikoak balioztatzen eta jarraipena egiten.</p>
+            </div>
+          </div>
+
+          <!-- 6. Errehabilitazioa -->
+          <div class="photo-doc-card">
+            <img src="assets/images/kuralink_bihotz_errehabilitazioa.jpg" alt="Bihotz-Errehabilitazio Saio Gidatua">
+            <div class="photo-doc-info">
+              <span class="photo-doc-tag">Errehabilitazioa</span>
+              <h5>Bihotz-Errehabilitazio Klinikoa</h5>
+              <p>Fisioterapeutak gidatutako saioa: ariketak egiten diren bitartean bihotz-taupadak neurtuz.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L.</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 8</span>
+      </div>
+    </div>
+
+
+    <!-- ====================================================================
+         ORRIALDEA 9: BIDERAGARRITASUN PLANA, FINANTZAK ETA ONDORIOAK
+         ==================================================================== -->
+    <div class="page">
+      <div class="page-header">
+        <span>KuraLink Health Technologies S.L. • Plan de Negocio</span>
+        <span class="page-header-tag">07. VIABILIDAD Y CONCLUSIONES</span>
+      </div>
+
+      <div class="page-content">
+        <h2 class="section-heading"><span class="num">07</span> Bideragarritasun Plana eta Ondorioak</h2>
+
+        <h3 class="sub-heading">7.1. B2B SaaS Negozio Eredua eta Diru-Sarrerak:</h3>
+        <p>
+          KuraLink-ek <strong>ez du hardware propiorik fabrikatzen</strong>; arrisku industriala saihestuz, jada merkatuan CE MDR ziurtagiria duten sentsore eramangarriak integratzen ditu bere softwarearen bidez.
+        </p>
+
+        <div class="grid-2" style="margin-bottom: 3.5mm;">
+          <div class="card highlight">
+            <h4>B2B Harpidetza Sanitarioa:</h4>
+            <p>Hileroko kuota ospitale eta aseguruentzat aktibo duten paziente bakoitzeko: <strong>25 - 40 € / paziente / hilabete</strong>. Barne hartzen ditu Cloud azpiegitura segurua, FHIR sinkronizazioa eta algoritmo prediktiboak.</p>
+          </div>
+          <div class="card highlight">
+            <h4>B2B Onboarding &amp; Integrazio Kuota:</h4>
+            <p>Osasun-zentro bakoitzeko hasierako integrazio teknikoa (Osabide Global / EHR konexioa, langileen formakuntza klinikoa eta protokoloen ezarpena): <strong>8.000 - 15.000 €</strong>.</p>
+          </div>
+        </div>
+
+        <h3 class="sub-heading">7.2. ROI Ekonomiko eta Kliniko Egiaztatua:</h3>
+        <div class="callout-box cyan">
+          <strong>Kalkulu Arrazoitua (120 pazienteko zentro kardiologiko batean):</strong>
+          <ul style="margin-left: 4mm; margin-top: 2mm; margin-bottom: 0;">
+            <li>Ospitaleko ohe-egun baten batez besteko kostua: <strong>750 € / egun</strong>.</li>
+            <li>Paziente bakoitzeko aurreztutako ohe-egunak (alta goiztiarra tele-zaintzarekin): <strong>4 egun</strong>.</li>
+            <li>Aurreztutako ohe-egunak guztira: <strong>480 ohe-egun libre</strong> beste gaixoentzat.</li>
+            <li><strong>Guztizko aurrezpen ekonomikoa ospitalearentzat: 360.000 € / urtean</strong>.</li>
+            <li>Saihestutako bir-ospitaleratzeak: <strong>42 paziente</strong> (%35eko murrizketa).</li>
+          </ul>
+        </div>
+
+        <h3 class="sub-heading">7.3. Regulación Clínica y Certificaciones:</h3>
+        <p>
+          KuraLink osasun-software zorrotza denez, legezko eta arauzko betetze maximoa bermatzen du:
+        </p>
+        <div class="grid-3" style="margin-bottom: 4mm;">
+          <div class="card"><strong style="color:#0284C7; font-size: 8.5pt;">ISO 13485:2016:</strong><p style="font-size: 8pt;">Gailu medikoen kalitate-kudeaketa sistema osoa.</p></div>
+          <div class="card"><strong style="color:#0284C7; font-size: 8.5pt;">MDR (EB 2017/745):</strong><p style="font-size: 8pt;">SaMD Klasea IIa CE markadun gailu mediko gisa.</p></div>
+          <div class="card"><strong style="color:#0284C7; font-size: 8.5pt;">HL7 FHIR &amp; GDPR:</strong><p style="font-size: 8pt;">Historia kliniko integratua eta datu-babes gorena (ENS Altua).</p></div>
+        </div>
+
+        <div class="callout-box green" style="border-left-width: 5px;">
+          <h4 style="color:#047857; margin-bottom: 1.5mm;">Conclusión Principal:</h4>
+          <p style="margin-bottom: 0; font-size: 9pt; color: #064E3B;">
+            KuraLink Health Technologies proiektuak Europako gizarte-erronka handienari erantzuten dio (zahartzea eta ospitaleen kolapsoa), balio errealeko, bideragarriko eta errentagarriko soluzio biomediko bat eskainiz. Teknologia eta gizatasuna uztartuz, pazienteak etxean seguru bizi dira eta osasun-sistemak ehunka mila euro aurrezten ditu.
+          </p>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <span class="page-footer-left">KuraLink Health Technologies S.L. • Miramon Parke Teknologikoa, Donostia</span>
+        <div class="page-footer-cert">
+          <img src="assets/images/iso_ce_certifications.png" alt="ISO 13485 &amp; CE" class="footer-cert-stamp">
+          <span>ISO 13485 • CE MDR IIa</span>
+        </div>
+        <span>Página 9</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // URL parametroen araberako birbideratze adimenduna (?lang=es edo ?lang=en)
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = (urlParams.get('lang') || '').toLowerCase();
+    if (lang === 'es' || lang === 'castellano' || lang === 'spanish') {
+      window.location.replace('txostena_inprimatzeko_es.html');
+    } else if (lang === 'en' || lang === 'english') {
+      window.location.replace('txostena_inprimatzeko_en.html');
+    }
+  </script>
+</body>
+</html>

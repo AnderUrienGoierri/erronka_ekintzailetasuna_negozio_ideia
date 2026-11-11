@@ -290,16 +290,76 @@ function initBurgerMenu() {
 /* ==========================================================================
    Tema eta Hizkuntza Kontrolatzailea (Modu Argia / Iluna & Euskara/ES/EN)
    ========================================================================== */
+/* ==========================================================================
+   Tema eta Hizkuntza Kontrolatzailea (Modu Argia / Iluna & Euskara/ES/EN)
+   ========================================================================== */
+const I18N_WEB = {
+  eu: {
+    navProject: "Negozio Proiektua",
+    navRoi: "ROI Kalkulagailua",
+    navPatient: "Paziente Ataria (Login)",
+    navPdf: "Txostena (PDF)",
+    heroTag: "SAAS MEDIKOA & IOMT TELE-MONITORIZAZIO KLINIKOA",
+    heroTitle: "Osasun tele–zaintza adimentsua gailu medikoen eta pazienteen artean.",
+    heroDesc: "KuraLink Health Technologies gailu mediko eramangarriak eta osasun-sistemak bateratzen dituen plataforma digital aurreratua da. Sentsore biomedikoak zero-touch bidez sinkronizatzen ditu, seinale fisiologikoak adimenez iragazten ditu eta ospitaleko historian (Osabide Global / HL7 FHIR) zuzenean txertatzen da, ospitaleratzeak %35 murriztuz.",
+    stat1Label: "Ospitaleratze Murrizketa",
+    stat2Label: "Ariketen Atxikimendua",
+    stat3Label: "CE Homologazio Klinikoa",
+    pdfFilename: "KuraLink_Negozio_Txostena.pdf",
+    pdfUrl: "assets/docs/KuraLink_Negozio_Txostena.pdf"
+  },
+  es: {
+    navProject: "Plan de Negocio",
+    navRoi: "Calculadora ROI",
+    navPatient: "Portal Paciente (Login)",
+    navPdf: "Informe (PDF)",
+    heroTag: "SAAS MÉDICO & TELE-MONITORIZACIÓN CLÍNICA IOMT",
+    heroTitle: "Tele-cuidado inteligente de salud entre dispositivos médicos y pacientes.",
+    heroDesc: "KuraLink Health Technologies es una avanzada plataforma digital que unifica dispositivos médicos vestibles y sistemas hospitalarios. Sincroniza sensores biomédicos sin fricción (zero-touch), filtra señales fisiológicas con IA y se integra directamente en el historial clínico (HL7 FHIR), reduciendo rehospitalizaciones un 35%.",
+    stat1Label: "Reducción Rehospitalizaciones",
+    stat2Label: "Adherencia a Ejercicios",
+    stat3Label: "Homologación Clínica CE",
+    pdfFilename: "KuraLink_Plan_Negocio_ES.pdf",
+    pdfUrl: "assets/docs/KuraLink_Plan_Negocio_ES.pdf"
+  },
+  en: {
+    navProject: "Business Plan",
+    navRoi: "ROI Calculator",
+    navPatient: "Patient Portal (Login)",
+    navPdf: "Report (PDF)",
+    heroTag: "MEDICAL SAAS & IOMT CLINICAL TELE-MONITORING",
+    heroTitle: "Intelligent healthcare tele-monitoring bridging medical devices and patients.",
+    heroDesc: "KuraLink Health Technologies is an advanced digital platform unifying wearable medical sensors with hospital EHR systems. It synchronizes biomedical sensors with zero-touch UX, filters physiological noise with edge algorithms and links into HL7 FHIR clinical records, reducing readmissions by 35%.",
+    stat1Label: "Readmission Reduction",
+    stat2Label: "Exercise Adherence",
+    stat3Label: "CE MDR IIa Certification",
+    pdfFilename: "KuraLink_Business_Report_EN.pdf",
+    pdfUrl: "assets/docs/KuraLink_Business_Report_EN.pdf"
+  }
+};
+
 function initThemeAndLanguage() {
-  const headerBtn = document.getElementById("headerThemeToggleBtn");
-  const drawerBtn = document.getElementById("drawerThemeToggleBtn");
+  const headerThemeBtn = document.getElementById("headerThemeToggleBtn");
+  const drawerThemeBtn = document.getElementById("drawerThemeToggleBtn");
   const descEl = document.getElementById("themeStatusDesc");
   const btnTextEl = document.getElementById("themeBtnText");
+
+  const headerSettingsBtn = document.getElementById("headerSettingsBtn");
+  const modalOverlay = document.getElementById("settingsModalOverlay");
+  const closeSettingsBtn = document.getElementById("closeSettingsModalBtn");
+  const modalThemeDarkBtn = document.getElementById("modalThemeDarkBtn");
+  const modalThemeLightBtn = document.getElementById("modalThemeLightBtn");
+
+  const langBtns = document.querySelectorAll(".lang-btn");
   const langPills = document.querySelectorAll(".lang-pill");
 
   // Load saved theme or default to dark
   const savedTheme = localStorage.getItem("kuralink-theme") || "dark";
   applyTheme(savedTheme);
+
+  // Load saved language or default to eu
+  const savedLang = localStorage.getItem("kuralink-lang") || "eu";
+  applyLanguage(savedLang);
 
   function applyTheme(theme) {
     if (theme === "light") {
@@ -320,16 +380,94 @@ function initThemeAndLanguage() {
     applyTheme(isLight ? "dark" : "light");
   }
 
-  if (headerBtn) headerBtn.addEventListener("click", toggleTheme);
-  if (drawerBtn) drawerBtn.addEventListener("click", toggleTheme);
+  function applyLanguage(lang) {
+    const dict = I18N_WEB[lang] || I18N_WEB.eu;
+    localStorage.setItem("kuralink-lang", lang);
 
-  // Language selector
+    // Update active badges in modal and drawer
+    langBtns.forEach((btn) => {
+      btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+    });
+    langPills.forEach((pill) => {
+      pill.classList.toggle("active", pill.getAttribute("data-lang") === lang);
+    });
+
+    // Update nav links
+    const btnDropdown = document.getElementById("btnDropdownProject");
+    if (btnDropdown) {
+      const textNode = Array.from(btnDropdown.childNodes).find((n) => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim());
+      if (textNode) textNode.nodeValue = ` ${dict.navProject} `;
+    }
+
+    const patientBtns = document.querySelectorAll("#navBtnPatientPortal, #drawerBtnPatientPortal");
+    patientBtns.forEach((btn) => {
+      const strong = btn.querySelector("strong");
+      if (strong) strong.textContent = dict.navPatient;
+      else {
+        const textNode = Array.from(btn.childNodes).find((n) => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim());
+        if (textNode) textNode.nodeValue = ` ${dict.navPatient} `;
+      }
+    });
+
+    const pdfLinks = document.querySelectorAll(".btn-download-pdf, .drawer-cta-btn");
+    pdfLinks.forEach((link) => {
+      link.setAttribute("href", dict.pdfUrl);
+      link.setAttribute("download", dict.pdfFilename);
+    });
+
+    // Update Hero text
+    const heroTitle = document.querySelector(".hero-content h1");
+    if (heroTitle) heroTitle.textContent = dict.heroTitle;
+    const heroDesc = document.querySelector(".hero-content p");
+    if (heroDesc) heroDesc.textContent = dict.heroDesc;
+    const heroTag = document.querySelector(".hero-content .section-tag");
+    if (heroTag) {
+      const tagText = Array.from(heroTag.childNodes).find((n) => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim());
+      if (tagText) tagText.nodeValue = ` ${dict.heroTag}`;
+    }
+  }
+
+  if (headerThemeBtn) headerThemeBtn.addEventListener("click", toggleTheme);
+  if (drawerThemeBtn) drawerThemeBtn.addEventListener("click", toggleTheme);
+
+  // Settings Modal Controls
+  if (headerSettingsBtn && modalOverlay) {
+    headerSettingsBtn.addEventListener("click", () => {
+      modalOverlay.style.display = "flex";
+    });
+  }
+
+  if (closeSettingsBtn && modalOverlay) {
+    closeSettingsBtn.addEventListener("click", () => {
+      modalOverlay.style.display = "none";
+    });
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) modalOverlay.style.display = "none";
+    });
+  }
+
+  if (modalThemeDarkBtn) {
+    modalThemeDarkBtn.addEventListener("click", () => applyTheme("dark"));
+  }
+  if (modalThemeLightBtn) {
+    modalThemeLightBtn.addEventListener("click", () => applyTheme("light"));
+  }
+
+  // Language selectors
+  langBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang");
+      applyLanguage(lang);
+    });
+  });
+
   langPills.forEach((pill) => {
     pill.addEventListener("click", () => {
-      langPills.forEach((p) => p.classList.remove("active"));
-      pill.classList.add("active");
       const lang = pill.getAttribute("data-lang");
-      localStorage.setItem("kuralink-lang", lang);
+      applyLanguage(lang);
     });
   });
 }

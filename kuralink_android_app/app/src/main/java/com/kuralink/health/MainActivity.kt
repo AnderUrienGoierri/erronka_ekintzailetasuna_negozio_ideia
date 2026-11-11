@@ -2,6 +2,7 @@
 
 package com.kuralink.health
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,7 +38,9 @@ import com.kuralink.health.ui.screens.RehabScreen
 import com.kuralink.health.ui.screens.SettingsScreen
 import com.kuralink.health.ui.screens.AppLanguage
 import com.kuralink.health.ui.theme.*
+import com.kuralink.health.util.AppStrings
 import com.kuralink.health.util.PdfOpener
+import com.kuralink.health.util.Translations
 import kotlinx.coroutines.launch
 
 sealed class Screen(val title: String, val icon: ImageVector) {
@@ -56,12 +59,24 @@ class MainActivity : ComponentActivity() {
         setContent {
             KuraLinkHealthTheme {
                 val context = LocalContext.current
+                val prefs = remember { context.getSharedPreferences("kuralink_prefs", Context.MODE_PRIVATE) }
+                val savedLangCode = remember { prefs.getString("app_language", "eu") ?: "eu" }
+                val initialLanguage = remember {
+                    when (savedLangCode) {
+                        "es" -> AppLanguage.ESPANOL
+                        "en" -> AppLanguage.ENGLISH
+                        else -> AppLanguage.EUSKARA
+                    }
+                }
+
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
 
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.Company) }
                 var isLoggedIn by remember { mutableStateOf(false) }
-                var currentLanguage by remember { mutableStateOf(AppLanguage.EUSKARA) }
+                var currentLanguage by remember { mutableStateOf(initialLanguage) }
+                val strings = remember(currentLanguage) { Translations.forLanguage(currentLanguage) }
+                var showPdfDialog by remember { mutableStateOf(false) }
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
@@ -147,7 +162,7 @@ class MainActivity : ComponentActivity() {
                                         )
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(
-                                                text = if (isLoggedIn) "Mikel Iturbe (Paziente Aktiboa)" else "Paziente Saioa Hasi GABE",
+                                                text = if (isLoggedIn) "Mikel Iturbe (${strings.patientActive})" else strings.patientLoginRequired,
                                                 color = if (isLoggedIn) AccentGreen else TextLight,
                                                 fontSize = 12.sp,
                                                 fontWeight = FontWeight.Bold
@@ -169,9 +184,9 @@ class MainActivity : ComponentActivity() {
 
                                 HorizontalDivider(color = SurfaceBorder, thickness = 1.dp)
 
-                                // Section 1: Business Plan Sections (teoria_pdf)
+                                // Section 1: Business Plan Sections
                                 Text(
-                                    text = "Negozio Plana (Txostena)",
+                                    text = strings.drawerSectionPlan,
                                     color = TextMuted,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
@@ -180,7 +195,7 @@ class MainActivity : ComponentActivity() {
 
                                 DrawerNavigationItem(
                                     number = "01",
-                                    title = "Arazoa eta Irtenbidea",
+                                    title = strings.drawerCh1,
                                     subtitle = "Saturazioa eta zaintza biomedikoa",
                                     onClick = {
                                         currentScreen = Screen.BusinessPlan
@@ -190,7 +205,7 @@ class MainActivity : ComponentActivity() {
 
                                 DrawerNavigationItem(
                                     number = "02",
-                                    title = "Misioa, Bisioa eta Baloreak",
+                                    title = strings.drawerCh2,
                                     subtitle = "Nortasun korporatiboa eta etika",
                                     onClick = {
                                         currentScreen = Screen.BusinessPlan
@@ -200,7 +215,7 @@ class MainActivity : ComponentActivity() {
 
                                 DrawerNavigationItem(
                                     number = "03",
-                                    title = "Target (Xede Publikoa)",
+                                    title = strings.drawerCh3,
                                     subtitle = "B2B2C segmentazio osoa",
                                     onClick = {
                                         currentScreen = Screen.BusinessPlan
@@ -210,7 +225,7 @@ class MainActivity : ComponentActivity() {
 
                                 DrawerNavigationItem(
                                     number = "04",
-                                    title = "Balio Proposamena & Lehia",
+                                    title = strings.drawerCh4,
                                     subtitle = "MDR IIa eta Osabide/FHIR",
                                     onClick = {
                                         currentScreen = Screen.BusinessPlan
@@ -220,7 +235,7 @@ class MainActivity : ComponentActivity() {
 
                                 DrawerNavigationItem(
                                     number = "05",
-                                    title = "Marka: KuraLink",
+                                    title = strings.drawerCh5,
                                     subtitle = "Izenaren garapena eta koloreak",
                                     onClick = {
                                         currentScreen = Screen.BusinessPlan
@@ -230,9 +245,9 @@ class MainActivity : ComponentActivity() {
 
                                 HorizontalDivider(color = SurfaceBorder, thickness = 1.dp)
 
-                                // Section 2: Clinical Tools & Data
+                                // Section 2: Clinical Tools & ROI
                                 Text(
-                                    text = "Tresna Klinikoak & ROI",
+                                    text = strings.drawerSectionTools,
                                     color = TextMuted,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
@@ -242,8 +257,8 @@ class MainActivity : ComponentActivity() {
                                 DrawerToolItem(
                                     icon = Icons.Default.Calculate,
                                     iconColor = AccentCyan,
-                                    title = "ROI Kalkulagailua",
-                                    subtitle = "Ospitaleen aurrezpen ekonomikoa",
+                                    title = strings.roiCalculatorTitle,
+                                    subtitle = strings.roiCalculatorSubtitle,
                                     onClick = {
                                         currentScreen = Screen.Company
                                         scope.launch { drawerState.close() }
@@ -254,7 +269,7 @@ class MainActivity : ComponentActivity() {
 
                                 // Section 3: Patient Secured Medical Area
                                 Text(
-                                    text = "Pazientearen Eremu Babestua",
+                                    text = strings.drawerSectionPatient,
                                     color = TextMuted,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
@@ -264,7 +279,7 @@ class MainActivity : ComponentActivity() {
                                 DrawerToolItem(
                                     icon = Icons.Default.AccountCircle,
                                     iconColor = TechBlue,
-                                    title = "Paziente Ataria",
+                                    title = strings.patientPortalTitle,
                                     subtitle = if (isLoggedIn) "Mikel Iturberen fitxa klinikoa" else "Hasi saioa sartzeko",
                                     onClick = {
                                         currentScreen = Screen.Patient
@@ -275,7 +290,7 @@ class MainActivity : ComponentActivity() {
                                 DrawerToolItem(
                                     icon = Icons.Default.Favorite,
                                     iconColor = AccentCyan,
-                                    title = "Telemetria & EKG",
+                                    title = strings.telemetryTitle,
                                     subtitle = if (isLoggedIn) "BioPatch seinale zuzenekoa" else "Babestua (Login beharrezkoa)",
                                     onClick = {
                                         currentScreen = Screen.Monitoring
@@ -286,7 +301,7 @@ class MainActivity : ComponentActivity() {
                                 DrawerToolItem(
                                     icon = Icons.Default.FitnessCenter,
                                     iconColor = AccentGreen,
-                                    title = "Errehabilitazio Ariketak",
+                                    title = strings.rehabTitle,
                                     subtitle = if (isLoggedIn) "Agindutako 4 ariketa aktibo" else "Babestua (Login beharrezkoa)",
                                     onClick = {
                                         currentScreen = Screen.Rehab
@@ -298,7 +313,7 @@ class MainActivity : ComponentActivity() {
 
                                 // Section 4: Configuration & Settings (Ezarpenak)
                                 Text(
-                                    text = "Ezarpenak & Konfigurazioa",
+                                    text = strings.drawerSectionSettings,
                                     color = TextMuted,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
@@ -308,8 +323,8 @@ class MainActivity : ComponentActivity() {
                                 DrawerToolItem(
                                     icon = Icons.Default.Settings,
                                     iconColor = AccentCyan,
-                                    title = "Ezarpenak",
-                                    subtitle = "Tema (Argia/Iluna), Hizkuntza eta Alertak",
+                                    title = strings.settingsTitle,
+                                    subtitle = strings.settingsSubtitle,
                                     onClick = {
                                         currentScreen = Screen.Settings
                                         scope.launch { drawerState.close() }
@@ -323,8 +338,8 @@ class MainActivity : ComponentActivity() {
                                 // Bottom Download PDF CTA
                                 Button(
                                     onClick = {
-                                        PdfOpener.openOrDownloadPdf(context)
                                         scope.launch { drawerState.close() }
+                                        showPdfDialog = true
                                     },
                                     colors = ButtonDefaults.buttonColors(containerColor = TechBlue),
                                     shape = RoundedCornerShape(10.dp),
@@ -338,7 +353,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text(
-                                        text = "Deskargatu Txostena (PDF)",
+                                        text = strings.downloadPdfCta,
                                         color = Color.White,
                                         fontSize = 13.sp,
                                         fontWeight = FontWeight.Bold
@@ -427,13 +442,13 @@ class MainActivity : ComponentActivity() {
                                         )
                                     }
 
-                                    // PDF Quick Download Button
+                                    // PDF Quick Download Button (Opens Language Chooser Dialog)
                                     IconButton(
-                                        onClick = { PdfOpener.openOrDownloadPdf(context) }
+                                        onClick = { showPdfDialog = true }
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.PictureAsPdf,
-                                            contentDescription = "Deskargatu PDF Txostena",
+                                            contentDescription = strings.downloadPdfCta,
                                             tint = AccentCyan
                                         )
                                     }
@@ -460,8 +475,17 @@ class MainActivity : ComponentActivity() {
                                                     .clip(CircleShape)
                                                     .background(if (isLoggedIn) AccentGreen else TextMuted)
                                             )
+                                            val loginStatusText = if (isLoggedIn) {
+                                                "Mikel I."
+                                            } else {
+                                                when (currentLanguage) {
+                                                    AppLanguage.EUSKARA -> "Saioa Hasi"
+                                                    AppLanguage.ESPANOL -> "Iniciar Sesión"
+                                                    AppLanguage.ENGLISH -> "Sign In"
+                                                }
+                                            }
                                             Text(
-                                                text = if (isLoggedIn) "Mikel I." else "Saioa Hasi",
+                                                text = loginStatusText,
                                                 color = if (isLoggedIn) AccentGreen else TextMuted,
                                                 fontSize = 11.sp,
                                                 fontWeight = FontWeight.Medium
@@ -483,16 +507,24 @@ class MainActivity : ComponentActivity() {
                                 val items = listOf(Screen.Company, Screen.Patient, Screen.Monitoring, Screen.Rehab)
                                 items.forEach { screen ->
                                     val isSelected = currentScreen == screen
+                                    val labelText = when (screen) {
+                                        is Screen.Company -> strings.navCompany
+                                        is Screen.BusinessPlan -> strings.navBusinessPlan
+                                        is Screen.Patient -> strings.navPatient
+                                        is Screen.Monitoring -> strings.navMonitoring
+                                        is Screen.Rehab -> strings.navRehab
+                                        is Screen.Settings -> strings.navSettings
+                                    }
                                     NavigationBarItem(
                                         selected = isSelected,
                                         onClick = { currentScreen = screen },
                                         icon = {
                                             Icon(
                                                 imageVector = screen.icon,
-                                                contentDescription = screen.title
+                                                contentDescription = labelText
                                             )
                                         },
-                                        label = { Text(screen.title, fontSize = 11.sp) },
+                                        label = { Text(labelText, fontSize = 11.sp) },
                                         colors = NavigationBarItemDefaults.colors(
                                             selectedIconColor = AccentCyan,
                                             selectedTextColor = AccentCyan,
@@ -553,13 +585,158 @@ class MainActivity : ComponentActivity() {
                                     isDarkTheme = isDarkThemeState.value,
                                     onThemeToggle = { isDarkThemeState.value = it },
                                     currentLanguage = currentLanguage,
-                                    onLanguageChange = { currentLanguage = it }
+                                    onLanguageChange = { newLang ->
+                                        currentLanguage = newLang
+                                        prefs.edit().putString("app_language", newLang.code).apply()
+                                    }
                                 )
                             }
                         }
                     }
+
+                    // Multilingual PDF Chooser Dialog
+                    if (showPdfDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showPdfDialog = false },
+                            containerColor = PrimarySurface,
+                            titleContentColor = TextLight,
+                            textContentColor = TextMuted,
+                            shape = RoundedCornerShape(16.dp),
+                            title = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.PictureAsPdf,
+                                        contentDescription = null,
+                                        tint = AccentCyan,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                    Text(
+                                        text = strings.pdfSectionTitle,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = TextLight
+                                    )
+                                }
+                            },
+                            text = {
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                                ) {
+                                    Text(
+                                        text = strings.pdfSectionSubtitle,
+                                        fontSize = 12.sp,
+                                        color = TextMuted
+                                    )
+
+                                    // Euskara
+                                    PdfDialogOptionCard(
+                                        badge = "EU",
+                                        title = strings.pdfOpenEu,
+                                        subtitle = "9 Orrialde • Donostia egoitza",
+                                        onClick = {
+                                            showPdfDialog = false
+                                            PdfOpener.openOrDownloadPdf(context, AppLanguage.EUSKARA)
+                                        }
+                                    )
+
+                                    // Spanish
+                                    PdfDialogOptionCard(
+                                        badge = "ES",
+                                        title = strings.pdfOpenEs,
+                                        subtitle = "9 Páginas • Homologación CE MDR IIa",
+                                        onClick = {
+                                            showPdfDialog = false
+                                            PdfOpener.openOrDownloadPdf(context, AppLanguage.ESPANOL)
+                                        }
+                                    )
+
+                                    // English
+                                    PdfDialogOptionCard(
+                                        badge = "EN",
+                                        title = strings.pdfOpenEn,
+                                        subtitle = "9 Pages • Full Clinical SaMD Report",
+                                        onClick = {
+                                            showPdfDialog = false
+                                            PdfOpener.openOrDownloadPdf(context, AppLanguage.ENGLISH)
+                                        }
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                TextButton(onClick = { showPdfDialog = false }) {
+                                    val closeLabel = when (currentLanguage) {
+                                        AppLanguage.EUSKARA -> "Itxi"
+                                        AppLanguage.ESPANOL -> "Cerrar"
+                                        AppLanguage.ENGLISH -> "Close"
+                                    }
+                                    Text(
+                                        text = closeLabel,
+                                        color = AccentCyan,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        )
+                    }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun PdfDialogOptionCard(
+    badge: String,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    Surface(
+        color = CardBackground,
+        shape = RoundedCornerShape(10.dp),
+        border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Row(
+            modifier = Modifier.padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Surface(
+                    color = TechBlue.copy(alpha = 0.25f),
+                    shape = RoundedCornerShape(6.dp),
+                    modifier = Modifier.size(28.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text(
+                            text = badge,
+                            color = AccentCyan,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+                Column {
+                    Text(text = title, color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    Text(text = subtitle, color = TextMuted, fontSize = 10.sp)
+                }
+            }
+            Icon(
+                imageVector = Icons.Default.OpenInNew,
+                contentDescription = null,
+                tint = AccentCyan,
+                modifier = Modifier.size(16.dp)
+            )
         }
     }
 }

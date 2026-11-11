@@ -84,7 +84,36 @@
     }
     .print-actions-right {
       display: flex;
+      align-items: center;
       gap: 12px;
+    }
+    .print-lang-group {
+      display: inline-flex;
+      align-items: center;
+      background: #1E293B;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .btn-lang-choice {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-lang-choice:hover {
+      color: white;
+    }
+    .btn-lang-choice.active {
+      background: #0284C7;
+      color: white;
     }
     .btn-print {
       background: #0284C7;
@@ -556,6 +585,11 @@
       <span style="font-size: 13px; font-weight: 600;">KuraLink Negozio Txostena (Bertsio Ofiziala 2.0 • 9 Orrialde)</span>
     </div>
     <div class="print-actions-right">
+      <div class="print-lang-group">
+        <a href="txostena_inprimatzeko.html" class="btn-lang-choice active" title="Euskarazko Txostena">Euskara</a>
+        <a href="txostena_inprimatzeko_es.html" class="btn-lang-choice" title="Plan de Negocio en Español">Español</a>
+        <a href="txostena_inprimatzeko_en.html" class="btn-lang-choice" title="Business Plan in English">English</a>
+      </div>
       <button class="btn-print" onclick="window.print()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
         Inprimatu / Gorde PDF
@@ -1245,5 +1279,15 @@
 
   </div>
 
+  <script>
+    // URL parametroen araberako birbideratze adimenduna (?lang=es edo ?lang=en)
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = (urlParams.get('lang') || '').toLowerCase();
+    if (lang === 'es' || lang === 'castellano' || lang === 'spanish') {
+      window.location.replace('txostena_inprimatzeko_es.html');
+    } else if (lang === 'en' || lang === 'english') {
+      window.location.replace('txostena_inprimatzeko_en.html');
+    }
+  </script>
 </body>
 </html>

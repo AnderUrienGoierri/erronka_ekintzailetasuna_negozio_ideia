@@ -22,6 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kuralink.health.ui.theme.*
+import com.kuralink.health.util.AppStrings
+import com.kuralink.health.util.PdfOpener
+import com.kuralink.health.util.Translations
 
 @Suppress("SpellCheckingInspection")
 enum class AppLanguage(val code: String, val title: String, val subtitle: String) {
@@ -40,11 +43,20 @@ fun SettingsScreen(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    val strings = remember(currentLanguage) { Translations.forLanguage(currentLanguage) }
 
     var arrhythmiaAlerts by remember { mutableStateOf(true) }
     var rehabReminders by remember { mutableStateOf(true) }
     var bleAutoConnect by remember { mutableStateOf(true) }
-    var fhirFrequency by remember { mutableStateOf("Denbora errealean") }
+    var fhirFrequency by remember {
+        mutableStateOf(
+            when (currentLanguage) {
+                AppLanguage.EUSKARA -> "Denbora errealean"
+                AppLanguage.ESPANOL -> "En tiempo real"
+                AppLanguage.ENGLISH -> "Real-time"
+            }
+        )
+    }
 
     Column(
         modifier = modifier
@@ -68,7 +80,7 @@ fun SettingsScreen(
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
                         imageVector = Icons.Default.Settings,
-                        contentDescription = "Ezarpenak",
+                        contentDescription = strings.settingsTitle,
                         tint = AccentCyan,
                         modifier = Modifier.size(24.dp)
                     )
@@ -76,20 +88,20 @@ fun SettingsScreen(
             }
             Column {
                 Text(
-                    text = "Aplikazioaren Ezarpenak",
+                    text = strings.settingsTitle,
                     color = TextLight,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Itxura, hizkuntza eta parametro klinikoak",
+                    text = strings.settingsSubtitle,
                     color = TextMuted,
                     fontSize = 12.sp
                 )
             }
         }
 
-        // Section 1: Appearance & Theme (Modu Argia eta Iluna)
+        // Section 1: Appearance & Theme
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = PrimarySurface),
@@ -117,13 +129,13 @@ fun SettingsScreen(
                         )
                         Column {
                             Text(
-                                text = "Itxura Modua (Tema)",
+                                text = strings.themeTitle,
                                 color = TextLight,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = if (isDarkTheme) "Modu Iluna aktibatuta (Gau/Kliniko)" else "Modu Argia aktibatuta (Egun/Kliniko)",
+                                text = if (isDarkTheme) strings.themeDarkDesc else strings.themeLightDesc,
                                 color = TextMuted,
                                 fontSize = 11.sp
                             )
@@ -166,7 +178,7 @@ fun SettingsScreen(
                         ) {
                             Icon(Icons.Default.DarkMode, contentDescription = null, tint = if (isDarkTheme) AccentCyan else TextMuted, modifier = Modifier.size(18.dp))
                             Text(
-                                text = "Modu Iluna",
+                                text = strings.themeDark,
                                 color = if (isDarkTheme) AccentCyan else TextLight,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold
@@ -193,7 +205,7 @@ fun SettingsScreen(
                         ) {
                             Icon(Icons.Default.LightMode, contentDescription = null, tint = if (!isDarkTheme) TechBlue else TextMuted, modifier = Modifier.size(18.dp))
                             Text(
-                                text = "Modu Argia",
+                                text = strings.themeLight,
                                 color = if (!isDarkTheme) TechBlue else TextLight,
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold
@@ -204,7 +216,7 @@ fun SettingsScreen(
             }
         }
 
-        // Section 2: Language (Hizkuntza Aukera)
+        // Section 2: Language Selector (Hizkuntza Aukera)
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = PrimarySurface),
@@ -222,20 +234,20 @@ fun SettingsScreen(
                     Icon(Icons.Default.Translate, contentDescription = null, tint = TechBlue, modifier = Modifier.size(20.dp))
                     Column {
                         Text(
-                            text = "Hizkuntza / Idioma / Language",
+                            text = strings.langSectionTitle,
                             color = TextLight,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Aukeratu aplikazioaren komunikazio-lengoaia",
+                            text = strings.langSectionSubtitle,
                             color = TextMuted,
                             fontSize = 11.sp
                         )
                     }
                 }
 
-                // 3 Language Options
+                // 3 Language Options (EU, ES, EN)
                 AppLanguage.entries.forEach { lang ->
                     val isSelected = currentLanguage == lang
                     Surface(
@@ -249,7 +261,12 @@ fun SettingsScreen(
                             .fillMaxWidth()
                             .clickable {
                                 onLanguageChange(lang)
-                                Toast.makeText(context, "${lang.title} hautatuta", Toast.LENGTH_SHORT).show()
+                                val msg = when (lang) {
+                                    AppLanguage.EUSKARA -> "Euskara hautatuta"
+                                    AppLanguage.ESPANOL -> "Español seleccionado"
+                                    AppLanguage.ENGLISH -> "English selected"
+                                }
+                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                             }
                     ) {
                         Row(
@@ -304,7 +321,64 @@ fun SettingsScreen(
             }
         }
 
-        // Section 3: Clinical Alerts & Notifications
+        // Section 3: Negozio Txostena (PDF) Multilingual Options
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = PrimarySurface),
+            shape = RoundedCornerShape(16.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder)
+        ) {
+            Column(
+                modifier = Modifier.padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(Icons.Default.PictureAsPdf, contentDescription = null, tint = AccentCyan, modifier = Modifier.size(20.dp))
+                    Column {
+                        Text(
+                            text = strings.pdfSectionTitle,
+                            color = TextLight,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = strings.pdfSectionSubtitle,
+                            color = TextMuted,
+                            fontSize = 11.sp
+                        )
+                    }
+                }
+
+                // Option 1: Basque PDF
+                PdfLanguageOptionItem(
+                    badge = "EU",
+                    title = strings.pdfOpenEu,
+                    subtitle = "Bertsio Ofiziala (9 Orrialde • Donostia)",
+                    onClick = { PdfOpener.openOrDownloadPdf(context, AppLanguage.EUSKARA) }
+                )
+
+                // Option 2: Spanish PDF
+                PdfLanguageOptionItem(
+                    badge = "ES",
+                    title = strings.pdfOpenEs,
+                    subtitle = "Plan de Negocio Completo (9 Páginas)",
+                    onClick = { PdfOpener.openOrDownloadPdf(context, AppLanguage.ESPANOL) }
+                )
+
+                // Option 3: English PDF
+                PdfLanguageOptionItem(
+                    badge = "EN",
+                    title = strings.pdfOpenEn,
+                    subtitle = "Official Business Report (9 Pages)",
+                    onClick = { PdfOpener.openOrDownloadPdf(context, AppLanguage.ENGLISH) }
+                )
+            }
+        }
+
+        // Section 4: Clinical Alerts & Notifications
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = PrimarySurface),
@@ -321,14 +395,24 @@ fun SettingsScreen(
                 ) {
                     Icon(Icons.Default.NotificationsActive, contentDescription = null, tint = AccentGreen, modifier = Modifier.size(20.dp))
                     Column {
+                        val title = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Jakinarazpen Medikoak & Alertak"
+                            AppLanguage.ESPANOL -> "Notificaciones Médicas y Alertas"
+                            AppLanguage.ENGLISH -> "Medical Notifications & Alerts"
+                        }
+                        val subtitle = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Parametro fisiologikoen kontrol automatikoa"
+                            AppLanguage.ESPANOL -> "Control automático de parámetros fisiológicos"
+                            AppLanguage.ENGLISH -> "Automatic physiological threshold monitoring"
+                        }
                         Text(
-                            text = "Jakinarazpen Medikoak & Alertak",
+                            text = title,
                             color = TextLight,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Parametro fisiologikoen kontrol automatikoa",
+                            text = subtitle,
                             color = TextMuted,
                             fontSize = 11.sp
                         )
@@ -342,8 +426,18 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = "Arritmia eta Takikardia Alertak", color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-                        Text(text = "BPM anormala edo takikardia hautematean soinu-alerta igorri", color = TextMuted, fontSize = 10.sp)
+                        val label = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Arritmia eta Takikardia Alertak"
+                            AppLanguage.ESPANOL -> "Alertas de Arritmia y Taquicardia"
+                            AppLanguage.ENGLISH -> "Arrhythmia & Tachycardia Alerts"
+                        }
+                        val desc = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "BPM anormala edo takikardia hautematean soinu-alerta igorri"
+                            AppLanguage.ESPANOL -> "Alerta sonora ante detección de BPM anormal o taquicardia"
+                            AppLanguage.ENGLISH -> "Sound alert on abnormal BPM or tachycardia detection"
+                        }
+                        Text(text = label, color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = desc, color = TextMuted, fontSize = 10.sp)
                     }
                     Switch(
                         checked = arrhythmiaAlerts,
@@ -361,8 +455,18 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = "Eguneko Ariketa Oroigarriak", color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-                        Text(text = "Medikuak agindutako errehabilitazio plana betetzeko abisuak", color = TextMuted, fontSize = 10.sp)
+                        val label = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Eguneko Ariketa Oroigarriak"
+                            AppLanguage.ESPANOL -> "Recordatorios Diarios de Ejercicios"
+                            AppLanguage.ENGLISH -> "Daily Exercise Reminders"
+                        }
+                        val desc = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Medikuak agindutako errehabilitazio plana betetzeko abisuak"
+                            AppLanguage.ESPANOL -> "Avisos para completar el plan de rehabilitación pautado"
+                            AppLanguage.ENGLISH -> "Reminders to complete prescribed rehabilitation plan"
+                        }
+                        Text(text = label, color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = desc, color = TextMuted, fontSize = 10.sp)
                     }
                     Switch(
                         checked = rehabReminders,
@@ -380,8 +484,18 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = "BioPatch BLE Zero-Touch Lotura", color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-                        Text(text = "Sentsorea gerturatzean automatikoki sinkronizatu", color = TextMuted, fontSize = 10.sp)
+                        val label = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "BioPatch BLE Zero-Touch Lotura"
+                            AppLanguage.ESPANOL -> "Vinculación Zero-Touch BLE BioPatch"
+                            AppLanguage.ENGLISH -> "BioPatch BLE Zero-Touch Pairing"
+                        }
+                        val desc = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Sentsorea gerturatzean automatikoki sinkronizatu"
+                            AppLanguage.ESPANOL -> "Sincronización automática al aproximar el sensor"
+                            AppLanguage.ENGLISH -> "Automatic synchronization on sensor proximity"
+                        }
+                        Text(text = label, color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = desc, color = TextMuted, fontSize = 10.sp)
                     }
                     Switch(
                         checked = bleAutoConnect,
@@ -392,7 +506,7 @@ fun SettingsScreen(
             }
         }
 
-        // Section 4: Clinical Interoperability (Osabide FHIR)
+        // Section 5: Clinical Interoperability (Osabide FHIR)
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = PrimarySurface),
@@ -409,21 +523,35 @@ fun SettingsScreen(
                 ) {
                     Icon(Icons.Default.CloudSync, contentDescription = null, tint = TechBlue, modifier = Modifier.size(20.dp))
                     Column {
+                        val title = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Osabide / HL7 FHIR Sinkronizazioa"
+                            AppLanguage.ESPANOL -> "Sincronización Osabide / HL7 FHIR"
+                            AppLanguage.ENGLISH -> "Osabide / HL7 FHIR Synchronization"
+                        }
+                        val subtitle = when (currentLanguage) {
+                            AppLanguage.EUSKARA -> "Osakidetzako zerbitzariekin datu-trukearen maiztasuna"
+                            AppLanguage.ESPANOL -> "Frecuencia de sincronización con Osakidetza"
+                            AppLanguage.ENGLISH -> "EHR sync interval with Osakidetza servers"
+                        }
                         Text(
-                            text = "Osabide / HL7 FHIR Sinkronizazioa",
+                            text = title,
                             color = TextLight,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Osakidetzako zerbitzariekin datu-trukearen maiztasuna",
+                            text = subtitle,
                             color = TextMuted,
                             fontSize = 11.sp
                         )
                     }
                 }
 
-                val options = listOf("Denbora errealean", "5 minuturo", "15 minuturo")
+                val options = when (currentLanguage) {
+                    AppLanguage.EUSKARA -> listOf("Denbora errealean", "5 minuturo", "15 minuturo")
+                    AppLanguage.ESPANOL -> listOf("En tiempo real", "Cada 5 min", "Cada 15 min")
+                    AppLanguage.ENGLISH -> listOf("Real-time", "Every 5 min", "Every 15 min")
+                }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -452,7 +580,7 @@ fun SettingsScreen(
             }
         }
 
-        // Section 5: Legal & Regulatory Information (CE MDR IIa)
+        // Section 6: Legal & Regulatory Information (CE MDR IIa)
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = CardBackground),
@@ -493,6 +621,59 @@ fun SettingsScreen(
                     fontSize = 10.sp
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun PdfLanguageOptionItem(
+    badge: String,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    Surface(
+        color = CardBackground,
+        shape = RoundedCornerShape(10.dp),
+        border = androidx.compose.foundation.BorderStroke(1.dp, SurfaceBorder),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Surface(
+                    color = TechBlue.copy(alpha = 0.2f),
+                    shape = RoundedCornerShape(6.dp),
+                    modifier = Modifier.size(30.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text(
+                            text = badge,
+                            color = AccentCyan,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+                Column {
+                    Text(text = title, color = TextLight, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                    Text(text = subtitle, color = TextMuted, fontSize = 10.sp)
+                }
+            }
+            Icon(
+                imageVector = Icons.Default.OpenInNew,
+                contentDescription = null,
+                tint = AccentCyan,
+                modifier = Modifier.size(18.dp)
+            )
         }
     }
 }
