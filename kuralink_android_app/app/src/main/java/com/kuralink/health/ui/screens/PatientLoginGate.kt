@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Login
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -139,7 +140,7 @@ fun PatientLoginGate(
                         .fillMaxWidth()
                         .height(48.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.Login, contentDescription = null, tint = Color.White)
+                    Icon(imageVector = Icons.AutoMirrored.Filled.Login, contentDescription = null, tint = Color.White)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = "Hasi Saioa", color = Color.White, fontWeight = FontWeight.Bold)
                 }

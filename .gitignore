@@ -4,6 +4,10 @@ build/
 app/build/
 *.iml
 .idea/
+.kotlin/
+kuralink_android_app/build/
+kuralink_android_app/.gradle/
+kuralink_android_app/.kotlin/
 local.properties
 .cxx/
 captures/

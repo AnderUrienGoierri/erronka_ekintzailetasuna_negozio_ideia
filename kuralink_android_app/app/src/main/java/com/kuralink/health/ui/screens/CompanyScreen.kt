@@ -10,6 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.BrandingWatermark
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -394,7 +396,7 @@ fun CompanyScreen(
         ExpandableBusinessCard(
             sectionNumber = "05",
             title = "Marka: KuraLink",
-            icon = Icons.Default.BrandingWatermark,
+            icon = Icons.AutoMirrored.Filled.BrandingWatermark,
             accentColor = AccentCyan,
             summary = "Kura (sendatzea/zaintza) + Link (multiplataforma konexioa).",
             details = listOf(
@@ -532,7 +534,7 @@ fun CompanyScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.TrendingUp, contentDescription = "Merkatu Datuak", tint = AccentCyan, modifier = Modifier.size(20.dp))
+                    Icon(imageVector = Icons.AutoMirrored.Filled.TrendingUp, contentDescription = "Merkatu Datuak", tint = AccentCyan, modifier = Modifier.size(20.dp))
                     Text(text = "Lan Mundua eta Demanda Erreala", color = TextLight, fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 }
 

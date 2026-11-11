@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -352,7 +353,7 @@ class MainActivity : ComponentActivity() {
                                         border = androidx.compose.foundation.BorderStroke(1.dp, AlertRed),
                                         modifier = Modifier.fillMaxWidth().height(42.dp)
                                     ) {
-                                        Icon(Icons.Default.Logout, contentDescription = null, tint = AlertRed, modifier = Modifier.size(16.dp))
+                                        Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = null, tint = AlertRed, modifier = Modifier.size(16.dp))
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Text(text = "Itxi Saioa (Logout)", color = AlertRed, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                                     }

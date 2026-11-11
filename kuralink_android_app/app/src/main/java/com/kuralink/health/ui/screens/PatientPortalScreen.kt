@@ -10,6 +10,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.DirectionsRun
+import androidx.compose.material.icons.automirrored.filled.Login
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -135,7 +138,7 @@ fun PatientPortalScreen(
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier.fillMaxWidth().height(48.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.Login, contentDescription = null, tint = Color.White)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.Login, contentDescription = null, tint = Color.White)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = "Hasi Saioa", color = Color.White, fontWeight = FontWeight.Bold)
                     }
@@ -295,7 +298,7 @@ fun PatientPortalScreen(
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Logout,
+                                imageVector = Icons.AutoMirrored.Filled.Logout,
                                 contentDescription = "Saioa Itxi",
                                 tint = TextMuted
                             )
@@ -451,7 +454,7 @@ fun PatientPortalScreen(
                         border = androidx.compose.foundation.BorderStroke(1.dp, AccentGreen.copy(alpha = 0.5f)),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(imageVector = Icons.Default.DirectionsRun, contentDescription = null, tint = AccentGreen)
+                        Icon(imageVector = Icons.AutoMirrored.Filled.DirectionsRun, contentDescription = null, tint = AccentGreen)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = "Gaurko Ariketak Osatu (%88)", color = TextLight, fontWeight = FontWeight.SemiBold)
                     }

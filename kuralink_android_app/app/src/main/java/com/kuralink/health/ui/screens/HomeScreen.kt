@@ -592,7 +592,7 @@ fun AnimatedEcgCanvas(
 
             // P wave
             path.lineTo(pWaveX - 10, midY)
-            path.quadraticBezierTo(pWaveX, midY - (if (isArrhythmia) 22f else 14f), pWaveX + 10, midY)
+            path.quadraticTo(pWaveX, midY - (if (isArrhythmia) 22f else 14f), pWaveX + 10, midY)
 
             // QRS Complex
             path.lineTo(qWaveX, midY)
@@ -603,7 +603,7 @@ fun AnimatedEcgCanvas(
 
             // T wave
             path.lineTo(tWaveX - 12, midY)
-            path.quadraticBezierTo(tWaveX, midY - (if (isArrhythmia) 8f else 22f), tWaveX + 12, midY)
+            path.quadraticTo(tWaveX, midY - (if (isArrhythmia) 8f else 22f), tWaveX + 12, midY)
             path.lineTo(startX + cycleWidth, midY)
         }
 
