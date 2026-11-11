@@ -1670,6 +1670,58 @@ footer {
   color: var(--text-primary);
 }
 
+/* Footer Certifications (ISO 13485 & CE MDR IIa) */
+.footer-certifications-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer-cert-badge-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-cert-badge-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(2, 132, 199, 0.2);
+}
+
+.footer-cert-img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-cert-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.35;
+}
+
+.footer-cert-title {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #0A192F;
+  letter-spacing: 0.2px;
+}
+
+.footer-cert-desc {
+  font-size: 0.76rem;
+  color: #0284C7;
+  font-weight: 600;
+}
+
 /* ==========================================================================
    Hero Principal Logo Banner (Ikusgarria eta Handia)
    ========================================================================== */
