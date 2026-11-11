@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -38,12 +37,12 @@ import com.kuralink.health.ui.theme.*
 import com.kuralink.health.util.PdfOpener
 import kotlinx.coroutines.launch
 
-sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
-    object Company : Screen("company", "Enpresa", Icons.Default.Business)
-    object Patient : Screen("patient", "Pazientea", Icons.Default.AccountCircle)
-    object Monitoring : Screen("monitoring", "Telemetria", Icons.Default.Favorite)
-    object Rehab : Screen("rehab", "Ariketak", Icons.Default.FitnessCenter)
-    object Settings : Screen("settings", "Ezarpenak", Icons.Default.Settings)
+sealed class Screen(val title: String, val icon: ImageVector) {
+    object Company : Screen("Enpresa", Icons.Default.Business)
+    object Patient : Screen("Pazientea", Icons.Default.AccountCircle)
+    object Monitoring : Screen("Telemetria", Icons.Default.Favorite)
+    object Rehab : Screen("Ariketak", Icons.Default.FitnessCenter)
+    object Settings : Screen("Ezarpenak", Icons.Default.Settings)
 }
 
 class MainActivity : ComponentActivity() {
