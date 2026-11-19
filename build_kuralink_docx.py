@@ -6,8 +6,9 @@ Adheres strictly to:
 - Black text (#000000) throughout the document
 - Natural, professional human formatting (no AI markers)
 - Clickable Table of Contents linking to internal bookmarks
-- Cover page with project image, author name, module, date, school
-- Realistic business scenario images included with captions
+- Cover page with corporate logo, project image, author name, module, date, school
+- Brand section with official vector logo and app icon with full design rationale
+- Realistic business scenario images included with clear captions
 """
 
 import os
@@ -25,7 +26,7 @@ def set_cell_background(cell, hex_color):
     shd = parse_xml(f'<w:shd {nsdecls("w")} w:fill="{hex_color}"/>')
     cell._tc.get_or_add_tcPr().append(shd)
 
-def set_cell_margins(cell, top=120, bottom=120, left=150, right=150):
+def set_cell_margins(cell, top=100, bottom=100, left=140, right=140):
     tcPr = cell._tc.get_or_add_tcPr()
     tcMar = OxmlElement('w:tcMar')
     for m, val in [('top', top), ('bottom', bottom), ('left', left), ('right', right)]:
@@ -170,39 +171,49 @@ def create_document():
     r_inst.font.color.rgb = BLACK
     
     p_subinst = doc.add_paragraph()
-    p_subinst.paragraph_format.space_after = Pt(20)
+    p_subinst.paragraph_format.space_after = Pt(12)
     r_subinst = p_subinst.add_run("Garapeneko Aplikazioen Multiplataforma (DAM) - 2. Maila")
     r_subinst.font.name = 'Arial'
     r_subinst.font.size = Pt(9.5)
     r_subinst.font.color.rgb = BLACK
+
+    # COVER LOGO (KuraLink official corporate logo)
+    logo_path = "02_marka_eta_identitate_bisuala/kuralink_logo.png"
+    if os.path.exists(logo_path):
+        p_logo = doc.add_paragraph()
+        p_logo.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_logo.paragraph_format.space_before = Pt(4)
+        p_logo.paragraph_format.space_after = Pt(14)
+        run_logo = p_logo.add_run()
+        run_logo.add_picture(logo_path, width=Cm(12.5))
     
     # Main Title
     p_title = doc.add_paragraph()
-    p_title.paragraph_format.space_before = Pt(10)
-    p_title.paragraph_format.space_after = Pt(8)
+    p_title.paragraph_format.space_before = Pt(4)
+    p_title.paragraph_format.space_after = Pt(6)
     r_title = p_title.add_run("NEGOZIO IDEIAREN GARAPENA ETA BIDERAGARRITASUN PLANA")
     r_title.font.name = 'Arial'
-    r_title.font.size = Pt(20)
+    r_title.font.size = Pt(18)
     r_title.bold = True
     r_title.font.color.rgb = BLACK
     
     # Subtitle
     p_sub = doc.add_paragraph()
-    p_sub.paragraph_format.space_after = Pt(20)
-    r_sub = p_sub.add_run("KuraLink Health Technologies: Gailu biomediko eramangarrien eta ospitale-sistemen arteko tele-monitorizazio adimentsua.")
+    p_sub.paragraph_format.space_after = Pt(12)
+    r_sub = p_sub.add_run("Gailu biomediko eramangarrien eta ospitale-sistemen arteko tele-monitorizazio adimentsua.")
     r_sub.font.name = 'Arial'
-    r_sub.font.size = Pt(12)
+    r_sub.font.size = Pt(11.5)
     r_sub.font.color.rgb = BLACK
     
-    # Business Idea Cover Image
+    # Business Idea Cover Photo / Mockup
     cover_img_path = "03_irudiak_eta_mockupak/kuralink_enpresa_irudia.jpg"
     if os.path.exists(cover_img_path):
         p_img = doc.add_paragraph()
         p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_img.paragraph_format.space_before = Pt(6)
-        p_img.paragraph_format.space_after = Pt(24)
+        p_img.paragraph_format.space_before = Pt(4)
+        p_img.paragraph_format.space_after = Pt(16)
         run_img = p_img.add_run()
-        run_img.add_picture(cover_img_path, width=Cm(14.5))
+        run_img.add_picture(cover_img_path, width=Cm(13.5))
     
     # Metadata Block (Boxed Table at bottom of cover)
     meta_table = doc.add_table(rows=5, cols=2)
@@ -220,10 +231,10 @@ def create_document():
     for idx, (lbl, val) in enumerate(metadata):
         cell_lbl = meta_table.cell(idx, 0)
         cell_val = meta_table.cell(idx, 1)
-        cell_lbl.width = Cm(5.0)
-        cell_val.width = Cm(11.0)
-        set_cell_margins(cell_lbl, 80, 80, 100, 100)
-        set_cell_margins(cell_val, 80, 80, 100, 100)
+        cell_lbl.width = Cm(4.8)
+        cell_val.width = Cm(11.2)
+        set_cell_margins(cell_lbl, 60, 60, 90, 90)
+        set_cell_margins(cell_val, 60, 60, 90, 90)
         set_cell_background(cell_lbl, "F8F9FA")
         set_cell_background(cell_val, "FFFFFF")
         
@@ -287,7 +298,8 @@ def create_document():
         ("sec_5", "5. MARKA: KURALINK", True),
         ("sec_5_1", "   5.1. Marka-izen on baten lau ezaugarriak KuraLink-en", False),
         ("sec_5_2", "   5.2. Identitate bisuala, kolore korporatiboak eta diseinu sistema", False),
-        ("sec_5_3", "   5.3. Mugikorreko aplikazioa eta sentsore biomedikoen integrazioa", False),
+        ("sec_5_3", "   5.3. Logotipo ofiziala, marka-ikonoa eta diseinuaren anatomia", False),
+        ("sec_5_4", "   5.4. Mugikorreko aplikazioa eta sentsore biomedikoen integrazioa", False),
         ("sec_6", "6. BIDERAGARRITASUN PLANA ETA ONDORIOAK", True),
         ("sec_6_1", "   6.1. Bideragarritasun teknikoa, ekonomikoa eta araudizkoa", False),
         ("sec_6_2", "   6.2. Ikaskuntza-prozesua eta etorkizuneko garapena", False)
@@ -842,7 +854,7 @@ def create_document():
         "KuraLink-en nortasun bisualak zorroztasun zientifikoa eta gertutasun klinikoa transmititzen ditu. Gure kolore-paleta "
         "arlo medikoaren eskakizunetara egokituta dago:"
     )
-    add_bullet("Urdin Teknologikoa (#0A2540 / #1E3A8A): ", "Konfiantza, egonkortasuna, zorroztasun instituzionala eta zibersegurtasuna adierazten ditu.")
+    add_bullet("Urdin Teknologikoa (#0A2540 / #1E3A8A / #0284C7): ", "Konfiantza, egonkortasuna, zorroztasun instituzionala eta zibersegurtasuna adierazten ditu.")
     add_bullet("Zian Klinikoa (#00D4B2 / #06B6D4): ", "Teknologia berria, seinale biomedikoen bizitasuna, berrikuntza eta argitasuna.")
     add_bullet("Berde Fisiologikoa (#10B981): ", "Pazientearen egonkortasun kardiakoa, berreskurapen arrakastatsua eta osasuna.")
     add_bullet("Gorri Kardiakoa (#EF4444): ", "Larrialdi-alertak, arritmiak eta berehalako arreta medikoa behar duten kasuak seinalatzeko.")
@@ -853,7 +865,30 @@ def create_document():
         "Horrela, pantaila txikietan zein inprimatutako txostenetan datu medikoak eta zenbakiak akatsik gabe irakurtzea bermatzen da."
     )
 
-    add_h2("5.3. Mugikorreko aplikazioa eta sentsore biomedikoen integrazioa", "sec_5_3")
+    add_h2("5.3. Logotipo ofiziala, marka-ikonoa eta diseinuaren anatomia", "sec_5_3")
+    add_p(
+        "KuraLink-en logotipoa eta ikono korporatiboa bektorialki diseinatu dira, aplikazio mugikorretan, web atarian eta inprimatutako "
+        "dokumentazio klinikoan inpaktu argia sortzeko. Diseinuak hiru elementu giltzarri batzen ditu:"
+    )
+    add_bullet("K letra biomedikoa: ", "Erdialdeko 'K' ikurra kapsula mediko batek eta pultsu-uhin fisiologiko batek zeharkatzen dute.")
+    add_bullet("Datu-nodo periferikoak: ", "Ikonoaren kanpoko zirkuluan kokatutako lau puntuek IoMT gailuen arteko datu-trukea eta hodeiko sinkronizazioa irudikatzen dute.")
+    add_bullet("Tipografia korporatiboa: ", "'Kura' hitza urdin ilun sendoan (#0A192F) kokatzen da sendotasuna emanez, eta 'Link' zian gradiente modernoan (#00B89C), azpitituluan enpresaren espezializazioa zehaztuz.")
+
+    # Image 5: Logotipo Ofiziala
+    add_figure(
+        "02_marka_eta_identitate_bisuala/kuralink_logo.png",
+        "5. Irudia: KuraLink logotipo korporatibo ofiziala (ikonoa, tipografia eta leloa: 'Software Biomedikoa eta Gailu Adimendunen Sinkronizazioa').",
+        width_cm=14.0
+    )
+
+    # Image 6: Marka-ikonoa
+    add_figure(
+        "02_marka_eta_identitate_bisuala/kuralink_icon.png",
+        "6. Irudia: KuraLink marka-ikonoa eta aplikazio mugikorraren logotipo laburtua (K nodoa eta pultsu kardiakoa).",
+        width_cm=6.5
+    )
+
+    add_h2("5.4. Mugikorreko aplikazioa eta sentsore biomedikoen integrazioa", "sec_5_4")
     add_p(
         "KuraLink aplikazio mugikorrak lau eremu nagusi eskaintzen dizkio pazienteari:"
     )
@@ -862,10 +897,10 @@ def create_document():
     add_bullet("Errehabilitazio Gidatua: ", "Egunero egin beharreko ariketen bideoak, denbora-kontagailua eta mugimenduaren egiaztapena.")
     add_bullet("Ezarpenak eta Hizkuntza: ", "Interfaze eleaniztuna (Euskara, Español, English), itxura modua (Argia/Iluna) eta jakinarazpenen doikuntza.")
 
-    # Image 5: Mugikorreko App eta Sentsorea
+    # Image 7: Mugikorreko App eta Sentsorea
     add_figure(
         "03_irudiak_eta_mockupak/kuralink_app_mockup.jpg",
-        "5. Irudia: KuraLink mugikorreko aplikazioa eta BioPatch BLE sentsore mediko eramangarria."
+        "7. Irudia: KuraLink mugikorreko aplikazioa eta BioPatch BLE sentsore mediko eramangarria."
     )
 
     # -------------------------------------------------------------
